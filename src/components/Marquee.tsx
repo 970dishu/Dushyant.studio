@@ -1,18 +1,22 @@
-import React from 'react';
+const logos = [
+  "FRAMER", "WEBFLOW", "FIGMA", "SKETCH", "ADOBE", "NOTION"
+];
 
 const Marquee = () => {
-  const text = "MOTION DESIGNER • CREATIVE DIRECTOR • VISUAL ARTIST • ANIMATOR • ";
-  
   return (
-    <div className="w-full overflow-hidden bg-accent py-4 border-y border-border/20">
+    <div className="w-full overflow-hidden border-y border-border/20 py-8 bg-background">
       <div className="flex animate-marquee whitespace-nowrap">
-        {[...Array(4)].map((_, i) => (
-          <span 
-            key={i} 
-            className="text-background font-display text-xl md:text-2xl font-bold tracking-wider mx-4"
-          >
-            {text}
-          </span>
+        {[...Array(3)].map((_, setIndex) => (
+          logos.map((logo, i) => (
+            <div 
+              key={`${setIndex}-${i}`}
+              className="mx-12 flex items-center"
+            >
+              <span className="text-sm md:text-base font-body text-muted-foreground/50 tracking-widest uppercase">
+                {logo}
+              </span>
+            </div>
+          ))
         ))}
       </div>
     </div>
