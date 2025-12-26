@@ -59,6 +59,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
+        display: ['Syne', 'sans-serif'],
         heading: ['Syne', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
