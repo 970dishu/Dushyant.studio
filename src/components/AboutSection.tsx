@@ -1,72 +1,87 @@
+import { ArrowUpRight } from "lucide-react";
+
 const skills = [
+  "Motion Design",
+  "3D Animation",
+  "VFX",
   "After Effects",
   "Cinema 4D",
   "Blender",
-  "Premiere Pro",
-  "Illustrator",
-  "Figma",
+];
+
+const experience = [
+  { company: "Freelance", role: "Motion Designer", period: "Currently" },
+  { company: "Studio X", role: "Senior Animator", period: "2022-24" },
+  { company: "Creative Co", role: "Motion Artist", period: "2020-22" },
 ];
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 md:py-32 bg-secondary/30">
+    <section id="about" className="py-24 md:py-32 bg-background">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left Content */}
           <div>
-            <span className="text-sm font-body text-primary tracking-widest uppercase mb-4 block">
-              .about me
-            </span>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-8">
-              Bringing ideas to life
-              <br />
-              <span className="text-primary">frame by frame</span>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-card border border-border rounded-full text-foreground hover:border-primary hover:text-primary transition-all duration-300 mb-8"
+            >
+              Book a Free Call
+              <ArrowUpRight size={16} />
+            </a>
+            
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
+              Meet the Creator
             </h2>
-            <div className="space-y-6 text-muted-foreground font-body">
-              <p>
-                I'm a motion designer with a passion for creating compelling visual narratives. 
-                With expertise spanning 2D and 3D animation, I transform static concepts into 
-                dynamic experiences that captivate and communicate.
-              </p>
-              <p>
-                My approach combines technical precision with creative intuition, ensuring 
-                every project not only meets objectives but exceeds expectations. Whether 
-                it's brand animations, explainer videos, or experimental art pieces, I bring 
-                dedication and artistry to every frame.
-              </p>
-            </div>
-          </div>
+            
+            <p className="text-muted-foreground font-body leading-relaxed mb-8">
+              I'm a passionate Motion Designer specializing in crafting bold visual experiences and animations that captivate and inspire, blending creativity with strategy to elevate brands.
+            </p>
 
-          {/* Right Content - Skills */}
-          <div className="bg-card border border-border rounded-2xl p-8 md:p-12">
-            <h3 className="text-sm font-body text-muted-foreground tracking-widest uppercase mb-8">
-              Tools & Skills
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {skills.map((skill, index) => (
+            {/* Skills Tags */}
+            <div className="flex flex-wrap gap-2 mb-12">
+              {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-5 py-3 text-sm font-body bg-background border border-border rounded-full text-foreground hover:border-primary hover:text-primary transition-all duration-300 cursor-default opacity-0 animate-scale-in"
-                  style={{ animationDelay: `${0.1 * index}s`, animationFillMode: "forwards" }}
+                  className="px-4 py-2 text-xs font-body bg-card border border-border rounded-full text-muted-foreground"
                 >
                   {skill}
                 </span>
               ))}
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-border">
-              <div>
-                <span className="text-3xl md:text-4xl font-heading font-bold text-primary">5+</span>
-                <p className="text-sm text-muted-foreground mt-1">Years Experience</p>
+            {/* Experience */}
+            <div className="space-y-4">
+              {experience.map((exp, index) => (
+                <div key={index} className="flex items-center justify-between py-4 border-b border-border">
+                  <div>
+                    <p className="font-body text-foreground">{exp.company}</p>
+                    <p className="text-sm text-muted-foreground">{exp.role}</p>
+                  </div>
+                  <span className="text-sm text-muted-foreground">{exp.period}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Content - Stats */}
+          <div className="flex flex-col justify-center">
+            <div className="grid grid-cols-2 gap-8">
+              <div className="text-center p-8 bg-card border border-border rounded-2xl">
+                <span className="text-5xl md:text-6xl font-heading font-bold text-primary">5+</span>
+                <p className="text-sm text-muted-foreground mt-2">Years Experience</p>
               </div>
-              <div>
-                <span className="text-3xl md:text-4xl font-heading font-bold text-primary">50+</span>
-                <p className="text-sm text-muted-foreground mt-1">Projects Done</p>
+              <div className="text-center p-8 bg-card border border-border rounded-2xl">
+                <span className="text-5xl md:text-6xl font-heading font-bold text-primary">50+</span>
+                <p className="text-sm text-muted-foreground mt-2">Projects Done</p>
               </div>
-              <div>
-                <span className="text-3xl md:text-4xl font-heading font-bold text-primary">30+</span>
-                <p className="text-sm text-muted-foreground mt-1">Happy Clients</p>
+              <div className="text-center p-8 bg-card border border-border rounded-2xl">
+                <span className="text-5xl md:text-6xl font-heading font-bold text-primary">30+</span>
+                <p className="text-sm text-muted-foreground mt-2">Happy Clients</p>
+              </div>
+              <div className="text-center p-8 bg-card border border-border rounded-2xl">
+                <span className="text-5xl md:text-6xl font-heading font-bold text-primary">100%</span>
+                <p className="text-sm text-muted-foreground mt-2">Satisfaction</p>
               </div>
             </div>
           </div>
