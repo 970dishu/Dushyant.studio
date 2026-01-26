@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
+import waveHand from "@/assets/wave-hand.png";
 
 const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
   const [showWave, setShowWave] = useState(false);
@@ -23,10 +24,10 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
     lg: "text-xl xl:text-2xl",
   };
 
-  const emojiSizes = {
-    sm: "text-2xl",
-    md: "text-3xl",
-    lg: "text-3xl xl:text-4xl",
+  const imgSizes = {
+    sm: "w-7 h-7",
+    md: "w-8 h-8",
+    lg: "w-9 h-9 xl:w-11 xl:h-11",
   };
 
   return (
@@ -39,13 +40,13 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
         >
           Hi
         </span>
-        <span
-          className={`absolute ${emojiSizes[size]} transition-all duration-500 ${
+        <img
+          src={waveHand}
+          alt="Wave"
+          className={`absolute ${imgSizes[size]} transition-all duration-500 ${
             showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
           }`}
-        >
-          👋
-        </span>
+        />
       </div>
     </div>
   );
