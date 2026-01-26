@@ -3,8 +3,8 @@ const Hero = () => {
     <section className="min-h-screen flex items-center pt-20 md:pt-0">
       <div className="container-wide px-6 md:px-12 lg:px-20 py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Content */}
-          <div className="order-2 lg:order-1">
+          {/* Left Content - Text */}
+          <div>
             <p className="text-primary text-sm md:text-base mb-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Hello, I'm
             </p>
@@ -46,10 +46,10 @@ const Hero = () => {
           </div>
 
           {/* Right - Portrait Image */}
-          <div className="order-1 lg:order-2 relative">
+          <div className="relative flex justify-center lg:justify-end">
             <div className="relative opacity-0 animate-fade-up" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
               {/* Main Image */}
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/5] bg-secondary border border-border">
+              <div className="relative rounded-2xl overflow-hidden aspect-[4/5] w-full max-w-md bg-secondary border border-border">
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop&crop=faces"
                   alt="Dushyant Garg - Motion Designer"
