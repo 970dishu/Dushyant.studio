@@ -1,4 +1,49 @@
+import { useState, useEffect } from "react";
+import { Hand } from "lucide-react";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
+
+const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
+  const [showWave, setShowWave] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowWave((prev) => !prev);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const sizeClasses = {
+    sm: "w-12 h-12 text-lg",
+    md: "w-14 h-14 text-xl",
+    lg: "w-16 h-16 xl:w-20 xl:h-20 text-xl xl:text-2xl",
+  };
+
+  const iconSizes = {
+    sm: 18,
+    md: 22,
+    lg: 26,
+  };
+
+  return (
+    <div className={`${sizeClasses[size]} bg-primary rounded-full flex items-center justify-center overflow-hidden`}>
+      <div className="relative w-full h-full flex items-center justify-center">
+        <span
+          className={`absolute text-primary-foreground font-body font-medium transition-all duration-500 ${
+            showWave ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"
+          }`}
+        >
+          Hi
+        </span>
+        <Hand
+          size={iconSizes[size]}
+          className={`absolute text-primary-foreground transition-all duration-500 ${
+            showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
+          }`}
+        />
+      </div>
+    </div>
+  );
+};
 
 const Hero = () => {
   return (
@@ -23,8 +68,8 @@ const Hero = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-3 -left-3 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-primary-foreground font-body text-lg font-medium">Hi</span>
+            <div className="absolute -bottom-3 -left-3">
+              <HiBadge size="sm" />
             </div>
           </div>
           
@@ -58,8 +103,8 @@ const Hero = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-14 h-14 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-body text-xl font-medium">Hi</span>
+              <div className="absolute -bottom-4 -left-4">
+                <HiBadge size="md" />
               </div>
             </div>
           </div>
@@ -97,8 +142,8 @@ const Hero = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-5 -left-5 w-16 h-16 xl:w-20 xl:h-20 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-body text-xl xl:text-2xl font-medium">Hi</span>
+              <div className="absolute -bottom-5 -left-5">
+                <HiBadge size="lg" />
               </div>
             </div>
           </div>
