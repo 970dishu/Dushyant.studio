@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,66 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary: 20 90% 48%;
-    --primary-foreground: 0 0% 2%;
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 20 90% 48%;
-    --accent-foreground: 0 0% 2%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 12%;
-    --ring: 20 90% 48%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 8%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Custom Design Tokens */
-    --font-heading: 'Syne', sans-serif;
+    --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
-    
-    --gradient-glow: radial-gradient(ellipse at center, hsl(24 100% 50% / 0.15) 0%, transparent 70%);
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 3%) 100%);
-    
-    --shadow-glow: 0 0 60px hsl(24 100% 50% / 0.3);
-    --shadow-card: 0 20px 40px hsl(0 0% 0% / 0.5);
-    
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 98%;
   }
 }
 
@@ -75,47 +88,45 @@
 }
 
 @layer components {
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground;
+  .section-padding {
+    @apply py-20 md:py-32 px-6 md:px-12 lg:px-20;
   }
 
-  .hover-reveal {
-    @apply grayscale transition-all duration-500 ease-out;
+  .container-wide {
+    @apply max-w-7xl mx-auto;
   }
 
-  .hover-reveal:hover {
-    @apply grayscale-0;
+  .link-hover {
+    @apply relative inline-block transition-colors duration-300;
   }
 
-  .link-underline {
-    @apply relative inline-block;
-  }
-
-  .link-underline::after {
+  .link-hover::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-full h-[1px] bg-primary origin-left scale-x-0 transition-transform duration-300;
+    @apply absolute bottom-0 left-0 w-full h-[1px] bg-foreground origin-left scale-x-0 transition-transform duration-300;
   }
 
-  .link-underline:hover::after {
+  .link-hover:hover::after {
     @apply scale-x-100;
   }
 
-  .glow-effect {
-    @apply relative;
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
   }
 
-  .glow-effect::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: var(--gradient-glow);
+  .card-hover:hover {
+    @apply -translate-y-2;
   }
 
-  .glow-effect:hover::before {
-    @apply opacity-100;
+  .image-zoom {
+    @apply overflow-hidden;
   }
 
-  .bg-gradient-radial {
-    background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+  .image-zoom img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .image-zoom:hover img {
+    @apply scale-105;
   }
 }
 
@@ -140,27 +151,9 @@
     animation: fadeIn 0.6s ease-out forwards;
   }
 
-  .animate-slide-in {
-    animation: slideIn 0.6s ease-out forwards;
+  .animate-counter {
+    animation: counter 2s ease-out forwards;
   }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-float-slow {
-    animation: float 8s ease-in-out infinite;
-  }
-
-  .animate-float-slower {
-    animation: float 10s ease-in-out infinite reverse;
-  }
-
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
 }
 
 @keyframes fadeUp {
@@ -179,37 +172,29 @@
   to { opacity: 1; }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-  }
-  25% {
-    transform: translateY(-20px) translateX(10px);
-  }
-  50% {
-    transform: translateY(-10px) translateX(-10px);
-  }
-  75% {
-    transform: translateY(-30px) translateX(5px);
-  }
+.animate-marquee {
+  animation: marquee 30s linear infinite;
 }
 
-.animate-marquee {
-  animation: marquee 20s linear infinite;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground));
 }
