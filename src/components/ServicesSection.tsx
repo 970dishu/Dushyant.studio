@@ -56,6 +56,47 @@ const services = [
   },
 ];
 
+const FloatingTag = ({ 
+  detail, 
+  index 
+}: { 
+  detail: string; 
+  index: number;
+}) => {
+  const tagRef = useRef<HTMLSpanElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: tagRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Each tag floats at different rates for organic feel
+  const floatOffset = (index % 3) - 1; // -1, 0, or 1
+  const y = useTransform(
+    scrollYProgress, 
+    [0, 0.5, 1], 
+    [15 + floatOffset * 5, 0, -15 - floatOffset * 5]
+  );
+  const rotate = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [floatOffset * 2, -floatOffset * 2]
+  );
+
+  return (
+    <motion.span
+      ref={tagRef}
+      style={{ y, rotate }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="px-4 py-2 rounded-full border border-border/50 text-sm md:text-base text-foreground/80 hover:border-primary hover:text-primary transition-colors duration-300 inline-block"
+    >
+      {detail}
+    </motion.span>
+  );
+};
+
 const ServiceCard = ({ 
   service, 
   index, 
@@ -140,18 +181,10 @@ const ServiceCard = ({
             {service.description}
           </p>
           
-          {/* Tags */}
+          {/* Tags with parallax */}
           <div className="flex flex-wrap gap-3">
             {service.details.map((detail, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="px-4 py-2 rounded-full border border-border/50 text-sm md:text-base text-foreground/80 hover:border-primary hover:text-primary transition-colors duration-300"
-              >
-                {detail}
-              </motion.span>
+              <FloatingTag key={i} detail={detail} index={i} />
             ))}
           </div>
         </div>
