@@ -43,7 +43,7 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
         <img
           src={waveHand}
           alt="Wave"
-          className={`absolute ${imgSizes[size]} transition-all duration-500 ${
+          className={`absolute ${imgSizes[size]} object-contain transition-all duration-500 ${
             showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
           }`}
         />
