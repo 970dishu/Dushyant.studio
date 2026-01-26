@@ -1,43 +1,40 @@
-import { Mail, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 md:py-32 bg-background relative overflow-hidden">
-      {/* Decorative Smoke */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-gradient-radial from-foreground/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs font-body text-muted-foreground tracking-[0.3em] uppercase mb-4 block">
+    <section id="contact" className="py-20 md:py-32 bg-card">
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl">
+          <span className="text-xs font-body text-primary tracking-[0.3em] uppercase mb-6 block">
             Get in Touch
           </span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-8">
-            Let's create something
+          
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-tight mb-8">
+            Let's create
             <br />
-            <span className="text-primary">amazing</span> together
+            something <span className="text-primary">amazing</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-body max-w-xl mx-auto mb-12">
-            Ready to elevate your brand with stunning motion design? Let's discuss your project.
+          
+          <p className="text-base md:text-lg font-body text-muted-foreground max-w-xl mb-10">
+            Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your vision to life through motion.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="mailto:hello@motion.design"
-              className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-medium uppercase tracking-wider bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300"
-            >
-              <Mail size={18} />
-              <span>Get in Touch</span>
-              <ArrowUpRight size={18} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-            </a>
-          </div>
+          {/* CTA */}
+          <a
+            href="mailto:hello@dushyant.design"
+            className="inline-flex items-center gap-3 px-8 py-4 text-base font-body font-medium bg-foreground text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+          >
+            <span>hello@dushyant.design</span>
+            <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+          </a>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-8 mt-16">
-            {["Behance", "Dribbble", "Instagram", "LinkedIn"].map((social) => (
+          <div className="flex items-center gap-8 mt-16 pt-8 border-t border-border">
+            {["LinkedIn", "Twitter", "Dribbble", "Behance"].map((social) => (
               <a
                 key={social}
                 href="#"
-                className="text-sm text-muted-foreground hover:text-primary link-underline transition-colors duration-300"
+                className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 {social}
               </a>
