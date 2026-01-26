@@ -1,73 +1,204 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { projects } from "@/data/projects";
 import CustomCursor from "./CustomCursor";
 
-const ProjectsSection = () => {
+interface ProjectCardProps {
+  project: typeof projects[0];
+  index: number;
+  totalProjects: number;
+  onHover: (id: string | null) => void;
+  isHovered: boolean;
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+const ProjectCard = ({ project, index, totalProjects, onHover, isHovered, containerRef }: ProjectCardProps) => {
   const navigate = useNavigate();
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Scale down slightly as you scroll past
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.6, 1, 1, 0.6]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ scale, opacity }}
+      className="sticky top-0 h-screen w-full flex items-center justify-center px-4 md:px-8 lg:px-16"
+    >
+      <div className="relative w-full max-w-[1600px]">
+        <CustomCursor 
+          isVisible={isHovered}
+          containerRef={containerRef}
+        />
+        <div
+          ref={(el) => {
+            if (containerRef.current !== el) {
+              (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+            }
+          }}
+          onClick={() => navigate(`/project/${project.slug}`)}
+          onMouseEnter={() => onHover(project.id)}
+          onMouseLeave={() => onHover(null)}
+          className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden cursor-none bg-card"
+        >
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+            {/* Green gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </div>
+
+          {/* Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-16">
+            {/* Project Number */}
+            <motion.div 
+              className="absolute top-6 right-6 md:top-10 md:right-10"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <span className="font-heading text-6xl md:text-8xl lg:text-9xl font-bold text-foreground/10 group-hover:text-primary/20 transition-colors duration-500">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+            </motion.div>
+
+            {/* Category */}
+            <motion.span 
+              className="text-sm md:text-base text-primary uppercase tracking-widest mb-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              {project.category}
+            </motion.span>
+
+            {/* Title */}
+            <motion.h3 
+              className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              {project.title}
+            </motion.h3>
+
+            {/* Description */}
+            <motion.p 
+              className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              {project.shortDescription}
+            </motion.p>
+
+            {/* Meta Info */}
+            <motion.div 
+              className="flex flex-wrap gap-4 md:gap-8 text-sm text-muted-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div>
+                <span className="text-foreground/50">Client:</span>{" "}
+                <span className="text-foreground">{project.client}</span>
+              </div>
+              <div>
+                <span className="text-foreground/50">Year:</span>{" "}
+                <span className="text-foreground">{project.year}</span>
+              </div>
+              <div>
+                <span className="text-foreground/50">Role:</span>{" "}
+                <span className="text-foreground">{project.role}</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Scroll indicator for first card */}
+          {index === 0 && (
+            <motion.div 
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            >
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Scroll</span>
+              <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const projectRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   return (
-    <section id="work" className="section-padding bg-secondary">
-      <div className="container-wide">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <div>
-            <p className="text-sm text-primary uppercase tracking-wider mb-4">
-              Selected Work
-            </p>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
-              Featured Projects
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-base md:text-lg max-w-lg">
-            A showcase of my best motion design, film editing, and creative direction work.
-          </p>
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <div key={project.id} className="relative">
-              <CustomCursor 
-                isVisible={hoveredProject === project.id}
-                containerRef={{ current: projectRefs.current[project.id] } as React.RefObject<HTMLElement>}
-              />
-              <div
-                ref={(el) => projectRefs.current[project.id] = el}
-                onClick={() => navigate(`/project/${project.slug}`)}
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-                className="group block bg-background rounded-2xl overflow-hidden card-hover border border-border cursor-none"
+    <section id="work" className="relative bg-background">
+      {/* Section Header */}
+      <div className="section-padding pb-0">
+        <div className="container-wide">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+            <div>
+              <motion.p 
+                className="text-sm text-primary uppercase tracking-wider mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
               >
-                {/* Image/Video Placeholder */}
-                <div className="image-zoom aspect-video bg-muted relative">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                  />
-                  {/* Green gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-
-                {/* Content */}
-                <div className="p-6 md:p-8">
-                  <span className="text-xs text-primary uppercase tracking-wider">
-                    {project.category}
-                  </span>
-                  <h3 className="font-heading text-xl md:text-2xl font-medium text-foreground mt-2 mb-2 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {project.shortDescription}
-                  </p>
-                </div>
-              </div>
+                Selected Work
+              </motion.p>
+              <motion.h2 
+                className="font-heading text-4xl md:text-5xl lg:text-6xl font-medium text-foreground"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+              >
+                Featured Projects
+              </motion.h2>
             </div>
-          ))}
+            <motion.p 
+              className="text-muted-foreground text-base md:text-lg max-w-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              A showcase of my best motion design, film editing, and creative direction work.
+            </motion.p>
+          </div>
         </div>
+      </div>
+
+      {/* Stacked Projects */}
+      <div className="relative" style={{ height: `${projects.length * 100}vh` }}>
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index}
+            totalProjects={projects.length}
+            onHover={setHoveredProject}
+            isHovered={hoveredProject === project.id}
+            containerRef={{ current: projectRefs.current[project.id] } as React.RefObject<HTMLDivElement>}
+          />
+        ))}
       </div>
     </section>
   );
