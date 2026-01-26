@@ -2,95 +2,80 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: "#services", label: "Services" },
+    { href: "#about", label: "About" },
+    { href: "#projects", label: "Projects" },
+    { href: "#testimonials", label: "Testimonials" },
+  ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md">
-      <div className="container mx-auto px-6 py-5">
-        <nav className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="container-wide px-6 md:px-12 lg:px-20">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a 
-            href="#" 
-            className="text-lg font-heading font-bold text-foreground tracking-tight"
-          >
-            dushyant
+          <a href="#" className="font-heading text-xl font-semibold text-foreground">
+            Duncan
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
-            >
-              Twitter
-            </a>
-            <a
-              href="#contact"
-              className="px-5 py-2.5 text-sm font-body font-medium bg-foreground text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-            >
-              Let's Talk
-            </a>
-          </div>
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* CTA Button */}
+          <a
+            href="#contact"
+            className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors duration-300"
+          >
+            Let's Talk
+          </a>
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-foreground"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </nav>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border animate-fade-in">
-            <ul className="flex flex-col p-6 gap-4">
-              <li>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  Twitter
-                </a>
-              </li>
-              <li className="mt-4">
-                <a
-                  href="#contact"
-                  onClick={() => setIsOpen(false)}
-                  className="inline-block px-6 py-3 text-sm font-medium bg-foreground text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  Let's Talk
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-background border-b border-border">
+          <nav className="container-wide px-6 py-6 flex flex-col gap-4">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium text-foreground hover:text-muted-foreground transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-foreground text-background rounded-full"
+            >
+              Let's Talk
+            </a>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

@@ -1,44 +1,150 @@
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
+const serviceOptions = [
+  "Branding",
+  "Web Design",
+  "UI/UX Design",
+  "Graphic Design",
+  "Other",
+];
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    service: "",
+    message: "",
+  });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    // Handle form submission
+  };
+
   return (
-    <section id="contact" className="py-20 md:py-32 bg-card">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl">
-          <span className="text-xs font-body text-primary tracking-[0.3em] uppercase mb-6 block">
-            Get in Touch
-          </span>
-          
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-tight mb-8">
-            Let's create
-            <br />
-            something <span className="text-primary">amazing</span>
-          </h2>
-          
-          <p className="text-base md:text-lg font-body text-muted-foreground max-w-xl mb-10">
-            Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your vision to life through motion.
-          </p>
-
-          {/* CTA */}
-          <a
-            href="mailto:hello@dushyant.design"
-            className="inline-flex items-center gap-3 px-8 py-4 text-base font-body font-medium bg-foreground text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
-          >
-            <span>hello@dushyant.design</span>
-            <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-          </a>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-8 mt-16 pt-8 border-t border-border">
-            {["LinkedIn", "Twitter", "Dribbble", "Behance"].map((social) => (
+    <section id="contact" className="section-padding bg-secondary">
+      <div className="container-wide">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+          {/* Left Content */}
+          <div>
+            <p className="text-sm text-muted-foreground uppercase tracking-wider mb-4">
+              Get in Touch
+            </p>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-medium text-foreground mb-8 leading-[1.1]">
+              Let's Work Together
+            </h2>
+            <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-md">
+              Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your vision to life.
+            </p>
+            
+            {/* Contact Info */}
+            <div className="space-y-4">
               <a
-                key={social}
-                href="#"
-                className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors duration-300"
+                href="mailto:hello@duncan.design"
+                className="inline-flex items-center gap-2 text-foreground font-medium hover:text-muted-foreground transition-colors"
               >
-                {social}
+                hello@duncan.design
               </a>
-            ))}
+            </div>
+          </div>
+
+          {/* Right - Form */}
+          <div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+
+              {/* Service Dropdown */}
+              <div className="relative">
+                <label htmlFor="service" className="block text-sm font-medium text-foreground mb-2">
+                  Service Needed?
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full px-4 py-3.5 bg-background border border-border rounded-lg text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all"
+                >
+                  <span className={formData.service ? "text-foreground" : "text-muted-foreground"}>
+                    {formData.service || "Select a service"}
+                  </span>
+                  <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+                
+                {isDropdownOpen && (
+                  <div className="absolute z-10 w-full mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden">
+                    {serviceOptions.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, service: option });
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full px-4 py-3 text-left text-foreground hover:bg-secondary transition-colors"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Message */}
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                  What Can I Help You With?
+                </label>
+                <textarea
+                  id="message"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  rows={5}
+                  className="w-full px-4 py-3.5 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all resize-none"
+                  placeholder="Tell me about your project..."
+                  required
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full px-8 py-4 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors duration-300"
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
       </div>

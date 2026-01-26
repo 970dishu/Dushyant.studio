@@ -1,27 +1,73 @@
+import { ArrowUp } from "lucide-react";
+
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const socialLinks = [
+    { name: "Twitter", href: "#" },
+    { name: "LinkedIn", href: "#" },
+    { name: "Dribbble", href: "#" },
+    { name: "Behance", href: "#" },
+  ];
+
+  const navLinks = [
+    { name: "Services", href: "#services" },
+    { name: "About", href: "#about" },
+    { name: "Projects", href: "#projects" },
+    { name: "Contact", href: "#contact" },
+  ];
 
   return (
-    <footer className="py-8 bg-background border-t border-border">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <a 
-            href="#" 
-            className="text-lg font-heading font-bold text-foreground"
-          >
-            dushyant
+    <footer className="section-padding border-t border-border">
+      <div className="container-wide">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-16">
+          {/* Logo */}
+          <a href="#" className="font-heading text-2xl font-semibold text-foreground">
+            Duncan
           </a>
-          
-          <p className="text-sm text-muted-foreground font-body">
-            © {currentYear} Dushyant Dubey. All rights reserved.
+
+          {/* Nav Links */}
+          <nav className="flex flex-wrap gap-6 md:gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+
+          {/* Social Links */}
+          <div className="flex gap-6">
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-border">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Duncan Robert. All rights reserved.
           </p>
 
-          <a 
-            href="#" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+          <button
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Back to top ↑
-          </a>
+            Back to top
+            <ArrowUp className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </footer>
