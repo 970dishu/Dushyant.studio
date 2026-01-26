@@ -25,7 +25,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-16">
           {/* Logo */}
           <a href="#" className="font-heading text-2xl font-semibold text-foreground">
-            Dushyant<span className="text-primary">.</span>
+            Dushyant<span className="text-primary">.studio</span>
           </a>
 
           {/* Nav Links */}
