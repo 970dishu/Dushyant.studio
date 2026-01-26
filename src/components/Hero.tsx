@@ -169,7 +169,7 @@ const Hero = () => {
         <div className="flex justify-center mt-12 md:mt-16 opacity-0 animate-fade-up" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
           <a
             href="#work"
-            className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors duration-300"
+            className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-white hover:text-background transition-colors duration-300"
           >
             View My Work
           </a>
