@@ -1,3 +1,5 @@
+import filmEditingThumbnail from "@/assets/film-editing-thumbnail.jpg";
+
 export interface Project {
   id: string;
   slug: string;
@@ -62,7 +64,7 @@ export const projects: Project[] = [
     client: "Independent Filmmaker",
     year: "2024",
     role: "Lead Film Editor",
-    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&h=600&fit=crop",
+    image: filmEditingThumbnail,
     isVideo: true,
     overview: "This documentary project required careful editing to weave together interviews, archival footage, and original cinematography into a cohesive narrative. The film explores themes of resilience and human connection.",
     problem: "The raw footage included over 100 hours of material with multiple storylines that needed to be consolidated into a 90-minute feature. The challenge was finding the emotional through-line that would keep audiences engaged.",
