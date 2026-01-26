@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { href: "#", label: "Home" },
@@ -15,8 +25,8 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6">
       <div className="flex justify-center px-4">
-        {/* Desktop Pill Navigation - Only on lg and up */}
-        <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
+        {/* Desktop Navigation - Full nav or "Available for work" based on scroll */}
+        <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">
           {/* Profile Picture */}
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
             <img 
@@ -26,23 +36,29 @@ const Header = () => {
             />
           </div>
 
-          {/* Nav Links */}
-          <div className="flex items-center gap-1 px-2">
+          {/* Nav Links - Hidden when scrolled */}
+          <div className={`flex items-center gap-1 px-2 transition-all duration-500 overflow-hidden ${isScrolled ? 'max-w-0 opacity-0 px-0' : 'max-w-[500px] opacity-100'}`}>
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
+                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300 whitespace-nowrap"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Contact Button */}
+          {/* "Available for work" text - Shown when scrolled */}
+          <div className={`flex items-center gap-2 transition-all duration-500 overflow-hidden ${isScrolled ? 'max-w-[200px] opacity-100 pr-2' : 'max-w-0 opacity-0'}`}>
+            <span className="text-sm font-medium text-foreground whitespace-nowrap">Available for work</span>
+            <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 animate-pulse"></span>
+          </div>
+
+          {/* Contact Button - Hidden when scrolled */}
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
+            className={`inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-500 whitespace-nowrap ${isScrolled ? 'max-w-0 opacity-0 px-0 overflow-hidden' : 'max-w-[200px] opacity-100'}`}
           >
             Contact
           </a>
@@ -63,7 +79,7 @@ const Header = () => {
             {/* Available for work text with green dot */}
             <div className="flex items-center gap-2 pr-2">
               <span className="text-sm font-medium text-foreground">Available for work</span>
-              <span className="w-2 h-2 bg-primary rounded-full"></span>
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
             </div>
 
             {/* Hamburger Menu Button */}
