@@ -54,19 +54,24 @@ const ContactSection = () => {
               
               {/* Hi/Wave Badge - positioned at bottom left, overlapping */}
               <div 
-                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 md:-bottom-8 md:-left-8 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-primary flex items-center justify-center transition-transform duration-300 hover:scale-110 shadow-lg"
+                className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 md:-bottom-5 md:-left-5 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 xl:w-24 xl:h-24 rounded-full bg-primary flex items-center justify-center transition-transform duration-300 hover:scale-110 shadow-lg overflow-hidden"
               >
-                {showWave ? (
-                  <img 
-                    src={waveHand} 
-                    alt="Wave" 
-                    className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain animate-wave"
-                  />
-                ) : (
-                  <span className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground">
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <span
+                    className={`absolute text-primary-foreground font-body font-medium text-xl sm:text-xl md:text-2xl xl:text-3xl transition-all duration-500 ${
+                      showWave ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"
+                    }`}
+                  >
                     Hi
                   </span>
-                )}
+                  <img
+                    src={waveHand}
+                    alt="Wave"
+                    className={`absolute w-8 h-8 sm:w-9 sm:h-9 md:w-11 md:h-11 xl:w-14 xl:h-14 object-contain transition-all duration-500 ${
+                      showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
+                    }`}
+                  />
+                </div>
               </div>
             </div>
           </div>
