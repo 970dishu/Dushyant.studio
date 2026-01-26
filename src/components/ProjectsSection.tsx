@@ -1,41 +1,13 @@
-import { Play } from "lucide-react";
-
-const projects = [
-  {
-    id: 1,
-    category: "Motion Design",
-    title: "Project Coming Soon",
-    description: "Your motion design project will be showcased here.",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&h=600&fit=crop",
-    isVideo: true,
-  },
-  {
-    id: 2,
-    category: "Film Editing",
-    title: "Project Coming Soon",
-    description: "Your film editing project will be showcased here.",
-    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&h=600&fit=crop",
-    isVideo: true,
-  },
-  {
-    id: 3,
-    category: "Creative Direction",
-    title: "Project Coming Soon",
-    description: "Your creative direction project will be showcased here.",
-    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=600&fit=crop",
-    isVideo: true,
-  },
-  {
-    id: 4,
-    category: "Storywriting",
-    title: "Project Coming Soon",
-    description: "Your storywriting project will be showcased here.",
-    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop",
-    isVideo: true,
-  },
-];
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { projects } from "@/data/projects";
+import CustomCursor from "./CustomCursor";
 
 const ProjectsSection = () => {
+  const navigate = useNavigate();
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const projectRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
   return (
     <section id="work" className="section-padding bg-secondary">
       <div className="container-wide">
@@ -57,40 +29,41 @@ const ProjectsSection = () => {
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project) => (
-            <div
-              key={project.id}
-              className="group block bg-background rounded-2xl overflow-hidden card-hover border border-border cursor-pointer"
-            >
-              {/* Image/Video Placeholder */}
-              <div className="image-zoom aspect-video bg-muted relative">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                />
-                {/* Play button overlay */}
-                {project.isVideo && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">
-                      <Play className="w-6 h-6 text-primary-foreground ml-1" fill="currentColor" />
-                    </div>
-                  </div>
-                )}
-                {/* Green gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+            <div key={project.id} className="relative">
+              <CustomCursor 
+                isVisible={hoveredProject === project.id}
+                containerRef={{ current: projectRefs.current[project.id] } as React.RefObject<HTMLElement>}
+              />
+              <div
+                ref={(el) => projectRefs.current[project.id] = el}
+                onClick={() => navigate(`/project/${project.slug}`)}
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                className="group block bg-background rounded-2xl overflow-hidden card-hover border border-border cursor-none"
+              >
+                {/* Image/Video Placeholder */}
+                <div className="image-zoom aspect-video bg-muted relative">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  {/* Green gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
 
-              {/* Content */}
-              <div className="p-6 md:p-8">
-                <span className="text-xs text-primary uppercase tracking-wider">
-                  {project.category}
-                </span>
-                <h3 className="font-heading text-xl md:text-2xl font-medium text-foreground mt-2 mb-2 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  {project.description}
-                </p>
+                {/* Content */}
+                <div className="p-6 md:p-8">
+                  <span className="text-xs text-primary uppercase tracking-wider">
+                    {project.category}
+                  </span>
+                  <h3 className="font-heading text-xl md:text-2xl font-medium text-foreground mt-2 mb-2 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {project.shortDescription}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
