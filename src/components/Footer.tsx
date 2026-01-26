@@ -58,7 +58,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Dushyant Garg. All rights reserved.
+            © {new Date().getFullYear()} Dushyant Garg
           </p>
 
           <button
