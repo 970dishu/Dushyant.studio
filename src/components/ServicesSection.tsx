@@ -118,21 +118,19 @@ const ServiceCard = ({
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="py-8 md:py-12 lg:py-16 flex items-start md:items-center justify-between gap-6">
+      <div className="py-8 md:py-12 lg:py-16 flex items-center justify-between gap-6">
         {/* Left: Number + Title */}
-        <div className="flex items-baseline gap-4 md:gap-8 flex-1">
-          <span className="text-primary/40 font-heading text-lg md:text-xl lg:text-2xl font-medium">
+        <div className="flex items-center gap-4 md:gap-8 flex-1">
+          <span className="text-primary/40 font-heading text-lg md:text-xl lg:text-2xl font-medium w-10 md:w-14">
             {service.number}
           </span>
-          <div className="flex-1">
-            <motion.h3 
-              className="font-heading text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary"
-              animate={{ x: isActive ? 20 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {service.title}
-            </motion.h3>
-          </div>
+          <motion.h3 
+            className="font-heading text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary"
+            animate={{ x: isActive ? 20 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {service.title}
+          </motion.h3>
         </div>
 
         {/* Right: Arrow indicator */}
