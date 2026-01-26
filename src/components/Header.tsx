@@ -15,8 +15,8 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6">
       <div className="flex justify-center px-4">
-        {/* Desktop Pill Navigation */}
-        <nav className="hidden md:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
+        {/* Desktop Pill Navigation - Only on lg and up */}
+        <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
           {/* Profile Picture */}
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
             <img 
@@ -48,28 +48,39 @@ const Header = () => {
           </a>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center justify-between w-full">
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
-            <img 
-              src={dushyantPortrait} 
-              alt="Dushyant" 
-              className="w-full h-full object-cover"
-            />
+        {/* Tablet/Mobile Navigation - "Available for work" pill */}
+        <div className="lg:hidden flex items-center justify-center">
+          <div className="flex items-center gap-3 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
+            {/* Profile Picture */}
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+              <img 
+                src={dushyantPortrait} 
+                alt="Dushyant" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Available for work text with green dot */}
+            <div className="flex items-center gap-2 pr-2">
+              <span className="text-sm font-medium text-foreground">Available for work</span>
+              <span className="w-2 h-2 bg-primary rounded-full"></span>
+            </div>
+
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-full"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-foreground bg-secondary/80 backdrop-blur-md rounded-full"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
+        <div className="lg:hidden mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
           <nav className="px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
