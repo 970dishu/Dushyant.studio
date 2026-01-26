@@ -10,7 +10,7 @@ const Hero = () => {
             </p>
             
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium text-foreground leading-[1.1] mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-              Dushyant Garg
+              Dushyant
             </h1>
             
             <div className="flex items-baseline gap-4 mb-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
@@ -52,7 +52,7 @@ const Hero = () => {
               <div className="relative rounded-2xl overflow-hidden aspect-[4/5] w-full max-w-md bg-secondary border border-border">
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop&crop=faces"
-                  alt="Dushyant Garg - Motion Designer"
+                  alt="Dushyant - Motion Designer"
                   className="w-full h-full object-cover"
                 />
                 {/* Green gradient overlay */}
