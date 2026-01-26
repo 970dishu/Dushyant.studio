@@ -31,8 +31,9 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission
+    const subject = encodeURIComponent(`Contact from ${formData.name} - ${formData.service}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`);
+    window.location.href = `mailto:dushyantdishugarg@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -94,7 +95,7 @@ const ContactSection = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-5 py-4 bg-secondary border-0 rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    placeholder="John Smith"
+                    placeholder="Dushyant Garg"
                     required
                   />
                 </div>
@@ -110,7 +111,7 @@ const ContactSection = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-5 py-4 bg-secondary border-0 rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    placeholder="johnsmith@gmail.com"
+                    placeholder="dushyantdishugarg@gmail.com"
                     required
                   />
                 </div>
