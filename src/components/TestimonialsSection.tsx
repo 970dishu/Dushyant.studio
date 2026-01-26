@@ -1,74 +1,52 @@
-import { Star } from "lucide-react";
-
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Marketing Director",
-    company: "TechCorp",
-    content: "The motion design work exceeded all our expectations. The attention to detail and creative vision transformed our brand completely.",
-    rating: 5
+    quote: "Dushyant's motion design elevated our product to a whole new level. His attention to detail and creative vision is unmatched.",
+    name: "Alex Chen",
+    role: "Product Lead, TechFlow"
   },
   {
-    name: "Michael Chen",
-    role: "Creative Lead",
-    company: "Studio Wave",
-    content: "Working with this motion designer was an incredible experience. They understood our vision and delivered beyond what we imagined.",
-    rating: 5
+    quote: "Working with Dushyant was seamless. He understood our brand instantly and delivered animations that perfectly captured our essence.",
+    name: "Sarah Miller",
+    role: "Creative Director, Nomad Studio"
   },
   {
-    name: "Emily Davis",
-    role: "Brand Manager",
-    company: "Innovate Inc",
-    content: "Professional, creative, and responsive. The animations brought our product to life in ways we never thought possible.",
-    rating: 5
+    quote: "The micro-interactions he designed transformed our user experience. Our engagement metrics improved by 40%.",
+    name: "James Wilson",
+    role: "CEO, StartupXYZ"
   }
 ];
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-background">
+    <section className="py-20 md:py-32 bg-card">
       <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="text-xs font-body text-muted-foreground tracking-[0.3em] uppercase mb-4 block">
+        <div className="mb-16 md:mb-20">
+          <span className="text-xs font-body text-primary tracking-[0.3em] uppercase mb-4 block">
             Testimonials
           </span>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground">
-            Client Reviews
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground">
+            Kind Words
           </h2>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="p-8 bg-card border border-border rounded-2xl opacity-0 animate-fade-up"
-              style={{ animationDelay: `${0.15 * index}s`, animationFillMode: "forwards" }}
+              className="group"
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={16} className="fill-primary text-primary" />
-                ))}
-              </div>
-              
-              {/* Content */}
-              <p className="text-muted-foreground font-body leading-relaxed mb-8">
-                "{testimonial.content}"
+              <p className="text-lg md:text-xl font-body text-foreground leading-relaxed mb-8">
+                "{testimonial.quote}"
               </p>
-              
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
-                  <span className="text-sm font-heading font-bold text-foreground">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-body text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}, {testimonial.company}</p>
-                </div>
+              <div>
+                <p className="text-sm font-heading font-semibold text-foreground">
+                  {testimonial.name}
+                </p>
+                <p className="text-sm font-body text-muted-foreground">
+                  {testimonial.role}
+                </p>
               </div>
             </div>
           ))}
