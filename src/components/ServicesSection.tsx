@@ -118,10 +118,10 @@ const ServiceCard = ({
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="py-8 md:py-12 lg:py-16 flex items-center justify-between gap-6">
+      <div className="py-8 md:py-12 lg:py-16 px-4 md:px-8 flex items-center justify-between gap-6">
         {/* Left: Number + Title */}
-        <div className="flex items-center gap-4 md:gap-8 flex-1">
-          <span className="text-primary/40 font-heading text-lg md:text-xl lg:text-2xl font-medium w-10 md:w-14">
+        <div className="flex items-center gap-6 md:gap-10 flex-1">
+          <span className="text-primary/40 font-heading text-xl md:text-2xl lg:text-3xl font-medium min-w-[3rem] md:min-w-[4rem]">
             {service.number}
           </span>
           <motion.h3 
@@ -174,7 +174,7 @@ const ServiceCard = ({
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
-        <div className="pb-8 md:pb-12 lg:pb-16 pl-8 md:pl-20 lg:pl-24">
+        <div className="pb-8 md:pb-12 lg:pb-16 px-4 md:px-8 pl-[4.5rem] md:pl-[6.5rem] lg:pl-[7rem]">
           <p className="text-muted-foreground text-base md:text-lg lg:text-xl max-w-2xl mb-8">
             {service.description}
           </p>
