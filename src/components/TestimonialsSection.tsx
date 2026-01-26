@@ -97,16 +97,16 @@ const TestimonialsSection = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-3 gap-8 mb-16 items-stretch">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-secondary rounded-2xl p-8 card-hover border border-border"
+              className="bg-secondary rounded-2xl p-8 card-hover border border-border flex flex-col h-full"
             >
-              <p className="text-foreground text-base md:text-lg mb-8 leading-relaxed">
+              <p className="text-foreground text-base md:text-lg mb-8 leading-relaxed flex-grow">
                 "{testimonial.quote}"
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 mt-auto">
                 <img
                   src={testimonial.avatar}
                   alt={testimonial.name}
