@@ -1,145 +1,221 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const services = [
   {
-    number: "1",
+    number: "01",
     title: "Motion Design",
     description: "Bringing static visuals to life through dynamic animations that captivate and engage audiences.",
     details: [
-      "2D & 3D motion graphics for brands and products",
-      "Logo animations and brand intro sequences",
-      "Explainer videos that simplify complex ideas",
-      "Social media animations optimized for each platform",
-      "UI/UX micro-interactions and transitions",
-      "Title sequences and kinetic typography",
+      "2D & 3D motion graphics",
+      "Logo animations",
+      "Explainer videos",
+      "Social media content",
+      "UI/UX micro-interactions",
+      "Kinetic typography",
     ],
   },
   {
-    number: "2",
+    number: "02",
     title: "Film Editing",
     description: "Crafting compelling narratives through precise editing, pacing, and visual storytelling techniques.",
     details: [
-      "Narrative film editing with emotional impact",
-      "Commercial and promotional video editing",
-      "Documentary storytelling and structure",
-      "Color grading for cinematic looks",
-      "Sound design and audio mixing",
-      "Multi-camera editing and live event coverage",
+      "Narrative film editing",
+      "Commercial editing",
+      "Documentary storytelling",
+      "Color grading",
+      "Sound design",
+      "Multi-camera editing",
     ],
   },
   {
-    number: "3",
+    number: "03",
     title: "Creative Direction",
     description: "Leading visual projects from concept to completion with a unified creative vision.",
     details: [
-      "Visual concept development and ideation",
-      "Brand visual identity and guidelines",
-      "Art direction for campaigns and shoots",
-      "Creative strategy and consulting",
-      "Team collaboration and project oversight",
-      "Client presentation and pitch development",
+      "Visual concept development",
+      "Brand identity",
+      "Art direction",
+      "Creative strategy",
+      "Team collaboration",
+      "Pitch development",
     ],
   },
   {
-    number: "4",
+    number: "04",
     title: "Storywriting",
     description: "Developing compelling narratives that connect with audiences on an emotional level.",
     details: [
-      "Script development for films and commercials",
-      "Storyboarding and visual pre-production",
-      "Narrative structure and plot design",
-      "Brand storytelling and messaging",
-      "Character development and dialogue",
-      "Concept writing for campaigns",
+      "Script development",
+      "Storyboarding",
+      "Narrative structure",
+      "Brand storytelling",
+      "Character development",
+      "Concept writing",
     ],
   },
 ];
 
-const ServicesSection = () => {
-  const [openService, setOpenService] = useState<string | null>(null);
-
-  const toggleService = (serviceNumber: string) => {
-    setOpenService(openService === serviceNumber ? null : serviceNumber);
-  };
-
+const ServiceCard = ({ 
+  service, 
+  index, 
+  isActive,
+  onHover 
+}: { 
+  service: typeof services[0]; 
+  index: number;
+  isActive: boolean;
+  onHover: (index: number | null) => void;
+}) => {
   return (
-    <section id="services" className="section-padding bg-secondary">
-      <div className="container-wide">
-        {/* Header */}
-        <div className="mb-16 md:mb-20">
-          <p className="text-sm text-primary uppercase tracking-wider mb-4">
-            What I Do
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6">
-            Services
-          </h2>
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
-            As a motion designer and creative director, I bring stories to life through compelling visuals and seamless animations. Click on each service to learn more.
-          </p>
+    <motion.div
+      className="group relative border-b border-border/30 cursor-pointer"
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => onHover(null)}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
+      <div className="py-8 md:py-12 lg:py-16 flex items-start md:items-center justify-between gap-6">
+        {/* Left: Number + Title */}
+        <div className="flex items-baseline gap-4 md:gap-8 flex-1">
+          <span className="text-primary/40 font-heading text-lg md:text-xl lg:text-2xl font-medium">
+            {service.number}
+          </span>
+          <div className="flex-1">
+            <motion.h3 
+              className="font-heading text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-medium text-foreground transition-colors duration-300 group-hover:text-primary"
+              animate={{ x: isActive ? 20 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {service.title}
+            </motion.h3>
+          </div>
         </div>
 
-        {/* Services Accordion */}
-        <div className="space-y-4">
-          {services.map((service) => (
-            <div
-              key={service.number}
-              className="bg-background rounded-2xl border border-border overflow-hidden"
-            >
-              {/* Accordion Header */}
-              <button
-                onClick={() => toggleService(service.number)}
-                className="w-full px-8 py-6 md:py-8 flex items-center justify-between text-left hover:bg-muted/30 transition-colors duration-300"
-              >
-                <div className="flex items-center gap-6">
-                  <span className="text-4xl md:text-5xl font-heading font-medium text-primary/40">
-                    {service.number}.
-                  </span>
-                  <div>
-                    <h3 className="font-heading text-xl md:text-2xl font-medium text-foreground">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm md:text-base mt-1 hidden md:block">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-                <ChevronDown 
-                  className={`w-6 h-6 text-primary transition-transform duration-300 flex-shrink-0 ${
-                    openService === service.number ? "rotate-180" : ""
-                  }`} 
-                />
-              </button>
+        {/* Right: Arrow indicator */}
+        <motion.div 
+          className="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-full border border-border/50 flex items-center justify-center"
+          animate={{ 
+            backgroundColor: isActive ? "hsl(var(--primary))" : "transparent",
+            borderColor: isActive ? "hsl(var(--primary))" : "hsl(var(--border) / 0.5)"
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.svg 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            className="w-5 h-5 md:w-6 md:h-6"
+            animate={{ 
+              rotate: isActive ? 45 : 0,
+              stroke: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground))"
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <path 
+              d="M7 17L17 7M17 7H7M17 7V17" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </motion.svg>
+        </motion.div>
+      </div>
 
-              {/* Accordion Content */}
-              <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openService === service.number ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-                }`}
+      {/* Expanded Content */}
+      <motion.div
+        className="overflow-hidden"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ 
+          height: isActive ? "auto" : 0,
+          opacity: isActive ? 1 : 0
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
+        <div className="pb-8 md:pb-12 lg:pb-16 pl-8 md:pl-20 lg:pl-24">
+          <p className="text-muted-foreground text-base md:text-lg lg:text-xl max-w-2xl mb-8">
+            {service.description}
+          </p>
+          
+          {/* Tags */}
+          <div className="flex flex-wrap gap-3">
+            {service.details.map((detail, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: i * 0.05 }}
+                className="px-4 py-2 rounded-full border border-border/50 text-sm md:text-base text-foreground/80 hover:border-primary hover:text-primary transition-colors duration-300"
               >
-                <div className="px-8 pb-8 pt-2">
-                  {/* Mobile description */}
-                  <p className="text-muted-foreground text-sm mb-6 md:hidden">
-                    {service.description}
-                  </p>
-                  
-                  {/* Details Grid */}
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {service.details.map((detail, index) => (
-                      <div
-                        key={index}
-                        className="flex items-start gap-3"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        <span className="text-foreground text-sm md:text-base">
-                          {detail}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+                {detail}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const ServicesSection = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
+  return (
+    <section 
+      ref={sectionRef}
+      id="services" 
+      className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
+    >
+      {/* Animated background gradient */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-b from-background via-secondary/50 to-background pointer-events-none"
+        style={{ y: backgroundY }}
+      />
+      
+      <div className="container-wide relative z-10">
+        {/* Header */}
+        <motion.div 
+          className="mb-16 md:mb-24 lg:mb-32"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.p 
+            className="text-sm text-primary uppercase tracking-wider mb-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            What I Do
+          </motion.p>
+          <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-foreground leading-[1.1]">
+            Services<span className="text-primary">.</span>
+          </h2>
+        </motion.div>
+
+        {/* Services List */}
+        <div className="border-t border-border/30">
+          {services.map((service, index) => (
+            <ServiceCard
+              key={service.number}
+              service={service}
+              index={index}
+              isActive={activeIndex === index}
+              onHover={setActiveIndex}
+            />
           ))}
         </div>
       </div>
