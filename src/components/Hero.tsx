@@ -54,7 +54,7 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
 const Hero = () => {
   return (
     <section className="min-h-screen flex items-center justify-center pt-24 md:pt-20 overflow-hidden">
-      <div className="w-full px-6 md:px-12 lg:px-16 py-12 md:py-20">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20">
         
         {/* Mobile Layout - Centered vertical stack */}
         <div className="flex flex-col items-center text-center md:hidden">
