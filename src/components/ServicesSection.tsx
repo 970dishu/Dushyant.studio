@@ -233,7 +233,7 @@ const ServicesSection = () => {
             What I Do
           </motion.p>
           <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-foreground leading-[1.1]">
-            Services<span className="text-primary">.</span>
+            What can I do for you<span className="text-primary">?</span>
           </h2>
         </motion.div>
 
