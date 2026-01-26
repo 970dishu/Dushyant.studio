@@ -7,12 +7,12 @@ const Hero = () => {
         {/* Main Layout - Three Column with Image Center */}
         <div className="relative flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0">
           
-          {/* Left Text */}
-          <div className="lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 text-center lg:text-left z-10">
-            <p className="text-muted-foreground text-sm md:text-base uppercase tracking-widest mb-2 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+          {/* Left Text - Name above, MOTION below */}
+          <div className="lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 text-center lg:text-left z-10 flex flex-col">
+            <p className="text-foreground text-base md:text-lg lg:text-xl uppercase tracking-[0.2em] font-medium mb-1 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant
             </p>
-            <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tight opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
+            <h1 className="font-heading text-5xl md:text-7xl lg:text-[8rem] xl:text-[10rem] font-bold text-foreground uppercase tracking-tight leading-none opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
               Motion
             </h1>
           </div>
@@ -36,12 +36,12 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Text */}
-          <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 text-center lg:text-right z-10">
-            <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tight opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
+          {/* Right Text - DESIGNER on top, description below */}
+          <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 text-center lg:text-right z-10 flex flex-col">
+            <h1 className="font-heading text-5xl md:text-7xl lg:text-[8rem] xl:text-[10rem] font-bold text-foreground uppercase tracking-tight leading-none opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
               Designer
             </h1>
-            <p className="text-muted-foreground text-sm md:text-base max-w-xs mx-auto lg:mx-0 lg:ml-auto mt-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+            <p className="text-muted-foreground text-base md:text-lg max-w-xs mx-auto lg:mx-0 lg:ml-auto mt-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
               I'm a motion designer and<br />a creative director
             </p>
           </div>
