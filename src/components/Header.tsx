@@ -7,7 +7,7 @@ const Header = () => {
   const navLinks = [
     { href: "#services", label: "Services" },
     { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
+    { href: "#work", label: "Work" },
     { href: "#testimonials", label: "Testimonials" },
   ];
 
@@ -17,7 +17,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a href="#" className="font-heading text-xl font-semibold text-foreground">
-            Duncan
+            Dushyant
           </a>
 
           {/* Desktop Navigation */}
@@ -36,7 +36,7 @@ const Header = () => {
           {/* CTA Button */}
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors duration-300"
+            className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors duration-300"
           >
             Let's Talk
           </a>
@@ -61,7 +61,7 @@ const Header = () => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-foreground hover:text-muted-foreground transition-colors"
+                className="text-lg font-medium text-foreground hover:text-primary transition-colors"
               >
                 {link.label}
               </a>
@@ -69,7 +69,7 @@ const Header = () => {
             <a
               href="#contact"
               onClick={() => setIsMenuOpen(false)}
-              className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-foreground text-background rounded-full"
+              className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-primary text-primary-foreground rounded-full"
             >
               Let's Talk
             </a>

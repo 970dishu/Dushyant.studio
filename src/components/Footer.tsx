@@ -8,14 +8,14 @@ const Footer = () => {
   const socialLinks = [
     { name: "Twitter", href: "#" },
     { name: "LinkedIn", href: "#" },
-    { name: "Dribbble", href: "#" },
+    { name: "Instagram", href: "#" },
     { name: "Behance", href: "#" },
   ];
 
   const navLinks = [
     { name: "Services", href: "#services" },
     { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
+    { name: "Work", href: "#work" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -25,7 +25,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-16">
           {/* Logo */}
           <a href="#" className="font-heading text-2xl font-semibold text-foreground">
-            Duncan
+            Dushyant<span className="text-primary">.</span>
           </a>
 
           {/* Nav Links */}
@@ -34,7 +34,7 @@ const Footer = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 {link.name}
               </a>
@@ -47,7 +47,7 @@ const Footer = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 {link.name}
               </a>
@@ -58,12 +58,12 @@ const Footer = () => {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Duncan Robert. All rights reserved.
+            © {new Date().getFullYear()} Dushyant Garg. All rights reserved.
           </p>
 
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             Back to top
             <ArrowUp className="w-4 h-4" />
