@@ -1,3 +1,5 @@
+import dushyantPortrait from "@/assets/dushyant-portrait.png";
+
 const Hero = () => {
   return (
     <section className="min-h-screen flex items-center pt-20 md:pt-0">
@@ -51,7 +53,7 @@ const Hero = () => {
               {/* Main Image */}
               <div className="relative rounded-2xl overflow-hidden aspect-[4/5] w-full max-w-md bg-secondary border border-border">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop&crop=faces"
+                  src={dushyantPortrait}
                   alt="Dushyant - Motion Designer"
                   className="w-full h-full object-cover"
                 />
