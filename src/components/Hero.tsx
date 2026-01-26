@@ -24,7 +24,7 @@ const Hero = () => {
               />
             </div>
             <div className="absolute -bottom-3 -left-3 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-primary-foreground font-heading text-lg font-medium">Hi</span>
+              <span className="text-primary-foreground font-body text-lg font-medium">Hi</span>
             </div>
           </div>
           
@@ -59,7 +59,7 @@ const Hero = () => {
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 w-14 h-14 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-heading text-xl font-medium">Hi</span>
+                <span className="text-primary-foreground font-body text-xl font-medium">Hi</span>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ const Hero = () => {
         {/* Desktop Layout - Three column flex */}
         <div className="hidden lg:flex items-center justify-between">
           {/* Left Column - Name above MOTION */}
-          <div className="flex-1 flex flex-col items-start pr-8">
+          <div className="flex-1 flex flex-col items-start justify-center pr-8">
             <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium opacity-0 animate-fade-up mb-2" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant Garg
             </p>
@@ -98,13 +98,13 @@ const Hero = () => {
                 />
               </div>
               <div className="absolute -bottom-5 -left-5 w-16 h-16 xl:w-20 xl:h-20 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-heading text-xl xl:text-2xl font-medium">Hi</span>
+                <span className="text-primary-foreground font-body text-xl xl:text-2xl font-medium">Hi</span>
               </div>
             </div>
           </div>
 
           {/* Right Column - DESIGNER above description */}
-          <div className="flex-1 flex flex-col items-end pl-8">
+          <div className="flex-1 flex flex-col items-end justify-center pl-8">
             <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up text-right" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
               Designer
             </h1>
