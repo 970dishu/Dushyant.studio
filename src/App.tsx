@@ -13,7 +13,9 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="min-h-screen bg-background cursor-none">
+      <div className="min-h-screen bg-background cursor-none relative">
+        {/* Grain texture overlay */}
+        <div className="grain-overlay" aria-hidden="true" />
         <GlobalCursor />
         <Toaster />
         <Sonner />

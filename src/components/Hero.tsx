@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 import waveHand from "@/assets/wave-hand.png";
 
@@ -53,9 +54,23 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
 };
 
 const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+
   return (
-    <section className="min-h-screen flex items-center justify-center pt-24 md:pt-20 overflow-hidden">
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20">
+    <section ref={sectionRef} className="min-h-screen flex items-center justify-center pt-24 md:pt-20 overflow-hidden relative">
+      <motion.div 
+        className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20"
+        style={{ y, opacity, scale }}
+      >
         
         {/* Mobile Layout - Centered vertical stack */}
         <div className="flex flex-col items-center text-center md:hidden">
@@ -175,7 +190,7 @@ const Hero = () => {
             View My Work
           </a>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
