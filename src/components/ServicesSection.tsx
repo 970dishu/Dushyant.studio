@@ -1,42 +1,42 @@
 const services = [
   {
     number: "1",
-    title: "UI/UX Design",
+    title: "Motion Design",
     items: [
-      "Wireframing and prototyping",
-      "User Interface design for web and mobile apps",
-      "Usability testing and user feedback analysis",
-      "Interaction design and micro-animations",
+      "2D & 3D motion graphics",
+      "Logo animations & brand intros",
+      "Explainer videos & product demos",
+      "Social media animations",
     ],
   },
   {
     number: "2",
-    title: "Graphic Design",
+    title: "Film Editing",
     items: [
-      "Logo and brand identity design",
-      "Social media graphics and ad creatives",
-      "Infographics and data visualization",
-      "Custom illustrations and icons",
+      "Narrative film editing",
+      "Commercial & promotional videos",
+      "Documentary editing",
+      "Color grading & sound design",
     ],
   },
   {
     number: "3",
-    title: "Web Design",
+    title: "Creative Direction",
     items: [
-      "Responsive website design",
-      "Landing page design and optimization",
-      "Webflow development and customization",
-      "Website maintenance and updates",
+      "Visual concept development",
+      "Brand visual identity",
+      "Art direction for campaigns",
+      "Creative strategy & consulting",
     ],
   },
   {
     number: "4",
-    title: "Branding",
+    title: "Storywriting",
     items: [
-      "Brand strategy and identity development",
-      "Visual style guide creation",
-      "Typography and color scheme selection",
-      "Brand storytelling and messaging",
+      "Script development",
+      "Storyboarding & visualization",
+      "Narrative structure design",
+      "Brand storytelling",
     ],
   },
 ];
@@ -47,11 +47,14 @@ const ServicesSection = () => {
       <div className="container-wide">
         {/* Header */}
         <div className="mb-16 md:mb-20">
+          <p className="text-sm text-primary uppercase tracking-wider mb-4">
+            What I Do
+          </p>
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6">
-            What I Can Do For You
+            Services
           </h2>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
-            As a digital designer, I am a visual storyteller, crafting experiences that connect deeply and spark creativity.
+            As a motion designer and creative director, I bring stories to life through compelling visuals and seamless animations.
           </p>
         </div>
 
@@ -60,11 +63,11 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={service.number}
-              className="bg-background rounded-2xl p-8 md:p-10 card-hover"
+              className="bg-background rounded-2xl p-8 md:p-10 card-hover border border-border"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-start gap-4 mb-6">
-                <span className="text-4xl md:text-5xl font-heading font-medium text-muted-foreground/30">
+                <span className="text-4xl md:text-5xl font-heading font-medium text-primary/30">
                   {service.number}.
                 </span>
                 <h3 className="font-heading text-xl md:text-2xl font-medium text-foreground pt-2">
@@ -77,7 +80,7 @@ const ServicesSection = () => {
                     key={itemIndex}
                     className="flex items-start gap-3 text-muted-foreground"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
