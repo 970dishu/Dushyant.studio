@@ -1,50 +1,65 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import dushyantPortrait from "@/assets/dushyant-portrait.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "#services", label: "Services" },
+    { href: "#", label: "Home" },
     { href: "#about", label: "About" },
-    { href: "#work", label: "Work" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "#work", label: "Projects" },
+    { href: "#testimonials", label: "Blogs" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="container-wide px-6 md:px-12 lg:px-20">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a href="#" className="font-heading text-xl font-semibold text-foreground">
-            Dushyant<span className="text-primary">.studio</span>
-          </a>
+    <header className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6">
+      <div className="flex justify-center px-4">
+        {/* Desktop Pill Navigation */}
+        <nav className="hidden md:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
+          {/* Profile Picture */}
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+            <img 
+              src={dushyantPortrait} 
+              alt="Dushyant" 
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Nav Links */}
+          <div className="flex items-center gap-1 px-2">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300"
+                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
               >
                 {link.label}
               </a>
             ))}
-          </nav>
+          </div>
 
-          {/* CTA Button */}
+          {/* Contact Button */}
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors duration-300"
+            className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-white/90 transition-colors duration-300"
           >
-            Let's Talk
+            Contact
           </a>
+        </nav>
 
-          {/* Mobile Menu Button */}
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center justify-between w-full">
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+            <img 
+              src={dushyantPortrait} 
+              alt="Dushyant" 
+              className="w-full h-full object-cover"
+            />
+          </div>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="p-2 text-foreground bg-secondary/80 backdrop-blur-md rounded-full"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -54,8 +69,8 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-b border-border">
-          <nav className="container-wide px-6 py-6 flex flex-col gap-4">
+        <div className="md:hidden mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
+          <nav className="px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -69,9 +84,9 @@ const Header = () => {
             <a
               href="#contact"
               onClick={() => setIsMenuOpen(false)}
-              className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-primary text-primary-foreground rounded-full"
+              className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-white text-background rounded-full"
             >
-              Let's Talk
+              Contact
             </a>
           </nav>
         </div>
