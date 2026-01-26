@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
-import LottieIcon from "./LottieIcon";
-
-// Waving hand Lottie animation URL
-const WAVE_LOTTIE_URL = "https://lottie.host/4a4dbf27-37f5-48ad-8ed5-29b7a3a7d8a7/waving-hand.json";
 
 const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
   const [showWave, setShowWave] = useState(false);
@@ -11,7 +7,7 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setShowWave((prev) => !prev);
-    }, 2500);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -27,10 +23,10 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
     lg: "text-xl xl:text-2xl",
   };
 
-  const lottieSizes = {
-    sm: "w-7 h-7",
-    md: "w-8 h-8",
-    lg: "w-10 h-10 xl:w-12 xl:h-12",
+  const emojiSizes = {
+    sm: "text-2xl",
+    md: "text-3xl",
+    lg: "text-3xl xl:text-4xl",
   };
 
   return (
@@ -43,18 +39,13 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
         >
           Hi
         </span>
-        <div
-          className={`absolute ${lottieSizes[size]} transition-all duration-500 ${
-            showWave ? "opacity-100 scale-100" : "opacity-0 scale-75"
+        <span
+          className={`absolute ${emojiSizes[size]} transition-all duration-500 ${
+            showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
           }`}
         >
-          <LottieIcon 
-            jsonUrl="https://assets2.lottiefiles.com/packages/lf20_s2lryxtd.json"
-            playing={showWave}
-            loop={true}
-            speed={1}
-          />
-        </div>
+          👋
+        </span>
       </div>
     </div>
   );
