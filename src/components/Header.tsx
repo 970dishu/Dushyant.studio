@@ -42,7 +42,7 @@ const Header = () => {
           {/* Contact Button */}
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-white/90 transition-colors duration-300"
+            className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
           >
             Contact
           </a>
