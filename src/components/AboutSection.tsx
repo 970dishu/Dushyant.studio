@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface CounterProps {
   end: number;
@@ -60,9 +61,18 @@ const stats = [
 ];
 
 const AboutSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["50px", "-50px"]);
+
   return (
-    <section id="about" className="section-padding">
-      <div className="container-wide">
+    <section ref={sectionRef} id="about" className="section-padding relative overflow-hidden">
+      <motion.div className="container-wide" style={{ y }}>
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left Content */}
           <div>
@@ -99,7 +109,7 @@ const AboutSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
