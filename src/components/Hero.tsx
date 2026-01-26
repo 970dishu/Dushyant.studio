@@ -79,7 +79,7 @@ const Hero = () => {
         <div className="hidden lg:flex items-center justify-between">
           {/* Left Column - Name above MOTION */}
           <div className="flex-1 flex flex-col items-start justify-center pr-8">
-            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium opacity-0 animate-fade-up mb-2 ml-1" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium opacity-0 animate-fade-up mb-2 ml-3" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant
             </p>
             <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
