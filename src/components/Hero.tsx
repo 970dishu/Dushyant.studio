@@ -76,10 +76,10 @@ const Hero = () => {
         </div>
 
         {/* Desktop Layout - Three column flex */}
-        <div className="hidden lg:flex items-stretch justify-between min-h-[65vh]">
-          {/* Left Column - Name at top, MOTION at bottom */}
-          <div className="flex-1 flex flex-col justify-between text-left pr-8">
-            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+        <div className="hidden lg:flex items-center justify-between">
+          {/* Left Column - Name above MOTION */}
+          <div className="flex-1 flex flex-col items-start pr-8">
+            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium opacity-0 animate-fade-up mb-2" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant Garg
             </p>
             <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
@@ -103,12 +103,12 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Column - DESIGNER at top, Description at bottom */}
-          <div className="flex-1 flex flex-col justify-between text-right pl-8">
-            <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
+          {/* Right Column - DESIGNER above description */}
+          <div className="flex-1 flex flex-col items-end pl-8">
+            <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up text-right" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
               Designer
             </h1>
-            <p className="text-muted-foreground text-base xl:text-lg max-w-xs ml-auto opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+            <p className="text-muted-foreground text-base xl:text-lg text-right mt-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
               I'm a motion designer and<br />a creative director
             </p>
           </div>
