@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Hand } from "lucide-react";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 
 const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
@@ -13,33 +12,40 @@ const HiBadge = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
   }, []);
 
   const sizeClasses = {
-    sm: "w-12 h-12 text-lg",
-    md: "w-14 h-14 text-xl",
-    lg: "w-16 h-16 xl:w-20 xl:h-20 text-xl xl:text-2xl",
+    sm: "w-12 h-12",
+    md: "w-14 h-14",
+    lg: "w-16 h-16 xl:w-20 xl:h-20",
   };
 
-  const iconSizes = {
-    sm: 18,
-    md: 22,
-    lg: 26,
+  const textSizes = {
+    sm: "text-lg",
+    md: "text-xl",
+    lg: "text-xl xl:text-2xl",
+  };
+
+  const emojiSizes = {
+    sm: "text-2xl",
+    md: "text-3xl",
+    lg: "text-3xl xl:text-4xl",
   };
 
   return (
     <div className={`${sizeClasses[size]} bg-primary rounded-full flex items-center justify-center overflow-hidden`}>
       <div className="relative w-full h-full flex items-center justify-center">
         <span
-          className={`absolute text-primary-foreground font-body font-medium transition-all duration-500 ${
+          className={`absolute text-primary-foreground font-body font-medium ${textSizes[size]} transition-all duration-500 ${
             showWave ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"
           }`}
         >
           Hi
         </span>
-        <Hand
-          size={iconSizes[size]}
-          className={`absolute text-primary-foreground transition-all duration-500 ${
+        <span
+          className={`absolute ${emojiSizes[size]} transition-all duration-500 ${
             showWave ? "opacity-100 scale-100 rotate-0 animate-wave" : "opacity-0 scale-75 -rotate-12"
           }`}
-        />
+        >
+          👋
+        </span>
       </div>
     </div>
   );
