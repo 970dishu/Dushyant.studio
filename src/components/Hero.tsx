@@ -78,7 +78,7 @@ const Hero = () => {
             Dushyant
           </p>
           <h1 className="font-heading text-5xl font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up mb-4" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-            Video
+            Motion
           </h1>
           
           {/* Portrait with Hi badge */}
@@ -111,7 +111,7 @@ const Hero = () => {
             Dushyant
             </p>
             <h1 className="font-heading text-7xl font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-              Video
+              Motion
             </h1>
           </div>
           
@@ -150,7 +150,7 @@ const Hero = () => {
               Dushyant
             </p>
             <h1 className="font-heading text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-bold text-foreground uppercase tracking-tighter leading-[0.85] opacity-0 animate-fade-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-              Video
+              Motion
             </h1>
           </div>
 
