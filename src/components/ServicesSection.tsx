@@ -30,15 +30,15 @@ const services = [
   },
   {
     number: "03",
-    title: "Creative Direction",
-    description: "Leading visual projects from concept to completion with a unified creative vision.",
+    title: "Video Editing",
+    description: "Transforming raw footage into polished, professional videos with seamless transitions and visual flow.",
     details: [
-      "Visual concept development",
-      "Brand identity",
-      "Art direction",
-      "Creative strategy",
-      "Team collaboration",
-      "Pitch development",
+      "YouTube content editing",
+      "Short-form video editing",
+      "Interview editing",
+      "Promotional videos",
+      "Video color correction",
+      "Audio sync & mixing",
     ],
   },
   {
