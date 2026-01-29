@@ -21,7 +21,7 @@ const tools = [
 const icons = [
   // Adobe Logo
   () => (
-    <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 fill-current">
+    <svg viewBox="0 0 24 24" className="w-4 h-5 md:w-5 md:h-6 fill-current">
       <path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425h-3.71zm-6.71 0H0L6.89.001h3.71l-3.344 22.623zm9.322-22.623h7.422L17.855 22.624h-3.709l2.432-22.623z"/>
     </svg>
   ),
