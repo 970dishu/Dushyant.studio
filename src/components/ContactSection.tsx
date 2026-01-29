@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 import waveHand from "@/assets/wave-hand.png";
 
@@ -12,6 +14,7 @@ const serviceOptions = [
 ];
 
 const ContactSection = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +23,7 @@ const ContactSection = () => {
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showWave, setShowWave] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toggle between "Hi" text and wave hand image
   useEffect(() => {
@@ -29,11 +33,39 @@ const ContactSection = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Contact from ${formData.name} - ${formData.service}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:dushyantdishugarg@gmail.com?subject=${subject}&body=${body}`;
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: formData,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -177,9 +209,10 @@ const ContactSection = () => {
               <div className="flex justify-center lg:justify-start pt-2 md:pt-4">
                 <button
                   type="submit"
-                  className="group relative px-8 sm:px-10 md:px-12 py-3 sm:py-4 bg-transparent text-primary font-heading text-base sm:text-lg md:text-xl uppercase tracking-wider rounded-full border-2 border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="group relative px-8 sm:px-10 md:px-12 py-3 sm:py-4 bg-transparent text-primary font-heading text-base sm:text-lg md:text-xl uppercase tracking-wider rounded-full border-2 border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Submit</span>
+                  <span>{isSubmitting ? "Sending..." : "Submit"}</span>
                 </button>
               </div>
             </form>
