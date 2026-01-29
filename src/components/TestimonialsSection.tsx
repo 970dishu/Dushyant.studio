@@ -1,4 +1,7 @@
 import { useEffect, useState, useRef } from "react";
+import kanishkImg from "@/assets/kanishk-khurana.png";
+import amanImg from "@/assets/aman-verma.png";
+import agyaatImg from "@/assets/agyaat-aadarsh.png";
 
 interface CounterProps {
   end: number;
@@ -56,21 +59,21 @@ const Counter = ({ end, suffix = "", duration = 2000 }: CounterProps) => {
 const testimonials = [
   {
     quote: "Dushyant's motion design elevated our brand to a whole new level. His attention to detail and creative vision is unmatched.",
-    name: "Client Name",
-    role: "Position, Company",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces",
+    name: "Kanishk Khurana",
+    role: "Creative Director",
+    avatar: kanishkImg,
   },
   {
     quote: "Working with Dushyant was seamless. He understood our vision instantly and delivered animations that exceeded our expectations.",
-    name: "Client Name",
-    role: "Position, Company",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces",
+    name: "Aman Verma",
+    role: "Marketing Lead",
+    avatar: amanImg,
   },
   {
     quote: "The creative direction and storytelling Dushyant brought to our project transformed our campaign completely.",
-    name: "Client Name",
-    role: "Position, Company",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
+    name: "Agyaat Aadarsh",
+    role: "Content Creator",
+    avatar: agyaatImg,
   },
 ];
 
