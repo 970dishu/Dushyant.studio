@@ -1,20 +1,19 @@
 
-
 const tools = [
-  { name: "After Effects", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" },
-  { name: "Illustrator", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" },
-  { name: "Premiere Pro", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" },
-  { name: "Photoshop", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg" },
-  { name: "Lightroom", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Adobe_Photoshop_Lightroom_CC_logo.svg" },
+  { name: "After Effects", logo: "https://simpleicons.org/icons/adobeaftereffects.svg" },
+  { name: "Illustrator", logo: "https://simpleicons.org/icons/adobeillustrator.svg" },
+  { name: "Premiere Pro", logo: "https://simpleicons.org/icons/adobepremierepro.svg" },
+  { name: "Photoshop", logo: "https://simpleicons.org/icons/adobephotoshop.svg" },
+  { name: "Lightroom", logo: "https://simpleicons.org/icons/adobelightroom.svg" },
   { name: "Adobe Animate", logo: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Adobe_Animate_CC_icon_%282020%29.svg" },
   { name: "Character Animator", logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Adobe_Character_Animator_CC_icon.svg" },
-  { name: "Blender", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
-  { name: "AutoCAD", logo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/AutoCAD_logo.svg" },
+  { name: "Blender", logo: "https://simpleicons.org/icons/blender.svg" },
+  { name: "AutoCAD", logo: "https://simpleicons.org/icons/autodesk.svg" },
   { name: "Fusion 360", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Autodesk_Fusion_360_icon.svg" },
-  { name: "Tinkercad", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Tinkercad-logo.svg" },
-  { name: "Framer", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" },
-  { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-  { name: "DaVinci Resolve", logo: "https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg" },
+  { name: "Tinkercad", logo: "https://simpleicons.org/icons/tinkercad.svg" },
+  { name: "Framer", logo: "https://simpleicons.org/icons/framer.svg" },
+  { name: "Figma", logo: "https://simpleicons.org/icons/figma.svg" },
+  { name: "DaVinci Resolve", logo: "https://simpleicons.org/icons/davinciresolve.svg" },
 ];
 
 const ToolsMarquee = () => {
