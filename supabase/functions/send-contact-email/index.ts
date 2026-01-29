@@ -34,7 +34,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: "Dushyant Garg <hey@dushyant.studio>",
+      from: `${name} <contact@dushyant.studio>`,
       to: ["dushyantdishugarg@gmail.com"],
       reply_to: email,
       subject: `New Contact Form Submission - ${service}`,
