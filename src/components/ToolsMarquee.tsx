@@ -82,12 +82,7 @@ const MarqueeRow = ({ reverse = false }: { reverse?: boolean }) => {
 
 const ToolsMarquee = () => {
   return (
-    <section className="py-12 md:py-20 overflow-hidden border-y border-border/30">
-      <div className="container-wide mb-6">
-        <p className="text-sm text-muted-foreground uppercase tracking-wider text-center">
-          Tools & Software I Use
-        </p>
-      </div>
+    <section className="py-8 md:py-12 overflow-hidden">
       
       {/* Marquee Container */}
       <div className="relative space-y-4 md:space-y-6">
