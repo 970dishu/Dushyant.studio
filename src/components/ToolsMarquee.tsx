@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+
 
 const tools = [
   { name: "After Effects", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg" },
@@ -14,13 +14,12 @@ const tools = [
   { name: "Tinkercad", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Tinkercad-logo.svg" },
   { name: "Framer", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" },
   { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-  { name: "Blackmagic Camera", logo: "https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg" },
   { name: "DaVinci Resolve", logo: "https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg" },
 ];
 
 const ToolsMarquee = () => {
-  // Double the array for seamless loop
-  const duplicatedTools = [...tools, ...tools];
+  // Triple the array for seamless infinite loop
+  const duplicatedTools = [...tools, ...tools, ...tools];
 
   return (
     <section className="py-16 md:py-24 overflow-hidden border-y border-border/30">
@@ -36,25 +35,12 @@ const ToolsMarquee = () => {
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         
-        {/* Scrolling Track */}
-        <motion.div
-          className="flex gap-16 md:gap-24"
-          animate={{
-            x: [0, -50 * tools.length * 6],
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 40,
-              ease: "linear",
-            },
-          }}
-        >
+        {/* Scrolling Track - CSS animation for truly seamless loop */}
+        <div className="flex animate-marquee">
           {duplicatedTools.map((tool, index) => (
             <div
               key={`${tool.name}-${index}`}
-              className="flex flex-col items-center gap-3 flex-shrink-0 group"
+              className="flex flex-col items-center gap-3 flex-shrink-0 group px-8 md:px-12"
             >
               <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-300 grayscale group-hover:grayscale-0">
                 <img
@@ -69,7 +55,7 @@ const ToolsMarquee = () => {
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
