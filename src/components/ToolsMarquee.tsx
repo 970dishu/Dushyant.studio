@@ -1,4 +1,4 @@
-import { Sparkles, Paintbrush } from "lucide-react";
+import { Sparkles, Paintbrush, MousePointer2, PenTool } from "lucide-react";
 
 const tools = [
   "After Effects",
@@ -17,81 +17,90 @@ const tools = [
   "DaVinci Resolve",
 ];
 
-// Decorative elements to intersperse
-const DecorativeElement = ({ type }: { type: "adobe" | "brush" | "sparkle" }) => {
-  if (type === "adobe") {
-    return (
-      <div className="flex-shrink-0 px-6 md:px-10 flex items-center justify-center opacity-40">
-        <svg viewBox="0 0 24 24" className="w-8 h-8 md:w-10 md:h-10 fill-current text-muted-foreground">
-          <path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425h-3.71zm-6.71 0H0L6.89.001h3.71l-3.344 22.623zm9.322-22.623h7.422L17.855 22.624h-3.709l2.432-22.623z"/>
-        </svg>
-      </div>
-    );
-  }
-  if (type === "brush") {
-    return (
-      <div className="flex-shrink-0 px-6 md:px-10 flex items-center justify-center opacity-40">
-        <Paintbrush className="w-7 h-7 md:w-9 md:h-9 text-muted-foreground" strokeWidth={1.5} />
-      </div>
-    );
-  }
-  return (
-    <div className="flex-shrink-0 px-6 md:px-10 flex items-center justify-center opacity-40">
-      <Sparkles className="w-7 h-7 md:w-9 md:h-9 text-muted-foreground" strokeWidth={1.5} />
-    </div>
-  );
-};
+// Icon components for variety
+const icons = [
+  // Adobe Logo
+  () => (
+    <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 fill-current">
+      <path d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425h-3.71zm-6.71 0H0L6.89.001h3.71l-3.344 22.623zm9.322-22.623h7.422L17.855 22.624h-3.709l2.432-22.623z"/>
+    </svg>
+  ),
+  // Brush
+  () => <Paintbrush className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />,
+  // Cursor
+  () => <MousePointer2 className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />,
+  // Pen Tool
+  () => <PenTool className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />,
+  // Sparkle
+  () => <Sparkles className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />,
+];
 
-const ToolsMarquee = () => {
-  // Create items with decorative elements interspersed
+const MarqueeRow = ({ reverse = false }: { reverse?: boolean }) => {
+  // Create items with icon after each tool
   const createMarqueeItems = () => {
-    const items: { type: "tool" | "decor"; value: string; decorType?: "adobe" | "brush" | "sparkle" }[] = [];
-    const decorTypes: ("adobe" | "brush" | "sparkle")[] = ["sparkle", "adobe", "brush"];
+    const items: JSX.Element[] = [];
     
     tools.forEach((tool, index) => {
-      items.push({ type: "tool", value: tool });
-      // Add decorative element after every 3rd tool
-      if ((index + 1) % 3 === 0) {
-        items.push({ type: "decor", value: "", decorType: decorTypes[Math.floor(index / 3) % 3] });
-      }
+      // Add tool name
+      items.push(
+        <span
+          key={`tool-${index}`}
+          className="flex-shrink-0 px-4 md:px-6 text-lg md:text-2xl font-medium text-muted-foreground/60 hover:text-primary transition-colors duration-300 cursor-default whitespace-nowrap"
+        >
+          {tool}
+        </span>
+      );
+      
+      // Add icon after each tool
+      const IconComponent = icons[index % icons.length];
+      items.push(
+        <span
+          key={`icon-${index}`}
+          className="flex-shrink-0 px-3 md:px-4 flex items-center justify-center text-muted-foreground/30"
+        >
+          <IconComponent />
+        </span>
+      );
     });
     
     return items;
   };
 
   const marqueeItems = createMarqueeItems();
-  // Triple for seamless loop
-  const duplicatedItems = [...marqueeItems, ...marqueeItems, ...marqueeItems];
+  // Double for seamless loop
+  const duplicatedItems = [...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="py-16 md:py-24 overflow-hidden border-y border-border/30">
-      <div className="container-wide mb-8">
+    <div className="flex overflow-hidden">
+      <div 
+        className={`flex items-center ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+      >
+        {duplicatedItems}
+      </div>
+    </div>
+  );
+};
+
+const ToolsMarquee = () => {
+  return (
+    <section className="py-12 md:py-20 overflow-hidden border-y border-border/30">
+      <div className="container-wide mb-6">
         <p className="text-sm text-muted-foreground uppercase tracking-wider text-center">
           Tools & Software I Use
         </p>
       </div>
       
       {/* Marquee Container */}
-      <div className="relative">
+      <div className="relative space-y-4 md:space-y-6">
         {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         
-        {/* Scrolling Track */}
-        <div className="flex animate-marquee">
-          {duplicatedItems.map((item, index) => (
-            item.type === "tool" ? (
-              <span
-                key={`${item.value}-${index}`}
-                className="flex-shrink-0 px-6 md:px-10 text-xl md:text-3xl font-medium text-muted-foreground/70 hover:text-primary transition-colors duration-300 cursor-default whitespace-nowrap"
-              >
-                {item.value}
-              </span>
-            ) : (
-              <DecorativeElement key={`decor-${index}`} type={item.decorType!} />
-            )
-          ))}
-        </div>
+        {/* Row 1 - scrolls left */}
+        <MarqueeRow />
+        
+        {/* Row 2 - scrolls right */}
+        <MarqueeRow reverse />
       </div>
     </section>
   );
