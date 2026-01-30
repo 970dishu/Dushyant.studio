@@ -60,7 +60,7 @@ const testimonials = [
   {
     quote: "Dushyant's motion design elevated our brand to a whole new level. His attention to detail and creative vision is unmatched.",
     name: "Kanishk Khurana",
-    role: "Creative Director",
+    role: "DevRel Web3, Across Protocol",
     avatar: kanishkImg,
   },
   {
