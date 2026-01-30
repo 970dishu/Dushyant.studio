@@ -60,19 +60,19 @@ const testimonials = [
   {
     quote: "Dushyant's motion design elevated our brand to a whole new level. His attention to detail and creative vision is unmatched.",
     name: "Kanishk Khurana",
-    role: "DevRel",
+    role: "Creative Director",
     avatar: kanishkImg,
   },
   {
     quote: "Working with Dushyant was seamless. He understood our vision instantly and delivered animations that exceeded our expectations.",
     name: "Aman Verma",
-    role: "Across",
+    role: "Marketing Lead",
     avatar: amanImg,
   },
   {
     quote: "The creative direction and storytelling Dushyant brought to our project transformed our campaign completely.",
     name: "Agyaat Aadarsh",
-    role: "Athlete and Content Creator",
+    role: "Content Creator",
     avatar: agyaatImg,
   },
 ];
