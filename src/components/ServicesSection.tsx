@@ -101,18 +101,17 @@ const ServiceCard = ({
   service, 
   index, 
   isActive,
-  onHover 
+  onClick 
 }: { 
   service: typeof services[0]; 
   index: number;
   isActive: boolean;
-  onHover: (index: number | null) => void;
+  onClick: (index: number) => void;
 }) => {
   return (
     <motion.div
       className="group relative border-b border-border/30 cursor-pointer"
-      onMouseEnter={() => onHover(index)}
-      onMouseLeave={() => onHover(null)}
+      onClick={() => onClick(index)}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -240,12 +239,12 @@ const ServicesSection = () => {
         {/* Services List */}
         <div className="border-t border-border/30">
           {services.map((service, index) => (
-            <ServiceCard
+              <ServiceCard
               key={service.number}
               service={service}
               index={index}
               isActive={activeIndex === index}
-              onHover={setActiveIndex}
+              onClick={(i) => setActiveIndex(activeIndex === i ? null : i)}
             />
           ))}
         </div>
