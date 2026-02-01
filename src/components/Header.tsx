@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,10 +19,10 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "#", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#work", label: "Projects" },
-    { href: "#testimonials", label: "Clients" },
+    { href: isHomePage ? "#" : "/", label: "Home", isAnchor: !isHomePage ? false : true },
+    { href: "/my-story", label: "My Story", isAnchor: false },
+    { href: isHomePage ? "#work" : "/#work", label: "Projects", isAnchor: isHomePage },
+    { href: isHomePage ? "#testimonials" : "/#testimonials", label: "Clients", isAnchor: isHomePage },
   ];
 
   return (
@@ -39,13 +42,23 @@ const Header = () => {
           {/* Nav Links - Hidden when scrolled */}
           <div className={`flex items-center gap-1 px-2 transition-all duration-500 overflow-hidden ${isScrolled ? 'max-w-0 opacity-0 px-0' : 'max-w-[500px] opacity-100'}`}>
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300 whitespace-nowrap"
-              >
-                {link.label}
-              </a>
+              link.isAnchor ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300 whitespace-nowrap"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300 whitespace-nowrap"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
           </div>
 
@@ -57,7 +70,7 @@ const Header = () => {
 
           {/* Contact Button - Hidden when scrolled */}
           <a
-            href="#contact"
+            href={isHomePage ? "#contact" : "/#contact"}
             className={`inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-500 whitespace-nowrap ${isScrolled ? 'max-w-0 opacity-0 px-0 overflow-hidden' : 'max-w-[200px] opacity-100'}`}
           >
             Contact
@@ -99,17 +112,28 @@ const Header = () => {
         <div className="lg:hidden mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
           <nav className="px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-foreground hover:text-primary transition-colors"
-              >
-                {link.label}
-              </a>
+              link.isAnchor ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <a
-              href="#contact"
+              href={isHomePage ? "#contact" : "/#contact"}
               onClick={() => setIsMenuOpen(false)}
               className="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-medium bg-white text-background rounded-full"
             >
