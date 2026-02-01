@@ -8,6 +8,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import MyStory from "./pages/MyStory";
 import NotFound from "./pages/NotFound";
 import GlobalCursor from "./components/GlobalCursor";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/my-story" element={<MyStory />} />
