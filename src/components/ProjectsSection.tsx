@@ -1,19 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { projects } from "@/data/projects";
-import CustomCursor from "./CustomCursor";
 
 interface ProjectCardProps {
   project: typeof projects[0];
   index: number;
   totalProjects: number;
-  onHover: (id: string | null) => void;
-  isHovered: boolean;
-  containerRef: React.RefObject<HTMLDivElement>;
 }
 
-const ProjectCard = ({ project, index, totalProjects, onHover, isHovered, containerRef }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
   const navigate = useNavigate();
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -33,20 +29,9 @@ const ProjectCard = ({ project, index, totalProjects, onHover, isHovered, contai
       className="sticky top-0 h-screen w-full flex items-center justify-center px-4 md:px-8 lg:px-16"
     >
       <div className="relative w-full max-w-[1600px]">
-        <CustomCursor 
-          isVisible={isHovered}
-          containerRef={containerRef}
-        />
         <div
-          ref={(el) => {
-            if (containerRef.current !== el) {
-              (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
-            }
-          }}
           onClick={() => navigate(`/project/${project.slug}`)}
-          onMouseEnter={() => onHover(project.id)}
-          onMouseLeave={() => onHover(null)}
-          className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden cursor-none bg-card"
+          className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-card cursor-pointer"
         >
           {/* Background Image */}
           <div className="absolute inset-0">
@@ -145,8 +130,6 @@ const ProjectCard = ({ project, index, totalProjects, onHover, isHovered, contai
 };
 
 const ProjectsSection = () => {
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const projectRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   return (
     <section id="work" className="relative bg-background">
@@ -194,9 +177,6 @@ const ProjectsSection = () => {
             project={project}
             index={index}
             totalProjects={projects.length}
-            onHover={setHoveredProject}
-            isHovered={hoveredProject === project.id}
-            containerRef={{ current: projectRefs.current[project.id] } as React.RefObject<HTMLDivElement>}
           />
         ))}
       </div>
