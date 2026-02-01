@@ -126,8 +126,8 @@ const AboutSection = () => {
             <div className="flex flex-wrap gap-8 mb-8">
               <div>
                 <p className="text-foreground font-medium mb-1">Email :</p>
-                <a href="mailto:hello@dushyant.com" className="text-muted-foreground hover:text-primary transition-colors">
-                  hello@dushyant.com
+                <a href="mailto:dushyantdishugarg@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                  dushyantdishugarg@gmail.com
                 </a>
               </div>
             </div>
