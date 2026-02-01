@@ -31,7 +31,7 @@ const Header = () => {
         {/* Desktop Navigation - Full nav or "Available for work" based on scroll */}
         <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">
           {/* Profile Picture */}
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+          <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
             <img 
               src={dushyantPortrait} 
               alt="Dushyant" 
@@ -81,7 +81,7 @@ const Header = () => {
         <div className="lg:hidden flex items-center justify-center">
           <div className="flex items-center gap-3 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
             {/* Profile Picture */}
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
+            <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
               <img 
                 src={dushyantPortrait} 
                 alt="Dushyant" 
