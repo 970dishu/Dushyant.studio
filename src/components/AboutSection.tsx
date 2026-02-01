@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import workspaceImage from "@/assets/workspace-setup.jpg";
 
 interface CounterProps {
   end: number;
@@ -57,8 +58,8 @@ const Counter = ({ end, suffix = "", duration = 2000 }: CounterProps) => {
 
 const stats = [
   { value: 3, suffix: "+", label: "Years of Experience" },
-  { value: 50, suffix: "+", label: "Projects Completed" },
-  { value: 25, suffix: "+", label: "Happy Clients" },
+  { value: 50, suffix: "+", label: "Completed Projects" },
+  { value: 25, suffix: "+", label: "Clients Worldwide" },
 ];
 
 const socials = [
@@ -97,50 +98,52 @@ const AboutSection = () => {
   return (
     <section ref={sectionRef} id="about" className="section-padding relative overflow-hidden">
       <motion.div className="container-wide" style={{ y }}>
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid lg:grid-cols-[1fr,auto] gap-12 lg:gap-16 items-start">
           {/* Left Content */}
-          <div>
-            <p className="text-sm text-primary uppercase tracking-wider mb-4">
+          <div className="relative">
+            {/* Green decorative dot */}
+            <div className="absolute right-0 top-32 w-3 h-3 bg-primary rounded-full hidden lg:block" />
+            
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 uppercase tracking-tight">
               About Me
-            </p>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-8 leading-[1.2]">
-              Hi, I'm Dushyant — a motion designer and creative director passionate about bringing stories to life through animation.
             </h2>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
-              With over 3 years of experience in motion design and film editing, I specialize in creating compelling visual narratives that captivate audiences and elevate brands.
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-10 max-w-xl">
+              Hi, I'm Dushyant — a motion designer and creative director passionate about bringing stories to life through animation.
             </p>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              From concept to final delivery, I handle every aspect of the creative process — storywriting, direction, animation, and editing — ensuring a cohesive vision throughout.
-            </p>
-          </div>
 
-          {/* Right - Stats */}
-          <div className="flex flex-col justify-center">
-            <div className="grid grid-cols-1 gap-8">
+            {/* Stats Row */}
+            <div className="grid grid-cols-3 gap-8 mb-10">
               {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-6 pb-8 border-b border-border last:border-0 last:pb-0"
-                >
-                  <span className="font-heading text-5xl md:text-6xl lg:text-7xl font-medium text-primary">
+                <div key={index} className="flex flex-col">
+                  <span className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary">
                     <Counter end={stat.value} suffix={stat.suffix} />
                   </span>
-                  <span className="text-muted-foreground text-sm md:text-base">
+                  <span className="text-foreground text-sm md:text-base font-medium mt-1">
                     {stat.label}
                   </span>
                 </div>
               ))}
             </div>
 
+            {/* Contact Info */}
+            <div className="flex flex-wrap gap-8 mb-8">
+              <div>
+                <p className="text-foreground font-medium mb-1">Email :</p>
+                <a href="mailto:hello@dushyant.com" className="text-muted-foreground hover:text-primary transition-colors">
+                  hello@dushyant.com
+                </a>
+              </div>
+            </div>
+
             {/* Social Icons */}
-            <div className="flex items-center gap-4 mt-8">
+            <div className="flex items-center gap-4 mb-8">
               {socials.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-foreground hover:text-primary hover:bg-secondary transition-colors"
+                  className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:bg-secondary/80 transition-colors"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -151,10 +154,21 @@ const AboutSection = () => {
             {/* My Story Button */}
             <Link
               to="/my-story"
-              className="inline-block mt-8 px-8 py-4 border-2 border-primary rounded-full text-primary font-heading text-lg uppercase tracking-wider hover:bg-primary hover:text-background transition-colors"
+              className="inline-block px-8 py-4 border-2 border-primary rounded-full text-primary font-heading text-lg uppercase tracking-wider hover:bg-primary hover:text-background transition-colors"
             >
               My Story
             </Link>
+          </div>
+
+          {/* Right - Workspace Image */}
+          <div className="hidden lg:block relative">
+            <div className="w-80 xl:w-96 h-[500px] xl:h-[600px] overflow-hidden rounded-lg">
+              <img 
+                src={workspaceImage} 
+                alt="Creative workspace setup" 
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </motion.div>
