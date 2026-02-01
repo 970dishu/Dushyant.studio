@@ -1,20 +1,16 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Play } from "lucide-react";
-import { getProjectBySlug, getOtherProjects, Project } from "@/data/projects";
+import { getProjectBySlug, getOtherProjects } from "@/data/projects";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const project = getProjectBySlug(slug || "");
   const otherProjects = getOtherProjects(slug || "");
-  
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const projectRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -297,34 +293,26 @@ const ProjectDetail = () => {
             
             <div className="grid md:grid-cols-3 gap-8">
               {otherProjects.slice(0, 3).map((otherProject) => (
-                <div key={otherProject.id} className="relative">
-                  <CustomCursor 
-                    isVisible={hoveredProject === otherProject.id}
-                    containerRef={{ current: projectRefs.current[otherProject.id] } as React.RefObject<HTMLElement>}
-                  />
-                  <div
-                    ref={(el) => projectRefs.current[otherProject.id] = el}
-                    onClick={() => navigate(`/project/${otherProject.slug}`)}
-                    onMouseEnter={() => setHoveredProject(otherProject.id)}
-                    onMouseLeave={() => setHoveredProject(null)}
-                    className="group block bg-background rounded-2xl overflow-hidden border border-border cursor-none hover:-translate-y-2 transition-all duration-500"
-                  >
-                    <div className="aspect-video overflow-hidden bg-muted relative">
-                      <img
-                        src={otherProject.image}
-                        alt={otherProject.title}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    <div className="p-6">
-                      <span className="text-xs text-primary uppercase tracking-wider">
-                        {otherProject.category}
-                      </span>
-                      <h3 className="font-heading text-xl font-medium text-foreground mt-2 group-hover:text-primary transition-colors">
-                        {otherProject.title}
-                      </h3>
-                    </div>
+                <div
+                  key={otherProject.id}
+                  onClick={() => navigate(`/project/${otherProject.slug}`)}
+                  className="group block bg-background rounded-2xl overflow-hidden border border-border cursor-pointer hover:-translate-y-2 transition-all duration-500"
+                >
+                  <div className="aspect-video overflow-hidden bg-muted relative">
+                    <img
+                      src={otherProject.image}
+                      alt={otherProject.title}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-xs text-primary uppercase tracking-wider">
+                      {otherProject.category}
+                    </span>
+                    <h3 className="font-heading text-xl font-medium text-foreground mt-2 group-hover:text-primary transition-colors">
+                      {otherProject.title}
+                    </h3>
                   </div>
                 </div>
               ))}
