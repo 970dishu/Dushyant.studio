@@ -34,10 +34,21 @@ Deno.serve(async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: `${name} <contact@dushyant.studio>`,
+      from: "Dushyant Studio <contact@dushyant.studio>",
       to: ["dushyantdishugarg@gmail.com"],
       reply_to: email,
-      subject: `New Contact Form Submission - ${service}`,
+      subject: `Portfolio Inquiry: ${service}`,
+      text: `New contact form submission from your portfolio website.
+
+Name: ${name}
+Email: ${email}
+Service: ${service}
+
+Message:
+${message}
+
+---
+Reply directly to this email to respond to ${name}.`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -49,7 +60,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
             <!-- Header -->
             <div style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); padding: 30px; border-radius: 16px 16px 0 0; text-align: center;">
-              <h1 style="margin: 0; color: #0a0a0a; font-size: 28px; font-weight: bold;">New Contact Form Submission</h1>
+              <h1 style="margin: 0; color: #0a0a0a; font-size: 28px; font-weight: bold;">New Portfolio Inquiry</h1>
             </div>
             
             <!-- Content -->
@@ -92,7 +103,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
             <!-- Footer -->
             <div style="margin-top: 24px; text-align: center;">
               <p style="margin: 0; color: #666666; font-size: 12px;">
-                Sent from your portfolio contact form
+                This message was sent from dushyant.studio contact form
               </p>
             </div>
           </div>
