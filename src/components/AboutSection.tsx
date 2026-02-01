@@ -130,6 +130,17 @@ const AboutSection = () => {
                   dushyantdishugarg@gmail.com
                 </a>
               </div>
+              <div>
+                <p className="text-foreground font-medium mb-1">WhatsApp :</p>
+                <a 
+                  href="https://wa.me/917696057349" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  +91 7696057349
+                </a>
+              </div>
             </div>
 
             {/* Social Icons */}
