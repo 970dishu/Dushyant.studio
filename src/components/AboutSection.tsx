@@ -101,9 +101,6 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-[1fr,auto] gap-12 lg:gap-16 items-start">
           {/* Left Content */}
           <div className="relative">
-            {/* Green decorative dot */}
-            <div className="absolute right-0 top-32 w-3 h-3 bg-primary rounded-full hidden lg:block" />
-            
             <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 uppercase tracking-tight">
               About Me
             </h2>
