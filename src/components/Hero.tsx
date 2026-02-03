@@ -246,14 +246,22 @@ const Hero = () => {
                   <AnimatePresence mode="wait">
                     <motion.h1
                       key={currentTitleIndex}
-                      initial={{ y: 100, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -100, opacity: 0 }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                      initial={{ y: 80, opacity: 0, filter: "blur(10px)" }}
+                      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                      exit={{ y: -80, opacity: 0, filter: "blur(10px)" }}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                       className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground uppercase tracking-tighter leading-none"
                     >
                       {titles[currentTitleIndex].split(" ").map((word, i) => (
-                        <span key={i} className="block">{word}</span>
+                        <motion.span 
+                          key={i} 
+                          className="block"
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          {word}
+                        </motion.span>
                       ))}
                     </motion.h1>
                   </AnimatePresence>
@@ -366,14 +374,22 @@ const Hero = () => {
             <AnimatePresence mode="wait">
               <motion.h1
                 key={currentTitleIndex}
-                initial={{ y: 60, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -60, opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ y: 50, opacity: 0, filter: "blur(8px)" }}
+                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                exit={{ y: -50, opacity: 0, filter: "blur(8px)" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-3xl font-bold text-foreground uppercase tracking-tighter leading-none"
               >
                 {titles[currentTitleIndex].split(" ").map((word, i) => (
-                  <span key={i} className="block">{word}</span>
+                  <motion.span 
+                    key={i} 
+                    className="block"
+                    initial={{ x: -15, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {word}
+                  </motion.span>
                 ))}
               </motion.h1>
             </AnimatePresence>
