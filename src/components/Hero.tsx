@@ -16,21 +16,10 @@ const videoProjects = [
   { id: 8, title: "Retail Campaign" },
 ];
 
-const titles = ["Motion Designer", "Creative Director"];
-
 const Hero = () => {
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
-
-  // Cycling text effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({})
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -107,30 +96,24 @@ const Hero = () => {
               Dushyant
             </p>
             
-            <div className="relative h-[120px] lg:h-[160px] xl:h-[200px] overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.h1
-                  key={currentTitleIndex}
-                  initial={{ y: 80, opacity: 0, filter: "blur(10px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: -80, opacity: 0, filter: "blur(10px)" }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground uppercase tracking-tighter leading-none"
+            <motion.h1
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground uppercase tracking-tighter leading-none"
+            >
+              {"Creative Director".split(" ").map((word, i) => (
+                <motion.span 
+                  key={i} 
+                  className="block"
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {titles[currentTitleIndex].split(" ").map((word, i) => (
-                    <motion.span 
-                      key={i} 
-                      className="block"
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      {word}
-                    </motion.span>
-                  ))}
-                </motion.h1>
-              </AnimatePresence>
-            </div>
+                  {word}
+                </motion.span>
+              ))}
+            </motion.h1>
 
             <p className="text-muted-foreground text-base lg:text-lg mt-8 max-w-md opacity-0 animate-fade-up" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
               Crafting visual stories through motion,<br />
@@ -201,30 +184,24 @@ const Hero = () => {
             Dushyant
           </p>
           
-          <div className="relative h-[80px] overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={currentTitleIndex}
-                initial={{ y: 50, opacity: 0, filter: "blur(8px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: -50, opacity: 0, filter: "blur(8px)" }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl font-bold text-foreground uppercase tracking-tighter leading-none"
+          <motion.h1
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="font-heading text-3xl font-bold text-foreground uppercase tracking-tighter leading-none"
+          >
+            {"Creative Director".split(" ").map((word, i) => (
+              <motion.span 
+                key={i} 
+                className="block"
+                initial={{ x: -15, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                {titles[currentTitleIndex].split(" ").map((word, i) => (
-                  <motion.span 
-                    key={i} 
-                    className="block"
-                    initial={{ x: -15, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.h1>
-            </AnimatePresence>
-          </div>
+                {word}
+              </motion.span>
+            ))}
+          </motion.h1>
 
           <p className="text-muted-foreground text-sm mt-4">
             Crafting visual stories through motion
