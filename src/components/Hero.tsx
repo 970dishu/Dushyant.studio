@@ -140,6 +140,7 @@ const Hero = () => {
                   key={project.id}
                   className="relative aspect-video rounded-xl overflow-hidden group cursor-pointer"
                   onMouseEnter={() => handleVideoHover(project.id)}
+                  onMouseLeave={handleVideoLeave}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
