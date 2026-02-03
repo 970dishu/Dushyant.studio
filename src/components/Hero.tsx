@@ -92,7 +92,7 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-left"
           >
-            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium mb-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium mb-4 opacity-0 animate-fade-up -ml-0.5" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant
             </p>
             
