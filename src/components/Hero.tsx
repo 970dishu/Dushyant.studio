@@ -1,10 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Words to morph between for the cursive text
-const morphWords = ["Creative", "Editor"];
-const MORPH_INTERVAL = 3000; // 3 seconds per word
-
 // Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
 // Thumbnail for video poster
@@ -25,17 +21,8 @@ const videoProjects = [
 const Hero = () => {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
-
-  // Morph text animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % morphWords.length);
-    }, MORPH_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -122,39 +109,15 @@ const Hero = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
+              className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3 lg:gap-4"
             >
-              <span className="relative w-[160px] lg:w-[250px] xl:w-[300px] flex justify-end mr-2 lg:mr-3">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={morphWords[currentWordIndex]}
-                    initial={{ 
-                      opacity: 0, 
-                      filter: "blur(12px)",
-                      clipPath: "inset(0 100% 0 0)"
-                    }}
-                    animate={{ 
-                      opacity: 1, 
-                      filter: "blur(0px)",
-                      clipPath: "inset(0 0% 0 0)"
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      filter: "blur(12px)",
-                      clipPath: "inset(0 0 0 100%)"
-                    }}
-                    transition={{ 
-                      duration: 0.6, 
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                    className="font-cursive text-primary italic absolute right-0"
-                    style={{
-                      textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
-                    }}
-                  >
-                    {morphWords[currentWordIndex]}
-                  </motion.span>
-                </AnimatePresence>
+              <span 
+                className="font-cursive text-primary italic"
+                style={{
+                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
+                }}
+              >
+                Creative
               </span>
               <span className="font-condensed font-medium uppercase tracking-wide">
                 Director
@@ -230,39 +193,15 @@ const Hero = () => {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
+              className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-2"
             >
-              <span className="relative w-[90px] flex justify-end mr-1">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={morphWords[currentWordIndex]}
-                    initial={{ 
-                      opacity: 0, 
-                      filter: "blur(8px)",
-                      clipPath: "inset(0 100% 0 0)"
-                    }}
-                    animate={{ 
-                      opacity: 1, 
-                      filter: "blur(0px)",
-                      clipPath: "inset(0 0% 0 0)"
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      filter: "blur(8px)",
-                      clipPath: "inset(0 0 0 100%)"
-                    }}
-                    transition={{ 
-                      duration: 0.6, 
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                    className="font-cursive text-primary italic absolute right-0"
-                    style={{
-                      textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
-                    }}
-                  >
-                    {morphWords[currentWordIndex]}
-                  </motion.span>
-                </AnimatePresence>
+              <span 
+                className="font-cursive text-primary italic"
+                style={{
+                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
+                }}
+              >
+                Creative
               </span>
               <span className="font-condensed font-medium uppercase tracking-wide text-2xl">
                 Director
