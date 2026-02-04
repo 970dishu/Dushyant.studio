@@ -144,11 +144,11 @@ const Hero = () => {
               
               <motion.p 
                 ref={nameRef}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
                 style={{ 
-                  y: nameY, 
+                  y: nameY,
                   scale: nameScale,
                   opacity: nameOpacity,
                 }}
@@ -246,7 +246,7 @@ const Hero = () => {
               </motion.p>
               
               <motion.p 
-                initial={{ opacity: 0, x: 10 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="font-cursive text-sm text-foreground/60"
