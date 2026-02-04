@@ -83,14 +83,7 @@ const Hero = () => {
             className="fixed inset-0 z-50 bg-background cursor-pointer"
             onClick={handleFullscreenClose}
           >
-            <video
-              src={VIDEO_URL}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            <video src={VIDEO_URL} autoPlay loop muted playsInline className="w-full h-full object-cover" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -98,7 +91,7 @@ const Hero = () => {
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:block w-full">
         {/* Title Area - Top Third */}
-        <div className="h-[40vh] flex items-center justify-center relative pt-16">
+        <div className="h-[30vh] flex items-center justify-center relative pt-16">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -112,29 +105,31 @@ const Hero = () => {
               className="font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-6"
               style={{ fontSize: "clamp(4.5rem, 8vw, 10rem)" }}
             >
-              <span 
+              <span
                 className="font-cursive text-primary italic"
                 style={{
-                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
+                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)",
                 }}
               >
                 Creative
               </span>
-              <span className="font-barrio uppercase tracking-wide">
-                Director
-              </span>
+              <span className="font-barrio uppercase tracking-wide">Director</span>
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-10 px-4">
-              <p 
-                className="text-muted-foreground opacity-0 animate-fade-up" 
-                style={{ animationDelay: "0.4s", animationFillMode: "forwards", fontSize: "clamp(0.875rem, 1.2vw, 1.125rem)" }}
+              <p
+                className="text-muted-foreground opacity-0 animate-fade-up"
+                style={{
+                  animationDelay: "0.4s",
+                  animationFillMode: "forwards",
+                  fontSize: "clamp(0.875rem, 1.2vw, 1.125rem)",
+                }}
               >
                 Crafting visual stories through motion
               </p>
-              
-              <motion.p 
+
+              <motion.p
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 0.6, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
@@ -151,7 +146,7 @@ const Hero = () => {
         <div className="relative h-[60vh]">
           {/* Fade overlay at top */}
           <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
-          
+
           {/* Scrollable video grid */}
           <div
             ref={videoContainerRef}
@@ -163,7 +158,7 @@ const Hero = () => {
                 display: none;
               }
             `}</style>
-            
+
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
               {videoProjects.map((project, index) => (
                 <motion.div
@@ -183,16 +178,16 @@ const Hero = () => {
                       <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
                         {project.client}
                       </h3>
-                      <p className="text-muted-foreground text-xs font-mono tracking-wider">
-                        {project.subtitle}
-                      </p>
+                      <p className="text-muted-foreground text-xs font-mono tracking-wider">{project.subtitle}</p>
                     </div>
                   </div>
-                  
+
                   {/* Video */}
                   <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
                     <video
-                      ref={(el) => { videoRefs.current[project.id] = el; }}
+                      ref={(el) => {
+                        videoRefs.current[project.id] = el;
+                      }}
                       src={VIDEO_URL}
                       poster={THUMBNAIL_URL}
                       preload="metadata"
@@ -206,7 +201,7 @@ const Hero = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Fade overlay at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
         </div>
@@ -223,26 +218,22 @@ const Hero = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3"
             >
-              <span 
+              <span
                 className="font-cursive text-primary italic"
                 style={{
-                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
+                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)",
                 }}
               >
                 Creative
               </span>
-              <span className="font-barrio uppercase tracking-wide text-4xl">
-                Director
-              </span>
+              <span className="font-barrio uppercase tracking-wide text-4xl">Director</span>
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full mt-4 px-2">
-              <p className="text-muted-foreground text-xs">
-                Crafting visual stories through motion
-              </p>
-              
-              <motion.p 
+              <p className="text-muted-foreground text-xs">Crafting visual stories through motion</p>
+
+              <motion.p
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
@@ -258,12 +249,9 @@ const Hero = () => {
         <div className="relative h-[70vh]">
           {/* Fade overlay at top */}
           <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
-          
+
           {/* Scrollable video grid */}
-          <div 
-            className="h-full overflow-y-auto px-4 py-6"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
+          <div className="h-full overflow-y-auto px-4 py-6" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
             <div className="grid grid-cols-1 gap-6">
               {videoProjects.map((project) => (
                 <motion.div
@@ -279,12 +267,10 @@ const Hero = () => {
                       <h3 className="text-foreground text-xs font-semibold tracking-wide uppercase">
                         {project.client}
                       </h3>
-                      <p className="text-muted-foreground text-[10px] font-mono tracking-wider">
-                        {project.subtitle}
-                      </p>
+                      <p className="text-muted-foreground text-[10px] font-mono tracking-wider">{project.subtitle}</p>
                     </div>
                   </div>
-                  
+
                   {/* Video */}
                   <div className="relative aspect-video rounded-lg overflow-hidden">
                     <video
@@ -302,7 +288,7 @@ const Hero = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Fade overlay at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
         </div>
