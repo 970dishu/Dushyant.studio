@@ -30,13 +30,21 @@ const Header = () => {
       <div className="flex justify-center px-4">
         {/* Desktop Navigation - Full nav or "Available for work" based on scroll */}
         <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">
-          {/* Profile Picture */}
-          <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
-            <img 
-              src={dushyantPortrait} 
-              alt="Dushyant" 
-              className="w-full h-full object-cover"
-            />
+          {/* Profile Picture with Name below */}
+          <div className="relative flex flex-col items-center">
+            <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
+              <img 
+                src={dushyantPortrait} 
+                alt="Dushyant" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Name that appears below picture when scrolled */}
+            <span 
+              className={`absolute -bottom-5 left-1/2 -translate-x-1/2 font-cursive text-xs text-primary whitespace-nowrap transition-all duration-500 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
+            >
+              Dushyant
+            </span>
           </div>
 
           {/* Nav Links - Hidden when scrolled */}
@@ -81,6 +89,8 @@ const Header = () => {
         <div className="lg:hidden flex items-center justify-center">
           <div className="flex items-center gap-3 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2">
             {/* Profile Picture */}
+          {/* Profile Picture with Name below */}
+          <div className="relative flex flex-col items-center">
             <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
               <img 
                 src={dushyantPortrait} 
@@ -88,6 +98,13 @@ const Header = () => {
                 className="w-full h-full object-cover"
               />
             </div>
+            {/* Name that appears below picture when scrolled */}
+            <span 
+              className={`absolute -bottom-5 left-1/2 -translate-x-1/2 font-cursive text-xs text-primary whitespace-nowrap transition-all duration-500 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
+            >
+              Dushyant
+            </span>
+          </div>
 
             {/* Available for work text with green dot */}
             <div className="flex items-center gap-2 pr-2">

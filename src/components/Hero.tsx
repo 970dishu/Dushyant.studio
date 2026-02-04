@@ -29,11 +29,11 @@ const Hero = () => {
   const { scrollY } = useScroll();
   
   // Transform the name's Y position as user scrolls (moves up toward navbar)
-  const nameY = useTransform(scrollY, [0, 300], [0, -200]);
-  // Scale down slightly as it approaches the navbar
-  const nameScale = useTransform(scrollY, [0, 300], [1, 0.6]);
-  // Fade to a subtle opacity as it settles behind navbar
-  const nameOpacity = useTransform(scrollY, [0, 150, 300], [0.8, 0.5, 0.15]);
+  const nameY = useTransform(scrollY, [0, 200], [0, -150]);
+  // Scale down as it approaches the navbar
+  const nameScale = useTransform(scrollY, [0, 200], [1, 0.3]);
+  // Fade out as it "transfers" to the navbar version
+  const nameOpacity = useTransform(scrollY, [0, 100, 200], [0.8, 0.4, 0]);
 
   // Play/pause videos on hover
   useEffect(() => {
