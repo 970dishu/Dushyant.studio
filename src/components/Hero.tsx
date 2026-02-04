@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 // Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
@@ -23,6 +23,17 @@ const Hero = () => {
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+  const nameRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-based animation for the name
+  const { scrollY } = useScroll();
+  
+  // Transform the name's Y position as user scrolls (moves up toward navbar)
+  const nameY = useTransform(scrollY, [0, 300], [0, -200]);
+  // Scale down slightly as it approaches the navbar
+  const nameScale = useTransform(scrollY, [0, 300], [1, 0.6]);
+  // Fade to a subtle opacity as it settles behind navbar
+  const nameOpacity = useTransform(scrollY, [0, 150, 300], [0.8, 0.5, 0.15]);
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -101,12 +112,18 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-center"
           >
-            {/* Name above title */}
+            {/* Name above title - moves up on scroll to merge with navbar */}
             <motion.p 
+              ref={nameRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-cursive text-4xl lg:text-5xl xl:text-6xl text-foreground/80 mb-4 lg:mb-6"
+              style={{ 
+                y: nameY, 
+                scale: nameScale,
+                opacity: nameOpacity,
+              }}
+              className="font-cursive text-4xl lg:text-5xl xl:text-6xl text-foreground mb-4 lg:mb-6 will-change-transform"
             >
               Dushyant
             </motion.p>
