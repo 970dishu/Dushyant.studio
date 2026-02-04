@@ -133,22 +133,17 @@ const Hero = () => {
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 lg:mt-10 px-4">
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="text-muted-foreground text-base lg:text-lg"
-              >
+              <p className="text-muted-foreground text-base lg:text-lg opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
                 Crafting visual stories through motion
-              </motion.p>
+              </p>
               
               <motion.p 
                 ref={nameRef}
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
                 style={{ 
-                  y: nameY,
+                  y: nameY, 
                   scale: nameScale,
                   opacity: nameOpacity,
                 }}
@@ -236,17 +231,12 @@ const Hero = () => {
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full mt-4 px-2">
-              <motion.p 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="text-muted-foreground text-xs"
-              >
+              <p className="text-muted-foreground text-xs">
                 Crafting visual stories through motion
-              </motion.p>
+              </p>
               
               <motion.p 
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="font-cursive text-sm text-foreground/60"
