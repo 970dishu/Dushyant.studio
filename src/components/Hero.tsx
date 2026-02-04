@@ -108,29 +108,14 @@ const Hero = () => {
                 Dushyant
               </p>
               
-              <motion.h1
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
-              >
-                <motion.span 
-                  className="block"
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  Creative
-                </motion.span>
-                <motion.span 
-                  className="block"
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  Director
-                </motion.span>
-              </motion.h1>
+            <motion.h1
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground uppercase tracking-tighter leading-none whitespace-nowrap"
+            >
+              Creative Director
+            </motion.h1>
 
               <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
                 Crafting visual stories through motion
@@ -196,15 +181,14 @@ const Hero = () => {
                 Dushyant
               </p>
               
-              <motion.h1
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-4xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
-              >
-                <span className="block">Creative</span>
-                <span className="block">Director</span>
-              </motion.h1>
+            <motion.h1
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading text-3xl font-bold text-foreground uppercase tracking-tighter leading-none whitespace-nowrap"
+            >
+              Creative Director
+            </motion.h1>
 
               <p className="text-muted-foreground text-sm mt-4">
                 Crafting visual stories through motion
