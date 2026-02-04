@@ -150,7 +150,7 @@ const Hero = () => {
         {/* Videos Container with Independent Scroll */}
         <div className="relative h-[60vh]">
           {/* Fade overlay at top */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
           
           {/* Scrollable video grid */}
           <div
