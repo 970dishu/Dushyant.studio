@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
+// Thumbnail for video poster
+const THUMBNAIL_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4#t=0.1";
 
 // Video projects data
 const videoProjects = [
@@ -151,6 +153,8 @@ const Hero = () => {
                   <video
                     ref={(el) => { videoRefs.current[project.id] = el; }}
                     src={VIDEO_URL}
+                    poster={THUMBNAIL_URL}
+                    preload="metadata"
                     loop
                     muted
                     playsInline
@@ -210,6 +214,8 @@ const Hero = () => {
                 >
                   <video
                     src={VIDEO_URL}
+                    poster={THUMBNAIL_URL}
+                    preload="metadata"
                     loop
                     muted
                     playsInline
