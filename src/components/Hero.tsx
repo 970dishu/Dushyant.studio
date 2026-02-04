@@ -133,9 +133,14 @@ const Hero = () => {
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 lg:mt-10 px-4">
-              <p className="text-muted-foreground text-base lg:text-lg opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-muted-foreground text-base lg:text-lg"
+              >
                 Crafting visual stories through motion
-              </p>
+              </motion.p>
               
               <motion.p 
                 ref={nameRef}
@@ -231,9 +236,14 @@ const Hero = () => {
 
             {/* Tagline and signature on the same line */}
             <div className="flex items-center justify-between w-full mt-4 px-2">
-              <p className="text-muted-foreground text-xs">
+              <motion.p 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="text-muted-foreground text-xs"
+              >
                 Crafting visual stories through motion
-              </p>
+              </motion.p>
               
               <motion.p 
                 initial={{ opacity: 0, x: 10 }}
