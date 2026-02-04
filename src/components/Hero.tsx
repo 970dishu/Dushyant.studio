@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Video from Lovable Cloud storage
@@ -69,6 +69,44 @@ const videoProjects = [
     subtitle: "HORIZONS",
   },
 ];
+
+// Lazy load hook for videos
+const useLazyVideo = () => {
+  const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set());
+  
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  
+  const observe = useCallback((element: HTMLDivElement | null, videoId: number) => {
+    if (!element) return;
+    
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = Number(entry.target.getAttribute('data-video-id'));
+              setLoadedVideos((prev) => new Set(prev).add(id));
+              observerRef.current?.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '100px', threshold: 0.1 }
+      );
+    }
+    
+    element.setAttribute('data-video-id', String(videoId));
+    observerRef.current.observe(element);
+  }, []);
+  
+  useEffect(() => {
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, []);
+  
+  return { loadedVideos, observe };
+};
+
 const Hero = () => {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
@@ -76,6 +114,8 @@ const Hero = () => {
   const videoRefs = useRef<{
     [key: number]: HTMLVideoElement | null;
   }>({});
+  
+  const { loadedVideos, observe } = useLazyVideo();
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -274,19 +314,26 @@ const Hero = () => {
                   </div>
 
                   {/* Video */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
-                    <video
-                      ref={(el) => {
-                        videoRefs.current[project.id] = el;
-                      }}
-                      src={VIDEO_URL}
-                      poster={THUMBNAIL_URL}
-                      preload="metadata"
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
+                  <div 
+                    ref={(el) => observe(el, project.id)}
+                    className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300 bg-muted"
+                  >
+                    {loadedVideos.has(project.id) ? (
+                      <video
+                        ref={(el) => {
+                          videoRefs.current[project.id] = el;
+                        }}
+                        src={VIDEO_URL}
+                        poster={THUMBNAIL_URL}
+                        preload="metadata"
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted animate-pulse" />
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -389,17 +436,24 @@ const Hero = () => {
                   </div>
 
                   {/* Video */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden">
-                    <video
-                      src={VIDEO_URL}
-                      poster={THUMBNAIL_URL}
-                      preload="metadata"
-                      loop
-                      muted
-                      playsInline
-                      autoPlay
-                      className="w-full h-full object-cover"
-                    />
+                  <div 
+                    ref={(el) => observe(el, project.id)}
+                    className="relative aspect-video rounded-lg overflow-hidden bg-muted"
+                  >
+                    {loadedVideos.has(project.id) ? (
+                      <video
+                        src={VIDEO_URL}
+                        poster={THUMBNAIL_URL}
+                        preload="metadata"
+                        loop
+                        muted
+                        playsInline
+                        autoPlay
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted animate-pulse" />
+                    )}
                   </div>
                 </motion.div>
               ))}
