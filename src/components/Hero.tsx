@@ -142,7 +142,7 @@ const Hero = () => {
                   {morphWords[currentWordIndex]}
                 </motion.span>
               </AnimatePresence>
-              <span className="font-classy uppercase tracking-wide">
+              <span className="font-body font-light uppercase tracking-[0.2em]">
                 Director
               </span>
             </motion.h1>
@@ -236,7 +236,7 @@ const Hero = () => {
                   {morphWords[currentWordIndex]}
                 </motion.span>
               </AnimatePresence>
-              <span className="font-classy uppercase tracking-wide text-2xl">
+              <span className="font-body font-light uppercase tracking-[0.15em] text-2xl">
                 Director
               </span>
             </motion.h1>
