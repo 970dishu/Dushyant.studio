@@ -27,6 +27,12 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6">
+      {/* Fixed Name beneath navbar */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 pointer-events-none">
+        <span className="font-cursive text-6xl lg:text-7xl xl:text-8xl text-foreground/10 tracking-wide">
+          Dushyant
+        </span>
+      </div>
       <div className="flex justify-center px-4">
         {/* Desktop Navigation - Full nav or "Available for work" based on scroll */}
         <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">

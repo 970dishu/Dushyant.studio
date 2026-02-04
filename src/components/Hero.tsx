@@ -101,9 +101,6 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-center"
           >
-            <p className="text-foreground text-lg lg:text-xl uppercase tracking-[0.3em] font-medium mb-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
-              Dushyant
-            </p>
             
             <motion.h1
               initial={{ y: 40, opacity: 0 }}
@@ -185,10 +182,7 @@ const Hero = () => {
         {/* Title Area */}
         <div className="h-[30vh] flex items-center justify-center pt-16">
           <div className="text-center px-6">
-            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium mb-2">
-              Dushyant
-            </p>
-            
+
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
