@@ -122,26 +122,28 @@ const Hero = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-4"
+              className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
             >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={morphWords[currentWordIndex]}
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  className="font-cursive text-primary italic"
-                  style={{
-                    textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
-                  }}
-                >
-                  {morphWords[currentWordIndex]}
-                </motion.span>
-              </AnimatePresence>
+              <span className="relative w-[180px] lg:w-[280px] xl:w-[340px] flex justify-end mr-4">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={morphWords[currentWordIndex]}
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                    transition={{ 
+                      duration: 0.5, 
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                    className="font-cursive text-primary italic absolute right-0"
+                    style={{
+                      textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
+                    }}
+                  >
+                    {morphWords[currentWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
               <span className="font-condensed font-medium uppercase tracking-wide">
                 Director
               </span>
@@ -216,26 +218,28 @@ const Hero = () => {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-2"
+              className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
             >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={morphWords[currentWordIndex]}
-                  initial={{ opacity: 0, y: 15, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -15, scale: 0.9 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  className="font-cursive text-primary italic"
-                  style={{
-                    textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
-                  }}
-                >
-                  {morphWords[currentWordIndex]}
-                </motion.span>
-              </AnimatePresence>
+              <span className="relative w-[100px] flex justify-end mr-2">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={morphWords[currentWordIndex]}
+                    initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -15, scale: 0.9 }}
+                    transition={{ 
+                      duration: 0.5, 
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                    className="font-cursive text-primary italic absolute right-0"
+                    style={{
+                      textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
+                    }}
+                  >
+                    {morphWords[currentWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
               <span className="font-condensed font-medium uppercase tracking-wide text-2xl">
                 Director
               </span>
