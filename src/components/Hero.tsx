@@ -21,6 +21,7 @@ const videoProjects = [
 const Hero = () => {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
+  const [isCreativeHovered, setIsCreativeHovered] = useState(false);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
 
@@ -112,12 +113,25 @@ const Hero = () => {
               className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3 lg:gap-4"
             >
               <span 
-                className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
-                }}
+                className="font-cursive text-primary italic relative w-[140px] lg:w-[220px] xl:w-[280px] flex justify-end"
+                onMouseEnter={() => setIsCreativeHovered(true)}
+                onMouseLeave={() => setIsCreativeHovered(false)}
               >
-                Creative
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={isCreativeHovered ? "editor" : "creative"}
+                    initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(8px)" }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute right-0"
+                    style={{
+                      textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
+                    }}
+                  >
+                    {isCreativeHovered ? "Editor" : "Creative"}
+                  </motion.span>
+                </AnimatePresence>
               </span>
               <span className="font-barrio uppercase tracking-wide">
                 Director
@@ -196,12 +210,25 @@ const Hero = () => {
               className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-2"
             >
               <span 
-                className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
-                }}
+                className="font-cursive text-primary italic relative w-[80px] flex justify-end"
+                onTouchStart={() => setIsCreativeHovered(true)}
+                onTouchEnd={() => setIsCreativeHovered(false)}
               >
-                Creative
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={isCreativeHovered ? "editor-mobile" : "creative-mobile"}
+                    initial={{ opacity: 0, y: 8, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute right-0"
+                    style={{
+                      textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
+                    }}
+                  >
+                    {isCreativeHovered ? "Editor" : "Creative"}
+                  </motion.span>
+                </AnimatePresence>
               </span>
               <span className="font-barrio uppercase tracking-wide text-2xl">
                 Director
