@@ -92,7 +92,7 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Main Hero Section - Desktop/Tablet */}
-      <section className="hidden md:block w-full">
+      <section className="hidden md:block w-full bg-black">
         {/* Title Area - Top Third */}
         <div className="h-[60vh] flex items-center justify-center relative">
           <motion.div
@@ -181,7 +181,7 @@ const Hero = () => {
       </section>
 
       {/* Mobile Layout */}
-      <section className="md:hidden w-full">
+      <section className="md:hidden w-full bg-black">
         {/* Title Area */}
         <div className="h-[30vh] flex items-center justify-center pt-16">
           <div className="text-center px-6">
