@@ -185,7 +185,7 @@ const Hero = () => {
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
-            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-10 px-4">
+            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 px-4">
               <p
                 className="text-muted-foreground opacity-0 animate-fade-up"
                 style={{
