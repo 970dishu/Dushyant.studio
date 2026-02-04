@@ -91,52 +91,58 @@ const Hero = () => {
 
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:block h-screen w-full relative overflow-hidden">
-        {/* Fixed Centered Title - Always on top */}
-        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="text-center"
-          >
-            <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
-              Dushyant
-            </p>
-            
-            <motion.h1
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
+        {/* Fixed Title Area - Top Third with Fade */}
+        <div className="fixed top-0 left-0 right-0 h-[45vh] z-20 pointer-events-none">
+          {/* Background with gradient fade */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background via-70% to-transparent" />
+          
+          {/* Title Content */}
+          <div className="relative h-full flex items-center justify-center pt-16">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="text-center"
             >
-              <motion.span 
-                className="block"
-                initial={{ y: 30, opacity: 0 }}
+              <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+                Dushyant
+              </p>
+              
+              <motion.h1
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="font-heading text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
               >
-                Creative
-              </motion.span>
-              <motion.span 
-                className="block"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Director
-              </motion.span>
-            </motion.h1>
+                <motion.span 
+                  className="block"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  Creative
+                </motion.span>
+                <motion.span 
+                  className="block"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  Director
+                </motion.span>
+              </motion.h1>
 
-            <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
-              Crafting visual stories through motion
-            </p>
-          </motion.div>
+              <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+                Crafting visual stories through motion
+              </p>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Videos Container - Scrolls under the title */}
+        {/* Scrollable Videos Container */}
         <div
           ref={scrollContainerRef}
-          className="absolute inset-0 z-10 overflow-y-auto"
+          className="h-screen overflow-y-auto"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           <style>{`
@@ -145,11 +151,11 @@ const Hero = () => {
             }
           `}</style>
           
-          {/* Spacer to push videos below fold initially */}
-          <div className="h-[70vh]" />
+          {/* Spacer - pushes videos to start at one-third */}
+          <div className="h-[40vh]" />
           
           {/* Video Grid */}
-          <div className="px-8 lg:px-16 pb-16">
+          <div className="px-8 lg:px-16 xl:px-24 pb-16">
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
               {videoProjects.map((project, index) => (
                 <motion.div
@@ -180,31 +186,35 @@ const Hero = () => {
 
       {/* Mobile Layout */}
       <section className="md:hidden min-h-screen flex flex-col relative">
-        {/* Fixed Centered Title */}
-        <div className="absolute inset-x-0 top-0 h-[50vh] flex items-center justify-center z-20 pointer-events-none bg-gradient-to-b from-background via-background to-transparent">
-          <div className="text-center px-6">
-            <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
-              Dushyant
-            </p>
-            
-            <motion.h1
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-4xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
-            >
-              <span className="block">Creative</span>
-              <span className="block">Director</span>
-            </motion.h1>
+        {/* Fixed Title Area with Fade */}
+        <div className="fixed top-0 left-0 right-0 h-[40vh] z-20 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background via-65% to-transparent" />
+          
+          <div className="relative h-full flex items-center justify-center pt-12">
+            <div className="text-center px-6">
+              <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
+                Dushyant
+              </p>
+              
+              <motion.h1
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="font-heading text-4xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
+              >
+                <span className="block">Creative</span>
+                <span className="block">Director</span>
+              </motion.h1>
 
-            <p className="text-muted-foreground text-sm mt-4">
-              Crafting visual stories through motion
-            </p>
+              <p className="text-muted-foreground text-sm mt-4">
+                Crafting visual stories through motion
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Scrollable Videos */}
-        <div className="min-h-screen overflow-y-auto pt-[45vh] pb-8 px-4 z-10">
+        <div className="min-h-screen overflow-y-auto pt-[35vh] pb-8 px-4">
           <div className="grid grid-cols-2 gap-3">
             {videoProjects.map((project) => (
               <motion.div
