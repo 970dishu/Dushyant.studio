@@ -6,20 +6,20 @@ const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/pu
 // Thumbnail for video poster
 const THUMBNAIL_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4#t=0.1";
 
-// Video projects data
+// Video projects data with client and subtitle
 const videoProjects = [
-  { id: 1, title: "Brand Identity Motion" },
-  { id: 2, title: "Product Launch Film" },
-  { id: 3, title: "Social Media Campaign" },
-  { id: 4, title: "App Onboarding Flow" },
-  { id: 5, title: "Music Video Direction" },
-  { id: 6, title: "Corporate Explainer" },
-  { id: 7, title: "Event Title Sequence" },
-  { id: 8, title: "Retail Campaign" },
-  { id: 9, title: "Documentary Short" },
-  { id: 10, title: "Fashion Lookbook" },
-  { id: 11, title: "Tech Startup Promo" },
-  { id: 12, title: "Animation Reel" },
+  { id: 1, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
+  { id: 2, client: "NIKE", subtitle: "AIR MAX DAY" },
+  { id: 3, client: "APPLE", subtitle: "SHOT ON IPHONE" },
+  { id: 4, client: "SAMSUNG", subtitle: "GALAXY UNPACKED" },
+  { id: 5, client: "COLDPLAY", subtitle: "MOON MUSIC" },
+  { id: 6, client: "ADIDAS", subtitle: "IMPOSSIBLE IS NOTHING" },
+  { id: 7, client: "PUMA", subtitle: "FOREVER FASTER" },
+  { id: 8, client: "RED BULL", subtitle: "GIVES YOU WINGS" },
+  { id: 9, client: "ZARA", subtitle: "FALL COLLECTION" },
+  { id: 10, client: "H&M", subtitle: "CONSCIOUS" },
+  { id: 11, client: "GUCCI", subtitle: "ANCORA" },
+  { id: 12, client: "LOUIS VUITTON", subtitle: "HORIZONS" },
 ];
 
 const Hero = () => {
@@ -164,29 +164,44 @@ const Hero = () => {
               }
             `}</style>
             
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
               {videoProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  className="relative aspect-video rounded-xl overflow-hidden cursor-pointer"
+                  className="cursor-pointer group"
                   onMouseEnter={() => handleVideoHover(project.id)}
                   onMouseLeave={handleVideoLeave}
                   onClick={() => handleVideoClick(project.id)}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.05, duration: 0.5 }}
-                  whileHover={{ scale: 1.03 }}
                 >
-                  <video
-                    ref={(el) => { videoRefs.current[project.id] = el; }}
-                    src={VIDEO_URL}
-                    poster={THUMBNAIL_URL}
-                    preload="metadata"
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
+                  {/* Header with serial number, client and subtitle */}
+                  <div className="flex items-start gap-4 mb-3">
+                    <span className="text-muted-foreground text-sm font-mono">[{project.id}]</span>
+                    <div>
+                      <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+                        {project.client}
+                      </h3>
+                      <p className="text-muted-foreground text-xs font-mono tracking-wider">
+                        {project.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Video */}
+                  <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                    <video
+                      ref={(el) => { videoRefs.current[project.id] = el; }}
+                      src={VIDEO_URL}
+                      poster={THUMBNAIL_URL}
+                      preload="metadata"
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -249,24 +264,40 @@ const Hero = () => {
             className="h-full overflow-y-auto px-4 py-6"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-6">
               {videoProjects.map((project) => (
                 <motion.div
                   key={project.id}
-                  className="relative aspect-video rounded-lg overflow-hidden"
+                  className="cursor-pointer"
                   onClick={() => handleVideoClick(project.id)}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <video
-                    src={VIDEO_URL}
-                    poster={THUMBNAIL_URL}
-                    preload="metadata"
-                    loop
-                    muted
-                    playsInline
-                    autoPlay
-                    className="w-full h-full object-cover"
-                  />
+                  {/* Header with serial number, client and subtitle */}
+                  <div className="flex items-start gap-3 mb-2">
+                    <span className="text-muted-foreground text-xs font-mono">[{project.id}]</span>
+                    <div>
+                      <h3 className="text-foreground text-xs font-semibold tracking-wide uppercase">
+                        {project.client}
+                      </h3>
+                      <p className="text-muted-foreground text-[10px] font-mono tracking-wider">
+                        {project.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Video */}
+                  <div className="relative aspect-video rounded-lg overflow-hidden">
+                    <video
+                      src={VIDEO_URL}
+                      poster={THUMBNAIL_URL}
+                      preload="metadata"
+                      loop
+                      muted
+                      playsInline
+                      autoPlay
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </motion.div>
               ))}
             </div>
