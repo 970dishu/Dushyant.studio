@@ -18,6 +18,7 @@ const videoProjects = [
 
 const Hero = () => {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
+  const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({})
 
@@ -39,7 +40,7 @@ const Hero = () => {
 
   // Prevent body scroll when video is fullscreen
   useEffect(() => {
-    if (hoveredVideoId !== null) {
+    if (fullscreenVideoId !== null) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -47,7 +48,7 @@ const Hero = () => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [hoveredVideoId]);
+  }, [fullscreenVideoId]);
 
   const handleVideoHover = (id: number) => {
     setHoveredVideoId(id);
@@ -57,19 +58,26 @@ const Hero = () => {
     setHoveredVideoId(null);
   };
 
+  const handleVideoClick = (id: number) => {
+    setFullscreenVideoId(id);
+  };
+
+  const handleFullscreenClose = () => {
+    setFullscreenVideoId(null);
+  };
+
   return (
     <>
       {/* Fullscreen Video Overlay */}
       <AnimatePresence>
-        {hoveredVideoId !== null && (
+        {fullscreenVideoId !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 bg-background cursor-pointer"
-            onMouseLeave={handleVideoLeave}
-            onClick={handleVideoLeave}
+            onClick={handleFullscreenClose}
           >
             <video
               src={VIDEO_URL}
@@ -86,10 +94,7 @@ const Hero = () => {
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:flex h-screen w-full overflow-hidden">
         {/* Left Side - Cycling Text */}
-        <div 
-          className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 relative"
-          onMouseEnter={handleVideoLeave}
-        >
+        <div className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 relative">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -144,6 +149,8 @@ const Hero = () => {
                   key={project.id}
                   className="relative aspect-video rounded-xl overflow-hidden group cursor-pointer"
                   onMouseEnter={() => handleVideoHover(project.id)}
+                  onMouseLeave={handleVideoLeave}
+                  onClick={() => handleVideoClick(project.id)}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
