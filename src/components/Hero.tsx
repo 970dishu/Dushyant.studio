@@ -126,7 +126,7 @@ const Hero = () => {
           opacity: 1
         }} transition={{
           duration: 0.4
-        }} className="text-center">
+        }} className="text-center my-0">
             <motion.h1 initial={{
             y: 40,
             opacity: 0
