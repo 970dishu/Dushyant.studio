@@ -101,6 +101,15 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-center"
           >
+            {/* Name above title */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-cursive text-4xl lg:text-5xl xl:text-6xl text-foreground/80 mb-4 lg:mb-6"
+            >
+              Dushyant
+            </motion.p>
             
             <motion.h1
               initial={{ y: 40, opacity: 0 }}
@@ -182,6 +191,15 @@ const Hero = () => {
         {/* Title Area */}
         <div className="h-[30vh] flex items-center justify-center pt-16">
           <div className="text-center px-6">
+            {/* Name above title */}
+            <motion.p 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="font-cursive text-2xl text-foreground/80 mb-2"
+            >
+              Dushyant
+            </motion.p>
 
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
