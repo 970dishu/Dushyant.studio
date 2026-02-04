@@ -32,7 +32,7 @@ const Header = () => {
         <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">
           {/* Profile Picture with Name below */}
           <div className="relative flex flex-col items-center">
-            <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
+            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-primary/30">
               <img 
                 src={dushyantPortrait} 
                 alt="Dushyant" 
@@ -91,7 +91,7 @@ const Header = () => {
             {/* Profile Picture */}
           {/* Profile Picture with Name below */}
           <div className="relative flex flex-col items-center">
-            <div className="w-10 h-8 rounded-full overflow-hidden border-2 border-primary/30">
+            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-primary/30">
               <img 
                 src={dushyantPortrait} 
                 alt="Dushyant" 
