@@ -124,15 +124,27 @@ const Hero = () => {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
             >
-              <span className="relative w-[180px] lg:w-[280px] xl:w-[340px] flex justify-end mr-4">
+              <span className="relative w-[160px] lg:w-[250px] xl:w-[300px] flex justify-end mr-2 lg:mr-3">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={morphWords[currentWordIndex]}
-                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                    initial={{ 
+                      opacity: 0, 
+                      filter: "blur(12px)",
+                      clipPath: "inset(0 100% 0 0)"
+                    }}
+                    animate={{ 
+                      opacity: 1, 
+                      filter: "blur(0px)",
+                      clipPath: "inset(0 0% 0 0)"
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      filter: "blur(12px)",
+                      clipPath: "inset(0 0 0 100%)"
+                    }}
                     transition={{ 
-                      duration: 0.5, 
+                      duration: 0.6, 
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     className="font-cursive text-primary italic absolute right-0"
@@ -220,15 +232,27 @@ const Hero = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center"
             >
-              <span className="relative w-[100px] flex justify-end mr-2">
+              <span className="relative w-[90px] flex justify-end mr-1">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={morphWords[currentWordIndex]}
-                    initial={{ opacity: 0, y: 15, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -15, scale: 0.9 }}
+                    initial={{ 
+                      opacity: 0, 
+                      filter: "blur(8px)",
+                      clipPath: "inset(0 100% 0 0)"
+                    }}
+                    animate={{ 
+                      opacity: 1, 
+                      filter: "blur(0px)",
+                      clipPath: "inset(0 0% 0 0)"
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      filter: "blur(8px)",
+                      clipPath: "inset(0 0 0 100%)"
+                    }}
                     transition={{ 
-                      duration: 0.5, 
+                      duration: 0.6, 
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     className="font-cursive text-primary italic absolute right-0"
