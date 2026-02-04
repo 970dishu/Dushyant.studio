@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
 import dushyantPortrait from "@/assets/dushyant-portrait.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [nameOpacity, setNameOpacity] = useState(0);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
-      // Name fades in as user scrolls past 150px, fully visible by 300px
-      const scrollProgress = Math.min(Math.max((window.scrollY - 150) / 150, 0), 1);
-      setNameOpacity(scrollProgress);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -31,16 +26,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6">
-      {/* Fixed Name beneath navbar - fades in on scroll */}
-      <motion.div 
-        className="absolute left-1/2 -translate-x-1/2 top-full mt-1 pointer-events-none -z-10"
-        style={{ opacity: nameOpacity }}
-      >
-        <span className="font-cursive text-5xl lg:text-6xl xl:text-7xl text-foreground/15 tracking-wide whitespace-nowrap">
-          Dushyant
-        </span>
-      </motion.div>
+    <header className="fixed top-0 left-0 right-0 z-40 py-4 md:py-6">
       <div className="flex justify-center px-4">
         {/* Desktop Navigation - Full nav or "Available for work" based on scroll */}
         <nav className="hidden lg:flex items-center gap-2 bg-secondary/80 backdrop-blur-md rounded-full px-2 py-2 transition-all duration-500">
