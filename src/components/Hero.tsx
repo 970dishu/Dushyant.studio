@@ -16,6 +16,10 @@ const videoProjects = [
   { id: 6, title: "Corporate Explainer" },
   { id: 7, title: "Event Title Sequence" },
   { id: 8, title: "Retail Campaign" },
+  { id: 9, title: "Documentary Short" },
+  { id: 10, title: "Fashion Lookbook" },
+  { id: 11, title: "Tech Startup Promo" },
+  { id: 12, title: "Animation Reel" },
 ];
 
 const Hero = () => {
