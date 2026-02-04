@@ -119,7 +119,7 @@ const Hero = () => {
               >
                 Creative
               </span>
-              <span className="font-condensed font-medium uppercase tracking-wide">
+              <span className="font-barrio uppercase tracking-wide">
                 Director
               </span>
             </motion.h1>
@@ -203,7 +203,7 @@ const Hero = () => {
               >
                 Creative
               </span>
-              <span className="font-condensed font-medium uppercase tracking-wide text-2xl">
+              <span className="font-barrio uppercase tracking-wide text-2xl">
                 Director
               </span>
             </motion.h1>
