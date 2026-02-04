@@ -24,7 +24,6 @@ const Hero = () => {
 
   // Play/pause videos on hover
   useEffect(() => {
-    // Pause all videos first
     Object.values(videoRefs.current).forEach((video) => {
       if (video) {
         video.pause();
@@ -32,7 +31,6 @@ const Hero = () => {
       }
     });
 
-    // Play the hovered video
     if (hoveredVideoId !== null && videoRefs.current[hoveredVideoId]) {
       videoRefs.current[hoveredVideoId]?.play();
     }
@@ -92,16 +90,16 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Main Hero Section - Desktop/Tablet */}
-      <section className="hidden md:flex h-screen w-full overflow-hidden">
-        {/* Left Side - Cycling Text */}
-        <div className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 relative">
+      <section className="hidden md:block h-screen w-full relative overflow-hidden">
+        {/* Fixed Centered Title - Always on top */}
+        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="text-left"
+            className="text-center"
           >
-            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium mb-4 opacity-0 animate-fade-up ml-1" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+            <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant
             </p>
             
@@ -109,52 +107,62 @@ const Hero = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground uppercase tracking-tighter leading-none"
+              className="font-heading text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
             >
-              {"Creative Director".split(" ").map((word, i) => (
-                <motion.span 
-                  key={i} 
-                  className="block"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {word}
-                </motion.span>
-              ))}
+              <motion.span 
+                className="block"
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Creative
+              </motion.span>
+              <motion.span 
+                className="block"
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Director
+              </motion.span>
             </motion.h1>
 
-            <p className="text-muted-foreground text-base lg:text-lg mt-8 max-w-md opacity-0 animate-fade-up" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
-              Crafting visual stories through motion,<br />
-              one frame at a time.
+            <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+              Crafting visual stories through motion
             </p>
-
-            <div className="mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}>
-              <span className="text-muted-foreground text-sm">Hover a video to preview →</span>
-            </div>
           </motion.div>
         </div>
 
-        {/* Right Side - Video Thumbnails Column */}
-        <div className="w-1/2 h-full relative">
-          {/* Scrollable Video Column */}
-          <div
-            ref={scrollContainerRef}
-            className="h-full overflow-y-auto py-8 px-4"
-            style={{ scrollbarWidth: "thin" }}
-          >
-            <div className="space-y-4">
-              {videoProjects.map((project) => (
+        {/* Videos Container - Scrolls under the title */}
+        <div
+          ref={scrollContainerRef}
+          className="absolute inset-0 z-10 overflow-y-auto"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <style>{`
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          
+          {/* Spacer to push videos below fold initially */}
+          <div className="h-[70vh]" />
+          
+          {/* Video Grid */}
+          <div className="px-8 lg:px-16 pb-16">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+              {videoProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  className="relative aspect-video rounded-xl overflow-hidden group cursor-pointer"
+                  className="relative aspect-video rounded-xl overflow-hidden cursor-pointer"
                   onMouseEnter={() => handleVideoHover(project.id)}
                   onMouseLeave={handleVideoLeave}
                   onClick={() => handleVideoClick(project.id)}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.05, duration: 0.5 }}
+                  whileHover={{ scale: 1.03 }}
                 >
-                  {/* Video Thumbnail */}
                   <video
                     ref={(el) => { videoRefs.current[project.id] = el; }}
                     src={VIDEO_URL}
@@ -170,45 +178,39 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Mobile Layout - Simplified */}
-      <section className="md:hidden min-h-screen flex flex-col pt-20 pb-8">
-        {/* Cycling Text */}
-        <div className="px-6 py-8">
-          <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
-            Dushyant
-          </p>
-          
-          <motion.h1
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-3xl font-bold text-foreground uppercase tracking-tighter leading-none"
-          >
-            {"Creative Director".split(" ").map((word, i) => (
-              <motion.span 
-                key={i} 
-                className="block"
-                initial={{ x: -15, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </motion.h1>
+      {/* Mobile Layout */}
+      <section className="md:hidden min-h-screen flex flex-col relative">
+        {/* Fixed Centered Title */}
+        <div className="absolute inset-x-0 top-0 h-[50vh] flex items-center justify-center z-20 pointer-events-none bg-gradient-to-b from-background via-background to-transparent">
+          <div className="text-center px-6">
+            <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
+              Dushyant
+            </p>
+            
+            <motion.h1
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading text-4xl font-bold text-foreground uppercase tracking-tighter leading-[0.85]"
+            >
+              <span className="block">Creative</span>
+              <span className="block">Director</span>
+            </motion.h1>
 
-          <p className="text-muted-foreground text-sm mt-4">
-            Crafting visual stories through motion
-          </p>
+            <p className="text-muted-foreground text-sm mt-4">
+              Crafting visual stories through motion
+            </p>
+          </div>
         </div>
 
-        {/* Video Grid - Horizontal Scroll on Mobile */}
-        <div className="flex-1 overflow-x-auto px-6 pb-8">
-          <div className="flex gap-4 h-full">
+        {/* Scrollable Videos */}
+        <div className="min-h-screen overflow-y-auto pt-[45vh] pb-8 px-4 z-10">
+          <div className="grid grid-cols-2 gap-3">
             {videoProjects.map((project) => (
               <motion.div
                 key={project.id}
-                className="relative flex-shrink-0 w-[320px] aspect-video rounded-xl overflow-hidden"
+                className="relative aspect-video rounded-lg overflow-hidden"
+                onClick={() => handleVideoClick(project.id)}
                 whileTap={{ scale: 0.98 }}
               >
                 <video
@@ -219,12 +221,6 @@ const Hero = () => {
                   autoPlay
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <h3 className="font-heading text-sm text-foreground font-bold uppercase tracking-tight">
-                    {project.title}
-                  </h3>
-                </div>
               </motion.div>
             ))}
           </div>
