@@ -85,7 +85,10 @@ const Hero = () => {
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:flex h-screen w-full overflow-hidden">
         {/* Left Side - Cycling Text */}
-        <div className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 relative">
+        <div 
+          className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 relative"
+          onMouseEnter={handleVideoLeave}
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
