@@ -94,7 +94,7 @@ const Hero = () => {
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:block w-full">
         {/* Title Area - Top Third */}
-        <div className="h-[60vh] flex items-center justify-center relative">
+        <div className="h-[50vh] flex items-center justify-center relative">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -144,7 +144,7 @@ const Hero = () => {
         </div>
 
         {/* Videos Container with Independent Scroll */}
-        <div className="relative h-[40vh]">
+        <div className="relative h-[50vh]">
           {/* Fade overlay at top */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
           
