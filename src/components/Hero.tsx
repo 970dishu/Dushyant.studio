@@ -142,7 +142,7 @@ const Hero = () => {
       {/* Main Hero Section - Desktop/Tablet */}
       <section className="hidden md:block w-full">
         {/* Title Area - Top Third */}
-        <div className="h-[40vh] flex items-center justify-center relative pt-16">
+        <div className="h-[40vh] flex items-center justify-center relative pt-4rem">
           <motion.div
             initial={{
               opacity: 0,
