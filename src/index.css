@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Barrio&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Barrio&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&family=Shadows+Into+Light&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -39,7 +39,7 @@
     /* Custom Design Tokens */
     --font-heading: 'Antonio', sans-serif;
     --font-body: 'Inter', sans-serif;
-    --font-cursive: 'Dancing Script', cursive;
+    --font-cursive: 'Shadows Into Light', cursive;
     --font-classy: 'Cormorant Garamond', serif;
     --font-condensed: 'Roboto Condensed', sans-serif;
     --font-barrio: 'Barrio', system-ui;
