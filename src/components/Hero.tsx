@@ -229,7 +229,7 @@ const Hero = () => {
           {/* Scrollable video grid */}
           <div
             ref={videoContainerRef}
-            className="h-full overflow-y-auto px-8 lg:px-16 xl:px-24 pt-2 pb-8 py-[16px]"
+            className="h-full overflow-y-auto px-8 lg:px-16 xl:px-24 pt-4 pb-8"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
