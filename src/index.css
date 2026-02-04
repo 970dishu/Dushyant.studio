@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Barrio&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -42,6 +42,7 @@
     --font-cursive: 'Dancing Script', cursive;
     --font-classy: 'Cormorant Garamond', serif;
     --font-condensed: 'Roboto Condensed', sans-serif;
+    --font-barrio: 'Barrio', system-ui;
   }
 }
 
@@ -151,6 +152,10 @@
 
   .font-condensed {
     font-family: var(--font-condensed);
+  }
+
+  .font-barrio {
+    font-family: var(--font-barrio);
   }
 
   .text-balance {
