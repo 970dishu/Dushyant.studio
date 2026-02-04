@@ -96,9 +96,9 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Main Hero Section - Desktop/Tablet */}
-      <section className="hidden md:block w-full">
-        {/* Title Area - Top Third */}
-        <div className="h-[50vh] flex items-center justify-center relative pt-16">
+      <section className="hidden md:block w-full relative">
+        {/* Sticky Title Area - stays fixed while videos scroll under */}
+        <div className="sticky top-0 z-20 bg-background pt-20 pb-12">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -126,7 +126,7 @@ const Hero = () => {
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
-            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-10 px-4">
+            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 px-4">
               <p 
                 className="text-muted-foreground opacity-0 animate-fade-up" 
                 style={{ animationDelay: "0.4s", animationFillMode: "forwards", fontSize: "clamp(0.875rem, 1.2vw, 1.125rem)" }}
@@ -145,70 +145,54 @@ const Hero = () => {
               </motion.p>
             </div>
           </motion.div>
+          
+          {/* Gradient fade at bottom of sticky header - creates "going under" effect */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent pointer-events-none" />
         </div>
 
-        {/* Videos Container with Independent Scroll */}
-        <div className="relative h-[50vh]">
-          {/* Fade overlay at top - extends up to tagline */}
-          <div className="absolute -top-20 left-0 right-0 h-32 bg-gradient-to-b from-background via-background to-transparent z-10 pointer-events-none" />
-          
-          {/* Scrollable video grid */}
-          <div
-            ref={videoContainerRef}
-            className="h-full overflow-y-auto px-8 lg:px-16 xl:px-24 pt-2 pb-8"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            <style>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
-              {videoProjects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  className="cursor-pointer group"
-                  onMouseEnter={() => handleVideoHover(project.id)}
-                  onMouseLeave={handleVideoLeave}
-                  onClick={() => handleVideoClick(project.id)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.05, duration: 0.5 }}
-                >
-                  {/* Header with serial number, client and subtitle */}
-                  <div className="flex items-start gap-4 mb-3">
-                    <span className="text-muted-foreground text-sm font-mono">[{project.id}]</span>
-                    <div>
-                      <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
-                        {project.client}
-                      </h3>
-                      <p className="text-muted-foreground text-xs font-mono tracking-wider">
-                        {project.subtitle}
-                      </p>
-                    </div>
+        {/* Videos Container - scrolls under the sticky header */}
+        <div className="relative px-8 lg:px-16 xl:px-24 pb-16 -mt-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
+            {videoProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                className="cursor-pointer group"
+                onMouseEnter={() => handleVideoHover(project.id)}
+                onMouseLeave={handleVideoLeave}
+                onClick={() => handleVideoClick(project.id)}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + index * 0.04, duration: 0.5 }}
+              >
+                {/* Header with serial number, client and subtitle */}
+                <div className="flex items-start gap-4 mb-3">
+                  <span className="text-muted-foreground text-sm font-mono">[{project.id}]</span>
+                  <div>
+                    <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+                      {project.client}
+                    </h3>
+                    <p className="text-muted-foreground text-xs font-mono tracking-wider">
+                      {project.subtitle}
+                    </p>
                   </div>
-                  
-                  {/* Video */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
-                    <video
-                      ref={(el) => { videoRefs.current[project.id] = el; }}
-                      src={VIDEO_URL}
-                      poster={THUMBNAIL_URL}
-                      preload="metadata"
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+                
+                {/* Video */}
+                <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                  <video
+                    ref={(el) => { videoRefs.current[project.id] = el; }}
+                    src={VIDEO_URL}
+                    poster={THUMBNAIL_URL}
+                    preload="metadata"
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            ))}
           </div>
-          
-          {/* Fade overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
         </div>
       </section>
 
