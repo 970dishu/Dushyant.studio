@@ -112,42 +112,44 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-center"
           >
-            {/* Name above title - moves up on scroll to merge with navbar */}
-            <motion.p 
-              ref={nameRef}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              style={{ 
-                y: nameY, 
-                scale: nameScale,
-                opacity: nameOpacity,
-              }}
-              className="font-cursive text-4xl lg:text-5xl xl:text-6xl text-foreground mb-4 lg:mb-6 will-change-transform"
-            >
-              Dushyant
-            </motion.p>
-            
-            <motion.h1
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-7xl lg:text-9xl xl:text-[10rem] font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-4 lg:gap-6"
-            >
-              <span 
-                className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
-                }}
+            <div className="relative">
+              <motion.h1
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="text-7xl lg:text-9xl xl:text-[10rem] font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-4 lg:gap-6"
               >
-                Creative
-              </span>
-              <span className="font-barrio uppercase tracking-wide">
-                Director
-              </span>
-            </motion.h1>
+                <span 
+                  className="font-cursive text-primary italic"
+                  style={{
+                    textShadow: "0 0 40px hsl(var(--primary) / 0.3)"
+                  }}
+                >
+                  Creative
+                </span>
+                <span className="font-barrio uppercase tracking-wide">
+                  Director
+                </span>
+              </motion.h1>
 
-            <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+              {/* Signature-style name below Director */}
+              <motion.p 
+                ref={nameRef}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                style={{ 
+                  y: nameY, 
+                  scale: nameScale,
+                  opacity: nameOpacity,
+                }}
+                className="absolute -bottom-6 lg:-bottom-8 right-0 lg:right-4 font-cursive text-xl lg:text-2xl xl:text-3xl text-foreground/60 will-change-transform"
+              >
+                — Dushyant
+              </motion.p>
+            </div>
+
+            <p className="text-muted-foreground text-base lg:text-lg mt-12 lg:mt-16 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
               Crafting visual stories through motion
             </p>
           </motion.div>
@@ -208,36 +210,38 @@ const Hero = () => {
         {/* Title Area */}
         <div className="h-[30vh] flex items-center justify-center pt-16">
           <div className="text-center px-6">
-            {/* Name above title */}
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="font-cursive text-2xl text-foreground/80 mb-2"
-            >
-              Dushyant
-            </motion.p>
-
-            <motion.h1
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3"
-            >
-              <span 
-                className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
-                }}
+            <div className="relative inline-block">
+              <motion.h1
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="text-5xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3"
               >
-                Creative
-              </span>
-              <span className="font-barrio uppercase tracking-wide text-4xl">
-                Director
-              </span>
-            </motion.h1>
+                <span 
+                  className="font-cursive text-primary italic"
+                  style={{
+                    textShadow: "0 0 30px hsl(var(--primary) / 0.3)"
+                  }}
+                >
+                  Creative
+                </span>
+                <span className="font-barrio uppercase tracking-wide text-4xl">
+                  Director
+                </span>
+              </motion.h1>
 
-            <p className="text-muted-foreground text-sm mt-4">
+              {/* Signature-style name below Director */}
+              <motion.p 
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="absolute -bottom-5 right-0 font-cursive text-base text-foreground/60"
+              >
+                — Dushyant
+              </motion.p>
+            </div>
+
+            <p className="text-muted-foreground text-sm mt-8">
               Crafting visual stories through motion
             </p>
           </div>
