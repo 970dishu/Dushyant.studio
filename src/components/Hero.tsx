@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
@@ -23,17 +23,6 @@ const Hero = () => {
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
-  const nameRef = useRef<HTMLDivElement>(null);
-
-  // Scroll-based animation for the name
-  const { scrollY } = useScroll();
-  
-  // Transform the name's Y position as user scrolls (moves up toward navbar)
-  const nameY = useTransform(scrollY, [0, 200], [0, -150]);
-  // Scale down as it approaches the navbar
-  const nameScale = useTransform(scrollY, [0, 200], [1, 0.3]);
-  // Fade out as it "transfers" to the navbar version
-  const nameOpacity = useTransform(scrollY, [0, 100, 200], [0.8, 0.4, 0]);
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -138,16 +127,10 @@ const Hero = () => {
               </p>
               
               <motion.p 
-                ref={nameRef}
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={{ opacity: 0.6, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                style={{ 
-                  y: nameY, 
-                  scale: nameScale,
-                  opacity: nameOpacity,
-                }}
-                className="font-cursive text-xl lg:text-2xl xl:text-3xl text-foreground/60 will-change-transform"
+                className="font-cursive text-xl lg:text-2xl xl:text-3xl text-foreground/60"
               >
                 — Dushyant
               </motion.p>
