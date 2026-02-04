@@ -19,8 +19,8 @@ const videoProjects = [
 const Hero = () => {
   const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({})
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
 
   // Play/pause videos on hover
   useEffect(() => {
@@ -90,24 +90,19 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Main Hero Section - Desktop/Tablet */}
-      <section className="hidden md:block h-screen w-full relative overflow-hidden">
-        {/* Fixed Title Area - Top Third with Fade */}
-        <div className="fixed top-0 left-0 right-0 h-[45vh] z-20 pointer-events-none">
-          {/* Background with gradient fade */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background via-70% to-transparent" />
-          
-          {/* Title Content */}
-          <div className="relative h-full flex items-center justify-center pt-16">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="text-center"
-            >
-              <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
-                Dushyant
-              </p>
-              
+      <section className="hidden md:block w-full">
+        {/* Title Area - Top Third */}
+        <div className="h-[35vh] flex items-center justify-center relative">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="text-center"
+          >
+            <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+              Dushyant
+            </p>
+            
             <motion.h1
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -117,30 +112,29 @@ const Hero = () => {
               Creative Director
             </motion.h1>
 
-              <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
-                Crafting visual stories through motion
-              </p>
-            </motion.div>
-          </div>
+            <p className="text-muted-foreground text-base lg:text-lg mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+              Crafting visual stories through motion
+            </p>
+          </motion.div>
         </div>
 
-        {/* Scrollable Videos Container */}
-        <div
-          ref={scrollContainerRef}
-          className="h-screen overflow-y-auto"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          <style>{`
-            .hide-scrollbar::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
+        {/* Videos Container with Independent Scroll */}
+        <div className="relative h-[65vh]">
+          {/* Fade overlay at top */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
           
-          {/* Spacer - pushes videos to start at one-third */}
-          <div className="h-[40vh]" />
-          
-          {/* Video Grid */}
-          <div className="px-8 lg:px-16 xl:px-24 pb-16">
+          {/* Scrollable video grid */}
+          <div
+            ref={videoContainerRef}
+            className="h-full overflow-y-auto px-8 lg:px-16 xl:px-24 py-8"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            <style>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
               {videoProjects.map((project, index) => (
                 <motion.div
@@ -166,21 +160,21 @@ const Hero = () => {
               ))}
             </div>
           </div>
+          
+          {/* Fade overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
         </div>
       </section>
 
       {/* Mobile Layout */}
-      <section className="md:hidden min-h-screen flex flex-col relative">
-        {/* Fixed Title Area with Fade */}
-        <div className="fixed top-0 left-0 right-0 h-[40vh] z-20 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background via-65% to-transparent" />
-          
-          <div className="relative h-full flex items-center justify-center pt-12">
-            <div className="text-center px-6">
-              <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
-                Dushyant
-              </p>
-              
+      <section className="md:hidden w-full">
+        {/* Title Area */}
+        <div className="h-[30vh] flex items-center justify-center pt-16">
+          <div className="text-center px-6">
+            <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
+              Dushyant
+            </p>
+            
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -190,34 +184,45 @@ const Hero = () => {
               Creative Director
             </motion.h1>
 
-              <p className="text-muted-foreground text-sm mt-4">
-                Crafting visual stories through motion
-              </p>
-            </div>
+            <p className="text-muted-foreground text-sm mt-4">
+              Crafting visual stories through motion
+            </p>
           </div>
         </div>
 
-        {/* Scrollable Videos */}
-        <div className="min-h-screen overflow-y-auto pt-[35vh] pb-8 px-4">
-          <div className="grid grid-cols-2 gap-3">
-            {videoProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                className="relative aspect-video rounded-lg overflow-hidden"
-                onClick={() => handleVideoClick(project.id)}
-                whileTap={{ scale: 0.98 }}
-              >
-                <video
-                  src={VIDEO_URL}
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            ))}
+        {/* Videos Container with Independent Scroll */}
+        <div className="relative h-[70vh]">
+          {/* Fade overlay at top */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+          
+          {/* Scrollable video grid */}
+          <div 
+            className="h-full overflow-y-auto px-4 py-6"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            <div className="grid grid-cols-2 gap-3">
+              {videoProjects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  className="relative aspect-video rounded-lg overflow-hidden"
+                  onClick={() => handleVideoClick(project.id)}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <video
+                    src={VIDEO_URL}
+                    loop
+                    muted
+                    playsInline
+                    autoPlay
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
+          
+          {/* Fade overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
         </div>
       </section>
     </>
