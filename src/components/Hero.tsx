@@ -101,7 +101,7 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-center"
           >
-            <p className="text-foreground text-sm uppercase tracking-[0.3em] font-medium mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
+            <p className="text-foreground text-lg lg:text-xl uppercase tracking-[0.3em] font-medium mb-4 opacity-0 animate-fade-up" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
               Dushyant
             </p>
             
@@ -109,7 +109,7 @@ const Hero = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3 lg:gap-4"
+              className="text-7xl lg:text-9xl xl:text-[10rem] font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-4 lg:gap-6"
             >
               <span 
                 className="font-cursive text-primary italic"
@@ -185,7 +185,7 @@ const Hero = () => {
         {/* Title Area */}
         <div className="h-[30vh] flex items-center justify-center pt-16">
           <div className="text-center px-6">
-            <p className="text-foreground text-xs uppercase tracking-[0.25em] font-medium mb-3">
+            <p className="text-foreground text-sm uppercase tracking-[0.25em] font-medium mb-2">
               Dushyant
             </p>
             
@@ -193,7 +193,7 @@ const Hero = () => {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-2"
+              className="text-5xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3"
             >
               <span 
                 className="font-cursive text-primary italic"
@@ -203,7 +203,7 @@ const Hero = () => {
               >
                 Creative
               </span>
-              <span className="font-barrio uppercase tracking-wide text-2xl">
+              <span className="font-barrio uppercase tracking-wide text-4xl">
                 Director
               </span>
             </motion.h1>
