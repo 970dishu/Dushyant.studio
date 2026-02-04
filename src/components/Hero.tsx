@@ -105,7 +105,8 @@ const Hero = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-7xl lg:text-9xl xl:text-[10rem] font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-4 lg:gap-6"
+              className="font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-6"
+              style={{ fontSize: "clamp(4.5rem, 8vw, 10rem)" }}
             >
               <span 
                 className="font-cursive text-primary italic"
@@ -121,8 +122,11 @@ const Hero = () => {
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
-            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 lg:mt-10 px-4">
-              <p className="text-muted-foreground text-base lg:text-lg opacity-0 animate-fade-up" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
+            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-10 px-4">
+              <p 
+                className="text-muted-foreground opacity-0 animate-fade-up" 
+                style={{ animationDelay: "0.4s", animationFillMode: "forwards", fontSize: "clamp(0.875rem, 1.2vw, 1.125rem)" }}
+              >
                 Crafting visual stories through motion
               </p>
               
@@ -130,7 +134,8 @@ const Hero = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 0.6, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="font-cursive text-xl lg:text-2xl xl:text-3xl text-foreground/60"
+                className="font-cursive text-foreground/60"
+                style={{ fontSize: "clamp(1.25rem, 1.8vw, 1.875rem)" }}
               >
                 — Dushyant
               </motion.p>
