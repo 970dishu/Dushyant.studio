@@ -113,18 +113,7 @@ const Hero = () => {
     };
   }, [detectCenterCard]);
 
-  // Horizontal wheel scroll (for trackpads & mice)
-  useEffect(() => {
-    const container = carouselRef.current;
-    if (!container) return;
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
-    };
-    container.addEventListener("wheel", handleWheel, { passive: false });
-    return () => container.removeEventListener("wheel", handleWheel);
-  }, []);
+
 
   // Drag handlers
   const onPointerDown = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
