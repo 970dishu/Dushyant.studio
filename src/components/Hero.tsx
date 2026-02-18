@@ -190,7 +190,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 0.5, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-foreground/50 font-mono tracking-wider"
+              className="absolute bottom-6 inset-x-0 text-center text-xs text-foreground/50 font-mono tracking-wider"
             >
               TAP ANYWHERE TO CLOSE
             </motion.p>
