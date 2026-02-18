@@ -48,13 +48,31 @@ const GlobalCursor = () => {
 
   return (
     <>
-      {/* Delayed following circle */}
+      {/* Main cursor dot */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        animate={{
+          x: position.x - 4,
+          y: position.y - 4,
+          scale: isClicking ? 0.8 : 1,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 28,
+          mass: 0.5,
+        }}
+      >
+        <div className="w-2 h-2 rounded-full bg-white" />
+      </motion.div>
+
+      {/* Following circle outline */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9998]"
         animate={{
-          x: position.x - 10,
-          y: position.y - 10,
-          scale: isClicking ? 0.8 : isPointer ? 1.3 : 1,
+          x: position.x - 20,
+          y: position.y - 20,
+          scale: isPointer ? 1.5 : isClicking ? 0.9 : 1,
         }}
         transition={{
           type: "spring",
@@ -63,9 +81,12 @@ const GlobalCursor = () => {
           mass: 0.1,
         }}
       >
-        <div className="w-5 h-5 rounded-full bg-primary/80" />
+        <div 
+          className={`w-10 h-10 rounded-full border-2 transition-colors duration-200 ${
+            isPointer ? 'border-primary bg-primary/10' : 'border-foreground/30'
+          }`}
+        />
       </motion.div>
-
     </>
   );
 };
