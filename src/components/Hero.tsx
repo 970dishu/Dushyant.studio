@@ -150,7 +150,9 @@ const Hero = () => {
     if (card && container) {
       const cardRect = card.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-      const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      const scrollLeft = container.scrollLeft + (cardCenter - containerCenter);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
       // Re-enable auto-detection after scroll completes
       setTimeout(() => { isUserScrolling.current = true; }, 600);
