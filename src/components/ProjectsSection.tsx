@@ -13,8 +13,6 @@ const ProjectCard = ({ project, index, totalProjects, containerRef }: ProjectCar
   const navigate = useNavigate();
   const cardRef = useRef<HTMLDivElement>(null);
   
-  // Track the overall container scroll to determine how far we've scrolled
-  // Each card occupies 1/totalProjects of the total scroll distance
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -22,26 +20,35 @@ const ProjectCard = ({ project, index, totalProjects, containerRef }: ProjectCar
 
   const isLastCard = index === totalProjects - 1;
 
-  // Each card's "active" range within the total scroll
+  // Each card's scroll segment
   const cardStart = index / totalProjects;
   const cardEnd = (index + 1) / totalProjects;
+  // Midpoint: card is fully visible here, then starts receding
+  const cardMid = (cardStart + cardEnd) / 2;
 
-  // Scale: starts at 1 when this card is active, scales down to 0.9 as next card takes over
+  // Scale: hold at 1 during first half, then shrink to 0.85 during second half
   const scale = useTransform(
     scrollYProgress,
-    [cardStart, cardEnd],
-    [1, isLastCard ? 1 : 0.9]
+    [cardStart, cardMid, cardEnd],
+    [1, 1, isLastCard ? 1 : 0.85]
   );
 
   // Brightness dims as card recedes
   const brightness = useTransform(
     scrollYProgress,
-    [cardStart, cardEnd],
-    [1, isLastCard ? 1 : 0.5]
+    [cardStart, cardMid, cardEnd],
+    [1, 1, isLastCard ? 1 : 0.4]
   );
   const filterBrightness = useTransform(brightness, (v) => `brightness(${v})`);
 
-  // Each card sticks slightly lower to show stacking
+  // Y offset: card slides up slightly as it recedes to enhance "going behind" feel
+  const y = useTransform(
+    scrollYProgress,
+    [cardStart, cardMid, cardEnd],
+    [0, 0, isLastCard ? 0 : -60]
+  );
+
+  // Each card sticks at progressively lower positions
   const stickyTop = index * 40;
 
   return (
@@ -49,10 +56,11 @@ const ProjectCard = ({ project, index, totalProjects, containerRef }: ProjectCar
       ref={cardRef}
       style={{
         scale,
+        y,
         zIndex: index + 1,
         top: `${stickyTop}px`,
       }}
-      className="sticky h-screen w-full flex items-center justify-center px-4 md:px-6 lg:px-12"
+      className="sticky h-screen w-full flex items-center justify-center px-4 md:px-6 lg:px-12 origin-top"
     >
       <motion.div
         className="relative w-full max-w-[1600px]"
