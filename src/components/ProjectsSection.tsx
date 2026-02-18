@@ -24,41 +24,30 @@ const ProjectCard = ({
   const segmentSize = 1 / totalProjects;
   const start = index * segmentSize;
   const end = start + segmentSize;
-
-  // Easing helper: cubic ease-in-out mapped to 0-1
-  const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-  // The NEXT card's segment start — that's when this card should start receding
   const nextStart = end;
   const nextEnd = nextStart + segmentSize;
 
   // Y position: incoming slides up from 800 to 0 over its own segment
-  const y = useTransform(scrollYProgress, (v) => {
-    if (isFirstCard) return 0;
-    if (v < start) return 800;
-    if (v >= start && v < end) {
-      const t = easeInOut((v - start) / segmentSize);
-      return 800 * (1 - t);
-    }
-    return 0;
-  });
+  const y = useTransform(
+    scrollYProgress,
+    isFirstCard
+      ? [0, 1]
+      : [start, start + segmentSize * 0.1, end - segmentSize * 0.1, end],
+    isFirstCard
+      ? [0, 0]
+      : [800, 700, 50, 0]
+  );
 
   // Scale: card is 1.0 when active, recedes to 0.92 when the NEXT card enters
-  const scale = useTransform(scrollYProgress, (v) => {
-    // Incoming: scale up from 0.95 to 1
-    if (!isFirstCard && v >= start && v < end) {
-      const t = easeInOut((v - start) / segmentSize);
-      return 0.95 + 0.05 * t;
-    }
-    // Outgoing: scale down from 1 to 0.92 while next card comes in
-    if (!isLastCard && v >= nextStart && v < nextEnd) {
-      const t = easeInOut((v - nextStart) / segmentSize);
-      return 1 - 0.08 * t;
-    }
-    if (v < start) return isFirstCard ? 1 : 0.95;
-    if (v >= nextEnd && !isLastCard) return 0.92;
-    return 1;
-  });
+  const scale = useTransform(
+    scrollYProgress,
+    isLastCard
+      ? (isFirstCard ? [0, start, end] : [0, start, end])
+      : [0, start, end, nextStart, nextEnd, 1],
+    isLastCard
+      ? (isFirstCard ? [1, 1, 1] : [0.95, 0.95, 1])
+      : [isFirstCard ? 1 : 0.95, isFirstCard ? 1 : 0.95, 1, 1, 0.92, 0.92]
+  );
 
   // Z-index: each successive card stacks higher; incoming card gets boost
   const zIndex = useTransform(scrollYProgress, (v) => {
@@ -68,7 +57,7 @@ const ProjectCard = ({
 
   return (
     <motion.div
-      style={{ y, scale, zIndex }}
+      style={{ y, scale, zIndex, willChange: "transform", translateZ: 0 }}
       className="absolute inset-0 flex items-center justify-center px-4 md:px-6 lg:px-12"
     >
       <div className="relative w-full max-w-[1600px]">
