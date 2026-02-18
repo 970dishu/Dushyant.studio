@@ -18,30 +18,51 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
     offset: ["start start", "end start"]
   });
 
-  // As user scrolls past this card:
-  // - Scale down to create "receding into background" depth
-  // - Keep opacity high so stacked cards remain visible behind
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.93]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.6]);
+  // Progressive scale-down as user scrolls past this card.
+  // Starts scaling immediately once scrolling begins (not delayed),
+  // ending at a smaller size so the card visually "recedes" into the background.
+  // The last card doesn't need to scale since nothing stacks on top of it.
+  const isLastCard = index === totalProjects - 1;
+  const targetScale = isLastCard ? 1 : 1 - (0.05 * (totalProjects - index));
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1, isLastCard ? 1 : targetScale]
+  );
 
-  // Each card sticks slightly lower so previous cards peek from behind
-  const topOffset = index * 28;
+  // Slight darkening to enhance depth — cards further back feel more distant
+  const brightness = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1, isLastCard ? 1 : 0.6]
+  );
+  const filterBrightness = useTransform(brightness, (v) => `brightness(${v})`);
+
+  // Each successive card sticks at a slightly higher top value.
+  // This means when a card scales down and gets "pushed back",
+  // you can see the top edge + rounded corners of the card behind.
+  const stickyTop = index * 40;
 
   return (
     <motion.div
       ref={cardRef}
-      style={{ 
-        scale, 
-        opacity, 
-        zIndex: index,
-        top: `${topOffset}px`,
+      style={{
+        scale,
+        zIndex: index + 1,
+        top: `${stickyTop}px`,
       }}
-      className="sticky h-screen w-full flex items-center justify-center px-4 md:px-8 lg:px-16"
+      className="sticky h-screen w-full flex items-center justify-center px-4 md:px-6 lg:px-12"
     >
-      <div className="relative w-full max-w-[1600px]">
+      <motion.div
+        className="relative w-full max-w-[1600px]"
+        style={{ filter: filterBrightness }}
+      >
         <div
           onClick={() => navigate(`/project/${project.slug}`)}
-          className="group relative w-full aspect-[16/9] rounded-[20px] overflow-hidden bg-card cursor-pointer shadow-2xl"
+          className="group relative w-full aspect-[16/9] rounded-[24px] overflow-hidden bg-card cursor-pointer"
+          style={{
+            boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 10px 30px -10px rgba(0, 0, 0, 0.4)',
+          }}
         >
           {/* Background Image */}
           <div className="absolute inset-0">
@@ -134,7 +155,7 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
             </motion.div>
           )}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
