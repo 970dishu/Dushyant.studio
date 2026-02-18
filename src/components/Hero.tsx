@@ -7,9 +7,9 @@ const VIDEO_URL = "/src/assets/mubi/call.mp4";
 const THUMBNAIL_URL = "/src/assets/mubi/call.mp4#t=0.1";
 
 const videoProjects = [
-  { id: 1, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
-  { id: 2, client: "NIKE", subtitle: "AIR MAX DAY" },
-  { id: 3, client: "APPLE", subtitle: "SHOT ON IPHONE" },
+  { id: 1, client: "APPLE", subtitle: "SHOT ON IPHONE" },
+  { id: 2, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
+  { id: 3, client: "NIKE", subtitle: "AIR MAX DAY" },
   { id: 4, client: "SAMSUNG", subtitle: "GALAXY UNPACKED" },
   { id: 5, client: "COLDPLAY", subtitle: "MOON MUSIC" },
   { id: 6, client: "ADIDAS", subtitle: "IMPOSSIBLE IS NOTHING" },
