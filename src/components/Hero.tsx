@@ -26,6 +26,7 @@ const Hero = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+  const [cardTransforms, setCardTransforms] = useState<{ [key: number]: { rotateY: number; translateZ: number; opacity: number } }>({});
 
   // Drag state
   const isDragging = useRef(false);
@@ -54,26 +55,40 @@ const Hero = () => {
     return () => { document.body.style.overflow = ""; };
   }, [fullscreenVideoId]);
 
-  // Detect center card and auto-play
+  // Detect center card, auto-play, and compute 3D transforms
   const detectCenterCard = useCallback(() => {
     const container = carouselRef.current;
     if (!container) return;
     const containerRect = container.getBoundingClientRect();
     const centerX = containerRect.left + containerRect.width / 2;
+    const halfWidth = containerRect.width / 2;
     let closestId: number | null = null;
     let closestDist = Infinity;
+    const transforms: typeof cardTransforms = {};
 
     Object.entries(cardRefs.current).forEach(([idStr, card]) => {
       if (!card) return;
+      const id = Number(idStr);
       const rect = card.getBoundingClientRect();
       const cardCenter = rect.left + rect.width / 2;
       const dist = Math.abs(cardCenter - centerX);
       if (dist < closestDist) {
         closestDist = dist;
-        closestId = Number(idStr);
+        closestId = id;
       }
+      // Normalize offset: -1 (far left) to 1 (far right)
+      const offset = (cardCenter - centerX) / halfWidth;
+      const clampedOffset = Math.max(-1, Math.min(1, offset));
+      // rotateY: cards at edges rotate up to 35deg
+      const rotateY = clampedOffset * -35;
+      // translateZ: center card is closest, edges recede
+      const translateZ = (1 - Math.abs(clampedOffset)) * 50 - 50;
+      // Opacity: center is full, edges dim
+      const opacity = 1 - Math.abs(clampedOffset) * 0.5;
+      transforms[id] = { rotateY, translateZ, opacity };
     });
 
+    setCardTransforms(transforms);
     if (closestId !== null && closestId !== activeId) {
       setActiveId(closestId);
     }
@@ -225,7 +240,7 @@ const Hero = () => {
         </div>
 
         {/* Horizontal Video Carousel */}
-        <div className="flex-1 relative flex items-center">
+        <div className="flex-1 relative flex items-center" style={{ perspective: "1200px" }}>
           {/* Left fade */}
           <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
           {/* Right fade */}
@@ -234,7 +249,7 @@ const Hero = () => {
           <div
             ref={carouselRef}
             className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y" }}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -244,6 +259,10 @@ const Hero = () => {
 
             {videoProjects.map((project, index) => {
               const isActive = activeId === project.id;
+              const t = cardTransforms[project.id];
+              const rotateY = t?.rotateY ?? 0;
+              const translateZ = t?.translateZ ?? 0;
+              const cardOpacity = t?.opacity ?? 0.6;
 
               return (
                 <motion.div
@@ -252,7 +271,10 @@ const Hero = () => {
                   className="flex-shrink-0 cursor-pointer group"
                   style={{
                     width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
-                    transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                    transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
+                    opacity: cardOpacity,
+                    transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease-out, opacity 0.3s ease-out",
+                    transformStyle: "preserve-3d",
                   }}
                   onClick={() => handleCardClick(project.id)}
                   initial={{ opacity: 0, y: 30 }}
@@ -279,7 +301,7 @@ const Hero = () => {
                         ? "ring-primary/50 shadow-lg shadow-primary/10"
                         : "ring-border/20 hover:ring-border/40"
                     }`}
-                    animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.6 }}
+                    animate={{ scale: isActive ? 1 : 0.95 }}
                     transition={{ duration: 0.4 }}
                   >
                     <video
