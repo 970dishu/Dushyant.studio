@@ -27,8 +27,7 @@ const Hero = () => {
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const [cardTransforms, setCardTransforms] = useState<{ [key: number]: { rotateY: number; translateZ: number; opacity: number } }>({});
-
-  // Drag state
+  const isUserScrolling = useRef(true); // false during programmatic scroll
   const isDragging = useRef(false);
   const dragStartX = useRef(0);
   const dragScrollLeft = useRef(0);
@@ -55,8 +54,8 @@ const Hero = () => {
     return () => { document.body.style.overflow = ""; };
   }, [fullscreenVideoId]);
 
-  // Detect center card, auto-play, and compute 3D transforms
-  const detectCenterCard = useCallback(() => {
+  // Compute 3D transforms and optionally detect center card
+  const updateCarousel = useCallback((updateActive: boolean) => {
     const container = carouselRef.current;
     if (!container) return;
     const containerRect = container.getBoundingClientRect();
@@ -76,20 +75,16 @@ const Hero = () => {
         closestDist = dist;
         closestId = id;
       }
-      // Normalize offset: -1 (far left) to 1 (far right)
       const offset = (cardCenter - centerX) / halfWidth;
       const clampedOffset = Math.max(-1, Math.min(1, offset));
-      // rotateY: cards at edges rotate up to 35deg
       const rotateY = clampedOffset * -35;
-      // translateZ: center card is closest, edges recede
       const translateZ = (1 - Math.abs(clampedOffset)) * 50 - 50;
-      // Opacity: center is full, edges dim
       const opacity = 1 - Math.abs(clampedOffset) * 0.5;
       transforms[id] = { rotateY, translateZ, opacity };
     });
 
     setCardTransforms(transforms);
-    if (closestId !== null && closestId !== activeId) {
+    if (updateActive && closestId !== null && closestId !== activeId) {
       setActiveId(closestId);
     }
   }, [activeId]);
@@ -101,17 +96,16 @@ const Hero = () => {
     let rafId: number;
     const onScroll = () => {
       cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(detectCenterCard);
+      rafId = requestAnimationFrame(() => updateCarousel(isUserScrolling.current));
     };
     container.addEventListener("scroll", onScroll, { passive: true });
-    // Initial detection
-    const timeout = setTimeout(detectCenterCard, 600);
+    const timeout = setTimeout(() => updateCarousel(true), 600);
     return () => {
       container.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
       clearTimeout(timeout);
     };
-  }, [detectCenterCard]);
+  }, [updateCarousel]);
 
 
 
@@ -121,10 +115,9 @@ const Hero = () => {
     if (!container) return;
     isDragging.current = true;
     hasDragged.current = false;
+    isUserScrolling.current = true;
     dragStartX.current = e.clientX;
     dragScrollLeft.current = container.scrollLeft;
-    container.setPointerCapture(e.pointerId);
-    container.style.cursor = "grabbing";
   }, []);
 
   const onPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
@@ -137,23 +130,18 @@ const Hero = () => {
     }
   }, []);
 
-  const onPointerUp = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+  const onPointerUp = useCallback(() => {
     isDragging.current = false;
-    const container = carouselRef.current;
-    if (container) {
-      container.releasePointerCapture(e.pointerId);
-      container.style.cursor = "grab";
-    }
   }, []);
 
   const handleCardClick = useCallback((id: number) => {
-    // Ignore click if user just dragged
     if (hasDragged.current) {
       hasDragged.current = false;
       return;
     }
 
-    // Always scroll to center and play
+    // Prevent auto-detection from overriding during programmatic scroll
+    isUserScrolling.current = false;
     setActiveId(id);
 
     const card = cardRefs.current[id];
@@ -163,6 +151,10 @@ const Hero = () => {
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+      // Re-enable auto-detection after scroll completes
+      setTimeout(() => { isUserScrolling.current = true; }, 600);
+    } else {
+      isUserScrolling.current = true;
     }
   }, []);
 
