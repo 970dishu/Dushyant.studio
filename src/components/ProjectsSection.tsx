@@ -23,7 +23,7 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
   // ending at a smaller size so the card visually "recedes" into the background.
   // The last card doesn't need to scale since nothing stacks on top of it.
   const isLastCard = index === totalProjects - 1;
-  const targetScale = isLastCard ? 1 : 1 - (0.05 * (totalProjects - index));
+  const targetScale = isLastCard ? 1 : 1 - (0.08 * (totalProjects - index));
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
