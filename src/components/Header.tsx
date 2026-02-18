@@ -21,6 +21,7 @@ const Header = () => {
   const navLinks = [
     { href: isHomePage ? "#" : "/", label: "Home", isAnchor: !isHomePage ? false : true },
     { href: isHomePage ? "#about" : "/#about", label: "About", isAnchor: isHomePage },
+    { href: "/my-story", label: "Story", isAnchor: false },
     { href: isHomePage ? "#work" : "/#work", label: "Projects", isAnchor: isHomePage },
     { href: isHomePage ? "#testimonials" : "/#testimonials", label: "Clients", isAnchor: isHomePage },
   ];
