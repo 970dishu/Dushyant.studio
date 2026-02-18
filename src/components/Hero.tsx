@@ -141,6 +141,7 @@ const Hero = () => {
       return;
     }
 
+    // Prevent auto-detection from overriding during programmatic scroll
     isUserScrolling.current = false;
     setActiveId(id);
 
@@ -151,7 +152,8 @@ const Hero = () => {
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-      setTimeout(() => { isUserScrolling.current = true; }, 500);
+      // Re-enable auto-detection after scroll completes
+      setTimeout(() => { isUserScrolling.current = true; }, 600);
     } else {
       isUserScrolling.current = true;
     }
@@ -250,7 +252,7 @@ const Hero = () => {
           <div
             ref={carouselRef}
             className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none snap-x snap-proximity"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d" }}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d", scrollBehavior: "smooth" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -271,10 +273,10 @@ const Hero = () => {
                   ref={(el) => { cardRefs.current[project.id] = el; }}
                   className="flex-shrink-0 cursor-pointer group snap-center"
                   style={{
-                    width: "clamp(260px, 35vw, 420px)",
-                    transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${isActive ? 1.15 : 0.9})`,
+                    width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
+                    transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
                     opacity: cardOpacity,
-                    transition: "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
+                    transition: "width 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
                     transformStyle: "preserve-3d",
                   }}
                   onClick={() => handleCardClick(project.id)}
@@ -283,12 +285,14 @@ const Hero = () => {
                   transition={{ delay: 0.3 + index * 0.04, duration: 0.5 }}
                 >
                   {/* Video Card */}
-                  <div
+                  <motion.div
                     className={`relative aspect-video rounded-lg overflow-hidden ring-1 transition-all duration-500 ${
                       isActive
                         ? "ring-primary/50 shadow-lg shadow-primary/10"
                         : "ring-border/20 hover:ring-border/40"
                     }`}
+                    animate={{ scale: isActive ? 1 : 0.92 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   >
                     <video
                       ref={(el) => { videoRefs.current[project.id] = el; }}
@@ -327,7 +331,7 @@ const Hero = () => {
                       </motion.button>
                     )}
 
-                  </div>
+                  </motion.div>
 
                   {/* Active indicator dot */}
                   {isActive && (
