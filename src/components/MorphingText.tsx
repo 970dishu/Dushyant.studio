@@ -49,13 +49,13 @@ const MorphingText = ({ className }: { className?: string }) => {
           {currentPrefix.split("").map((char, i) => (
             <motion.span
               key={`${prefixIndex}-${i}`}
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: "0%", opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0, position: "absolute" }}
+              initial={{ y: "110%", opacity: 0, filter: "blur(4px)" }}
+              animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: "-110%", opacity: 0, filter: "blur(4px)", position: "absolute" }}
               transition={{
-                duration: 0.3,
-                delay: i * 0.04,
-                ease: [0.16, 1, 0.3, 1],
+                duration: 0.25,
+                delay: i * 0.03,
+                ease: [0.22, 1, 0.36, 1],
               }}
               className="inline-block"
             >
