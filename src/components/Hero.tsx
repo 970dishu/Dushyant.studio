@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import MorphingText from "./MorphingText";
 
 // Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
@@ -181,7 +182,7 @@ const Hero = () => {
               >
                 Creative
               </span>
-              <span className="font-barrio uppercase tracking-wide">Director</span>
+              <MorphingText className="font-barrio uppercase tracking-wide" />
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
@@ -326,7 +327,7 @@ const Hero = () => {
               >
                 Creative
               </span>
-              <span className="font-barrio uppercase tracking-wide text-4xl">Director</span>
+              <MorphingText className="font-barrio uppercase tracking-wide text-4xl" />
             </motion.h1>
 
             {/* Tagline and signature on the same line */}
