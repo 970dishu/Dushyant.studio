@@ -54,14 +54,56 @@ const Hero = () => {
     return () => { document.body.style.overflow = ""; };
   }, [fullscreenVideoId]);
 
+  // Detect center card and auto-play
+  const detectCenterCard = useCallback(() => {
+    const container = carouselRef.current;
+    if (!container) return;
+    const containerRect = container.getBoundingClientRect();
+    const centerX = containerRect.left + containerRect.width / 2;
+    let closestId: number | null = null;
+    let closestDist = Infinity;
+
+    Object.entries(cardRefs.current).forEach(([idStr, card]) => {
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const dist = Math.abs(cardCenter - centerX);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestId = Number(idStr);
+      }
+    });
+
+    if (closestId !== null && closestId !== activeId) {
+      setActiveId(closestId);
+    }
+  }, [activeId]);
+
+  // Listen for scroll events to detect center card
+  useEffect(() => {
+    const container = carouselRef.current;
+    if (!container) return;
+    let rafId: number;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(detectCenterCard);
+    };
+    container.addEventListener("scroll", onScroll, { passive: true });
+    // Initial detection
+    const timeout = setTimeout(detectCenterCard, 600);
+    return () => {
+      container.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeout);
+    };
+  }, [detectCenterCard]);
+
   // Horizontal wheel scroll (for trackpads & mice)
   useEffect(() => {
     const container = carouselRef.current;
     if (!container) return;
     const handleWheel = (e: WheelEvent) => {
-      // If there's meaningful horizontal delta (trackpad), let it work naturally
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      // Convert vertical scroll to horizontal
       e.preventDefault();
       container.scrollLeft += e.deltaY;
     };
