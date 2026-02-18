@@ -76,9 +76,9 @@ const GlobalCursor = () => {
         }}
         transition={{
           type: "spring",
-          stiffness: 150,
-          damping: 15,
-          mass: 0.1,
+          stiffness: 500,
+          damping: 28,
+          mass: 0.5,
         }}
       >
         <div 
