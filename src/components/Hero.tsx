@@ -148,12 +148,12 @@ const Hero = () => {
 
   const handleCardClick = useCallback((id: number) => {
     // Ignore click if user just dragged
-    if (hasDragged.current) return;
-
-    if (activeId === id) {
-      setFullscreenVideoId(id);
+    if (hasDragged.current) {
+      hasDragged.current = false;
       return;
     }
+
+    // Always scroll to center and play
     setActiveId(id);
 
     const card = cardRefs.current[id];
@@ -164,7 +164,7 @@ const Hero = () => {
       const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
     }
-  }, [activeId]);
+  }, []);
 
   return (
     <>
