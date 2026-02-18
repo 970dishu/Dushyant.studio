@@ -24,7 +24,7 @@ const videoProjects = [
 const Hero = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
