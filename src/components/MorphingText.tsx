@@ -6,13 +6,19 @@ const suffix = "tor";
 
 const MorphingText = ({ className }: { className?: string }) => {
   const [prefixIndex, setPrefixIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1); // 1 = down, -1 = up
   const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
   const measureRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPrefixIndex((prev) => (prev + 1) % prefixes.length);
+      setPrefixIndex((prev) => {
+        const next = (prev + 1) % prefixes.length;
+        // Director(0) -> Editor(1): go down (1), Editor(1) -> Director(0): go up (-1)
+        setDirection(next > prev ? 1 : -1);
+        return next;
+      });
     }, 3500);
     return () => clearInterval(interval);
   }, []);
@@ -49,9 +55,9 @@ const MorphingText = ({ className }: { className?: string }) => {
           {currentPrefix.split("").map((char, i) => (
             <motion.span
               key={`${prefixIndex}-${i}`}
-              initial={{ y: "100%", opacity: 0 }}
+              initial={{ y: direction === 1 ? "100%" : "-100%", opacity: 0 }}
               animate={{ y: "0%", opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0, position: "absolute" }}
+              exit={{ y: direction === 1 ? "-100%" : "100%", opacity: 0, position: "absolute" }}
               transition={{
                 duration: 0.3,
                 delay: i * 0.04,
