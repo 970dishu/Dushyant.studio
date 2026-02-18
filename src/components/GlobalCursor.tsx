@@ -50,7 +50,7 @@ const GlobalCursor = () => {
     <>
       {/* Delayed following circle */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
         animate={{
           x: position.x - 10,
           y: position.y - 10,
