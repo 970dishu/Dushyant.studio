@@ -6,7 +6,6 @@ const suffix = "tor";
 
 const MorphingText = ({ className }: { className?: string }) => {
   const [prefixIndex, setPrefixIndex] = useState(0);
-  const [direction, setDirection] = useState<1 | -1>(1); // 1 = down, -1 = up
   const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
   const measureRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLSpanElement>(null);
