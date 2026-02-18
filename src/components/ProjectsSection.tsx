@@ -18,16 +18,14 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
     offset: ["start start", "end start"]
   });
 
-  // As the next card scrolls up and covers this one:
-  // - Scale down significantly to simulate receding into background
-  // - Fade out for depth
-  // - Push upward slightly so it peeks above the next card
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.85]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.3]);
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, -60]);
+  // As user scrolls past this card:
+  // - Scale down to create "receding into background" depth
+  // - Keep opacity high so stacked cards remain visible behind
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.93]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.6]);
 
-  // Each card sticks slightly lower to reinforce stacking
-  const topOffset = index * 24;
+  // Each card sticks slightly lower so previous cards peek from behind
+  const topOffset = index * 28;
 
   return (
     <motion.div
@@ -35,7 +33,6 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
       style={{ 
         scale, 
         opacity, 
-        y,
         zIndex: index,
         top: `${topOffset}px`,
       }}
@@ -44,7 +41,7 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
       <div className="relative w-full max-w-[1600px]">
         <div
           onClick={() => navigate(`/project/${project.slug}`)}
-          className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-card cursor-pointer"
+          className="group relative w-full aspect-[16/9] rounded-[20px] overflow-hidden bg-card cursor-pointer shadow-2xl"
         >
           {/* Background Image */}
           <div className="absolute inset-0">
