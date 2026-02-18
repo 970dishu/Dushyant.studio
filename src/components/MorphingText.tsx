@@ -41,7 +41,8 @@ const MorphingText = ({ className }: { className?: string }) => {
       {/* Animated prefix with smooth width */}
       <motion.span
         ref={containerRef}
-        className="inline-flex overflow-hidden"
+        className="inline-flex overflow-hidden relative"
+        style={{ clipPath: "inset(0)" }}
         animate={{ width: containerWidth }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
