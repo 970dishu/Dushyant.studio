@@ -20,94 +20,69 @@ const ProjectCard = ({
   const isLastCard = index === totalProjects - 1;
   const isFirstCard = index === 0;
 
-  // Each card occupies an equal segment of total scroll
+  // Each card owns an equal scroll segment
   const segmentSize = 1 / totalProjects;
   const start = index * segmentSize;
   const end = start + segmentSize;
-  const mid = start + segmentSize * 0.5;
 
-  // --- Incoming animation (card enters from below) ---
-  // Before this card's segment: hidden below (translateY +100, opacity 0, scale 0.98)
-  // At midpoint of segment: fully visible (translateY 0, opacity 1, scale 1)
-  const enterY = useTransform(
-    scrollYProgress,
-    [start, mid],
-    isFirstCard ? [0, 0] : [100, 0]
-  );
-  const enterOpacity = useTransform(
-    scrollYProgress,
-    [start, mid],
-    isFirstCard ? [1, 1] : [0, 1]
-  );
-  const enterScale = useTransform(
-    scrollYProgress,
-    [start, mid],
-    isFirstCard ? [1, 1] : [0.98, 1]
-  );
+  // Easing helper: cubic ease-in-out mapped to 0-1
+  const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-  // --- Outgoing animation (card exits upward) ---
-  // From midpoint to end: translateY 0 → -80, opacity 1 → 0.3
-  const exitY = useTransform(
-    scrollYProgress,
-    [mid, end],
-    [0, isLastCard ? 0 : -80]
-  );
-  const exitOpacity = useTransform(
-    scrollYProgress,
-    [mid, end],
-    [1, isLastCard ? 1 : 0.3]
-  );
-  const exitScale = useTransform(
-    scrollYProgress,
-    [mid, end],
-    [1, isLastCard ? 1 : 0.98]
-  );
-
-  // Combine enter + exit: use enter values before mid, exit values after
-  const y = useTransform(
-    scrollYProgress,
-    (v) => {
-      if (v <= mid) {
-        // Entering phase
-        const t = isFirstCard ? 0 : Math.max(0, (v - start) / (mid - start));
-        return isFirstCard ? 0 : 100 * (1 - t);
+  // Y position:
+  // - Incoming: slides up from +120vh (below) to center (0)
+  // - Active: stays at 0
+  // - Outgoing: moves DOWN to +80px and slightly behind
+  const y = useTransform(scrollYProgress, (v) => {
+    if (v < start) {
+      // Before this card's turn — parked below
+      return isFirstCard ? 0 : 800;
+    }
+    if (v >= start && v < end) {
+      const progress = (v - start) / segmentSize;
+      if (progress < 0.5) {
+        // First half: card entering (sliding up from below)
+        const t = easeInOut(progress / 0.5);
+        return isFirstCard ? 0 : 800 * (1 - t);
       } else {
-        // Exiting phase
-        const t = isLastCard ? 0 : Math.min(1, (v - mid) / (end - mid));
-        return isLastCard ? 0 : -80 * t;
+        // Second half: card exiting (sliding down / getting pushed back)
+        const t = easeInOut((progress - 0.5) / 0.5);
+        return isLastCard ? 0 : 80 * t;
       }
     }
-  );
+    // After this card's segment — pushed down behind
+    return isLastCard ? 0 : 80;
+  });
 
-  const opacity = useTransform(
-    scrollYProgress,
-    (v) => {
-      if (v <= mid) {
-        const t = isFirstCard ? 1 : Math.max(0, (v - start) / (mid - start));
-        return isFirstCard ? 1 : t;
+  // Scale: subtle depth — incoming grows from 0.97, outgoing shrinks to 0.95
+  const scale = useTransform(scrollYProgress, (v) => {
+    if (v < start) return isFirstCard ? 1 : 0.97;
+    if (v >= start && v < end) {
+      const progress = (v - start) / segmentSize;
+      if (progress < 0.5) {
+        const t = easeInOut(progress / 0.5);
+        return isFirstCard ? 1 : 0.97 + 0.03 * t;
       } else {
-        const t = isLastCard ? 0 : Math.min(1, (v - mid) / (end - mid));
-        return isLastCard ? 1 : 1 - 0.7 * t;
+        const t = easeInOut((progress - 0.5) / 0.5);
+        return isLastCard ? 1 : 1 - 0.05 * t;
       }
     }
-  );
+    return isLastCard ? 1 : 0.95;
+  });
 
-  const scale = useTransform(
-    scrollYProgress,
-    (v) => {
-      if (v <= mid) {
-        const t = isFirstCard ? 1 : Math.max(0, (v - start) / (mid - start));
-        return isFirstCard ? 1 : 0.98 + 0.02 * t;
-      } else {
-        const t = isLastCard ? 0 : Math.min(1, (v - mid) / (end - mid));
-        return isLastCard ? 1 : 1 - 0.02 * t;
-      }
+  // Z-index: active card on top, incoming even higher
+  const zIndex = useTransform(scrollYProgress, (v) => {
+    if (v < start) return index;
+    if (v >= start && v < end) {
+      const progress = (v - start) / segmentSize;
+      // During entry the new card is on top; during exit it drops below the next
+      return progress < 0.5 ? totalProjects + index : index;
     }
-  );
+    return index;
+  });
 
   return (
     <motion.div
-      style={{ y, opacity, scale, zIndex: index + 1 }}
+      style={{ y, scale, zIndex }}
       className="absolute inset-0 flex items-center justify-center px-4 md:px-6 lg:px-12"
     >
       <div className="relative w-full max-w-[1600px]">
@@ -132,50 +107,25 @@ const ProjectCard = ({
 
           {/* Content Overlay */}
           <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-16">
-            <motion.div
-              className="absolute top-6 right-6 md:top-10 md:right-10"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            <div className="absolute top-6 right-6 md:top-10 md:right-10">
               <span className="font-heading text-6xl md:text-8xl lg:text-9xl font-bold text-foreground/10 group-hover:text-primary/20 transition-colors duration-500">
                 {String(index + 1).padStart(2, "0")}
               </span>
-            </motion.div>
+            </div>
 
-            <motion.span
-              className="text-sm md:text-base text-primary uppercase tracking-widest mb-3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <span className="text-sm md:text-base text-primary uppercase tracking-widest mb-3">
               {project.category}
-            </motion.span>
+            </span>
 
-            <motion.h3
-              className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            <h3 className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
               {project.title}
-            </motion.h3>
+            </h3>
 
-            <motion.p
-              className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
+            <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl mb-6">
               {project.shortDescription}
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex flex-wrap gap-4 md:gap-8 text-sm text-muted-foreground"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <div className="flex flex-wrap gap-4 md:gap-8 text-sm text-muted-foreground">
               <div>
                 <span className="text-foreground/50">Client:</span>{" "}
                 <span className="text-foreground">{project.client}</span>
@@ -188,7 +138,7 @@ const ProjectCard = ({
                 <span className="text-foreground/50">Role:</span>{" "}
                 <span className="text-foreground">{project.role}</span>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {index === 0 && (
