@@ -174,7 +174,7 @@ const Hero = () => {
             className="fixed inset-0 z-50 bg-background cursor-pointer flex items-center justify-center"
             onClick={() => setFullscreenVideoId(null)}
           >
-            <video src={VIDEO_URL} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            <video src={VIDEO_URL} autoPlay loop playsInline className="w-full h-full object-cover" />
 
             {/* Close button */}
             <motion.button
@@ -294,7 +294,6 @@ const Hero = () => {
                       poster={THUMBNAIL_URL}
                       preload="metadata"
                       loop
-                      muted
                       playsInline
                       className="w-full h-full object-cover"
                     />
