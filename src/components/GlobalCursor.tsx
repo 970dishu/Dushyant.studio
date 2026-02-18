@@ -66,27 +66,6 @@ const GlobalCursor = () => {
         <div className="w-2 h-2 rounded-full bg-white" />
       </motion.div>
 
-      {/* Following circle outline */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998]"
-        animate={{
-          x: position.x - 20,
-          y: position.y - 20,
-          scale: isPointer ? 1.5 : isClicking ? 0.9 : 1,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      >
-        <div 
-          className={`w-10 h-10 rounded-full border-2 transition-colors duration-200 ${
-            isPointer ? 'border-primary bg-primary/10' : 'border-foreground/30'
-          }`}
-        />
-      </motion.div>
     </>
   );
 };
