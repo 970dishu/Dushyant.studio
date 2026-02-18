@@ -1,220 +1,127 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
 
-// Video from Lovable Cloud storage
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
-// Thumbnail for video poster
 const THUMBNAIL_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4#t=0.1";
 
-// Video projects data with client and subtitle
 const videoProjects = [
-  {
-    id: 1,
-    client: "SPOTIFY",
-    subtitle: "WRAPPED 2024",
-  },
-  {
-    id: 2,
-    client: "NIKE",
-    subtitle: "AIR MAX DAY",
-  },
-  {
-    id: 3,
-    client: "APPLE",
-    subtitle: "SHOT ON IPHONE",
-  },
-  {
-    id: 4,
-    client: "SAMSUNG",
-    subtitle: "GALAXY UNPACKED",
-  },
-  {
-    id: 5,
-    client: "COLDPLAY",
-    subtitle: "MOON MUSIC",
-  },
-  {
-    id: 6,
-    client: "ADIDAS",
-    subtitle: "IMPOSSIBLE IS NOTHING",
-  },
-  {
-    id: 7,
-    client: "PUMA",
-    subtitle: "FOREVER FASTER",
-  },
-  {
-    id: 8,
-    client: "RED BULL",
-    subtitle: "GIVES YOU WINGS",
-  },
-  {
-    id: 9,
-    client: "ZARA",
-    subtitle: "FALL COLLECTION",
-  },
-  {
-    id: 10,
-    client: "H&M",
-    subtitle: "CONSCIOUS",
-  },
-  {
-    id: 11,
-    client: "GUCCI",
-    subtitle: "ANCORA",
-  },
-  {
-    id: 12,
-    client: "LOUIS VUITTON",
-    subtitle: "HORIZONS",
-  },
+  { id: 1, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
+  { id: 2, client: "NIKE", subtitle: "AIR MAX DAY" },
+  { id: 3, client: "APPLE", subtitle: "SHOT ON IPHONE" },
+  { id: 4, client: "SAMSUNG", subtitle: "GALAXY UNPACKED" },
+  { id: 5, client: "COLDPLAY", subtitle: "MOON MUSIC" },
+  { id: 6, client: "ADIDAS", subtitle: "IMPOSSIBLE IS NOTHING" },
+  { id: 7, client: "PUMA", subtitle: "FOREVER FASTER" },
+  { id: 8, client: "RED BULL", subtitle: "GIVES YOU WINGS" },
+  { id: 9, client: "ZARA", subtitle: "FALL COLLECTION" },
+  { id: 10, client: "H&M", subtitle: "CONSCIOUS" },
+  { id: 11, client: "GUCCI", subtitle: "ANCORA" },
+  { id: 12, client: "LOUIS VUITTON", subtitle: "HORIZONS" },
 ];
-const Hero = () => {
-  const [hoveredVideoId, setHoveredVideoId] = useState<number | null>(null);
-  const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
-  const videoContainerRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<{
-    [key: number]: HTMLVideoElement | null;
-  }>({});
 
-  // Play/pause videos on hover
+const Hero = () => {
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+  const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+
+  // Play active video, pause others
   useEffect(() => {
-    Object.values(videoRefs.current).forEach((video) => {
+    Object.entries(videoRefs.current).forEach(([idStr, video]) => {
+      const id = Number(idStr);
       if (video) {
-        video.pause();
-        video.currentTime = 0;
+        if (id === activeId) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
       }
     });
-    if (hoveredVideoId !== null && videoRefs.current[hoveredVideoId]) {
-      videoRefs.current[hoveredVideoId]?.play();
-    }
-  }, [hoveredVideoId]);
+  }, [activeId]);
 
-  // Prevent body scroll when video is fullscreen
+  // Lock body scroll during fullscreen
   useEffect(() => {
-    if (fullscreenVideoId !== null) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = fullscreenVideoId !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [fullscreenVideoId]);
-  const handleVideoHover = (id: number) => {
-    setHoveredVideoId(id);
-  };
-  const handleVideoLeave = () => {
-    setHoveredVideoId(null);
-  };
-  const handleVideoClick = (id: number) => {
-    setFullscreenVideoId(id);
-  };
-  const handleFullscreenClose = () => {
-    setFullscreenVideoId(null);
-  };
+
+  const handleCardClick = useCallback((id: number) => {
+    if (activeId === id) {
+      // Second click opens fullscreen
+      setFullscreenVideoId(id);
+      return;
+    }
+    setActiveId(id);
+
+    // Scroll card to center
+    const card = cardRefs.current[id];
+    const container = carouselRef.current;
+    if (card && container) {
+      const cardRect = card.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }
+  }, [activeId]);
+
   return (
     <>
       {/* Fullscreen Video Overlay */}
       <AnimatePresence>
         {fullscreenVideoId !== null && (
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.3,
-            }}
-            className="fixed inset-0 z-50 bg-background cursor-pointer"
-            onClick={handleFullscreenClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-background cursor-pointer flex items-center justify-center"
+            onClick={() => setFullscreenVideoId(null)}
           >
             <video src={VIDEO_URL} autoPlay loop muted playsInline className="w-full h-full object-cover" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Hero Section - Desktop/Tablet */}
-      <section className="hidden md:block w-full">
-        {/* Title Area - Top Third */}
-        <div className="h-[40vh] flex items-center justify-center relative pt-20 pb-2 mt-2 mb-2">
+      <section className="w-full min-h-screen flex flex-col">
+        {/* Title Area */}
+        <div className="flex-shrink-0 flex items-center justify-center pt-24 pb-6 md:pt-28 md:pb-10 lg:pt-32 lg:pb-12">
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.4,
-            }}
-            className="text-center my-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="text-center px-4"
           >
             <motion.h1
-              initial={{
-                y: 40,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.7,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-6"
-              style={{
-                fontSize: "clamp(4.5rem, 8vw, 10rem)",
-              }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3 md:gap-6"
+              style={{ fontSize: "clamp(3rem, 8vw, 10rem)" }}
             >
               <span
                 className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 40px hsl(var(--primary) / 0.3)",
-                }}
+                style={{ textShadow: "0 0 40px hsl(var(--primary) / 0.3)" }}
               >
                 Creative
               </span>
               <MorphingText className="font-barrio uppercase tracking-wide" />
             </motion.h1>
 
-            {/* Tagline and signature on the same line */}
-            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-8 px-4">
+            <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-4 md:mt-8 px-2 md:px-4">
               <p
-                className="text-muted-foreground opacity-0 animate-fade-up"
-                style={{
-                  animationDelay: "0.4s",
-                  animationFillMode: "forwards",
-                  fontSize: "clamp(0.875rem, 1.2vw, 1.125rem)",
-                }}
+                className="text-muted-foreground text-xs md:text-base opacity-0 animate-fade-up"
+                style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
               >
                 Crafting visual stories through motion
               </p>
-
               <motion.p
-                initial={{
-                  opacity: 0,
-                  x: 20,
-                }}
-                animate={{
-                  opacity: 0.6,
-                  x: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.3,
-                }}
-                className="font-cursive text-foreground/60"
-                style={{
-                  fontSize: "clamp(1.25rem, 1.8vw, 1.875rem)",
-                }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 0.6, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="font-cursive text-foreground/60 text-sm md:text-xl lg:text-3xl"
               >
                 — Dushyant
               </motion.p>
@@ -222,196 +129,100 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Videos Container with Independent Scroll */}
-        <div className="relative h-[60vh]">
-          {/* Fade overlay at top */}
-          <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+        {/* Horizontal Video Carousel */}
+        <div className="flex-1 relative flex items-center">
+          {/* Left fade */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          {/* Right fade */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-          {/* Scrollable video grid */}
           <div
-            ref={videoContainerRef}
-            className="h-full overflow-y-auto px-8 lg:px-16 xl:px-24 pt-4 pb-8"
-            style={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
+            ref={carouselRef}
+            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            <style>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
+            <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
-              {videoProjects.map((project, index) => (
+            {videoProjects.map((project, index) => {
+              const isActive = activeId === project.id;
+
+              return (
                 <motion.div
                   key={project.id}
-                  className="cursor-pointer group"
-                  onMouseEnter={() => handleVideoHover(project.id)}
-                  onMouseLeave={handleVideoLeave}
-                  onClick={() => handleVideoClick(project.id)}
-                  initial={{
-                    opacity: 0,
-                    y: 30,
+                  ref={(el) => { cardRefs.current[project.id] = el; }}
+                  className="flex-shrink-0 cursor-pointer group"
+                  style={{
+                    width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
+                    transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    delay: 0.5 + index * 0.05,
-                    duration: 0.5,
-                  }}
+                  onClick={() => handleCardClick(project.id)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.04, duration: 0.5 }}
                 >
-                  {/* Header with serial number, client and subtitle */}
-                  <div className="flex items-start gap-4 mb-3">
-                    <span className="text-muted-foreground text-sm font-mono">[{project.id}]</span>
-                    <div>
-                      <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
-                        {project.client}
-                      </h3>
-                      <p className="text-muted-foreground text-xs font-mono tracking-wider">{project.subtitle}</p>
-                    </div>
-                  </div>
-
-                  {/* Video */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
-                    <video
-                      ref={(el) => {
-                        videoRefs.current[project.id] = el;
-                      }}
-                      src={VIDEO_URL}
-                      poster={THUMBNAIL_URL}
-                      preload="metadata"
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Fade overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
-        </div>
-      </section>
-
-      {/* Mobile Layout */}
-      <section className="md:hidden w-full">
-        {/* Title Area */}
-        <div className="h-[30vh] flex items-center justify-center pt-16">
-          <div className="px-4">
-            <motion.h1
-              initial={{
-                y: 30,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="text-5xl font-bold text-foreground leading-none whitespace-nowrap flex items-baseline justify-center gap-3"
-            >
-              <span
-                className="font-cursive text-primary italic"
-                style={{
-                  textShadow: "0 0 30px hsl(var(--primary) / 0.3)",
-                }}
-              >
-                Creative
-              </span>
-              <MorphingText className="font-barrio uppercase tracking-wide text-4xl" />
-            </motion.h1>
-
-            {/* Tagline and signature on the same line */}
-            <div className="flex items-center justify-between w-full mt-4 px-2">
-              <p className="text-muted-foreground text-xs">Crafting visual stories through motion</p>
-
-              <motion.p
-                initial={{
-                  opacity: 0,
-                  x: 10,
-                }}
-                animate={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.3,
-                }}
-                className="font-cursive text-sm text-foreground/60"
-              >
-                — Dushyant
-              </motion.p>
-            </div>
-          </div>
-        </div>
-
-        {/* Videos Container with Independent Scroll */}
-        <div className="relative h-[70vh]">
-          {/* Fade overlay at top */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
-
-          {/* Scrollable video grid */}
-          <div
-            className="h-full overflow-y-auto px-4 py-6"
-            style={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-          >
-            <div className="grid grid-cols-1 gap-6">
-              {videoProjects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  className="cursor-pointer"
-                  onClick={() => handleVideoClick(project.id)}
-                  whileTap={{
-                    scale: 0.98,
-                  }}
-                >
-                  {/* Header with serial number, client and subtitle */}
-                  <div className="flex items-start gap-3 mb-2">
+                  {/* Header */}
+                  <div className="flex items-start gap-3 mb-2 md:mb-3">
                     <span className="text-muted-foreground text-xs font-mono">[{project.id}]</span>
                     <div>
-                      <h3 className="text-foreground text-xs font-semibold tracking-wide uppercase">
+                      <h3 className="text-foreground text-xs md:text-sm font-semibold tracking-wide uppercase">
                         {project.client}
                       </h3>
-                      <p className="text-muted-foreground text-[10px] font-mono tracking-wider">{project.subtitle}</p>
+                      <p className="text-muted-foreground text-[10px] md:text-xs font-mono tracking-wider">
+                        {project.subtitle}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Video */}
-                  <div className="relative aspect-video rounded-lg overflow-hidden">
+                  {/* Video Card */}
+                  <motion.div
+                    className={`relative aspect-video rounded-lg overflow-hidden ring-1 transition-all duration-500 ${
+                      isActive
+                        ? "ring-primary/50 shadow-lg shadow-primary/10"
+                        : "ring-border/20 hover:ring-border/40"
+                    }`}
+                    animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.6 }}
+                    transition={{ duration: 0.4 }}
+                  >
                     <video
+                      ref={(el) => { videoRefs.current[project.id] = el; }}
                       src={VIDEO_URL}
                       poster={THUMBNAIL_URL}
                       preload="metadata"
                       loop
                       muted
                       playsInline
-                      autoPlay
                       className="w-full h-full object-cover"
                     />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
 
-          {/* Fade overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+                    {/* Play indicator for non-active cards */}
+                    {!isActive && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-background/20">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-foreground/40 flex items-center justify-center group-hover:border-primary/60 group-hover:scale-110 transition-all duration-300">
+                          <div className="w-0 h-0 border-l-[8px] md:border-l-[10px] border-l-foreground/50 border-t-[5px] md:border-t-[6px] border-t-transparent border-b-[5px] md:border-b-[6px] border-b-transparent ml-1 group-hover:border-l-primary/70 transition-colors" />
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+
+                  {/* Active indicator dot */}
+                  {isActive && (
+                    <motion.div
+                      className="flex justify-center mt-3"
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0 }}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    </motion.div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </>
   );
 };
+
 export default Hero;
