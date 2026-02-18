@@ -284,19 +284,6 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.04, duration: 0.5 }}
                 >
-                  {/* Header */}
-                  <div className="flex items-start gap-3 mb-2 md:mb-3">
-                    <span className="text-muted-foreground text-xs font-mono">[{project.id}]</span>
-                    <div>
-                      <h3 className="text-foreground text-xs md:text-sm font-semibold tracking-wide uppercase">
-                        {project.client}
-                      </h3>
-                      <p className="text-muted-foreground text-[10px] md:text-xs font-mono tracking-wider">
-                        {project.subtitle}
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Video Card */}
                   <motion.div
                     className={`relative aspect-video rounded-lg overflow-hidden ring-1 transition-all duration-500 ${
@@ -317,6 +304,16 @@ const Hero = () => {
                       playsInline
                       className="w-full h-full object-cover"
                     />
+
+                    {/* Overlay text on video */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-background/80 via-background/30 to-transparent">
+                      <h3 className="text-foreground text-xs md:text-sm font-semibold tracking-wide uppercase">
+                        {project.client}
+                      </h3>
+                      <p className="text-foreground/60 text-[10px] md:text-xs font-mono tracking-wider">
+                        {project.subtitle}
+                      </p>
+                    </div>
 
                     {/* Fullscreen button for active card */}
                     {isActive && (
