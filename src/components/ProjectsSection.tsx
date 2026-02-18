@@ -15,15 +15,17 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
   
   const { scrollYProgress } = useScroll({
     target: cardRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end start"]
   });
 
-  // When this card is being scrolled past (next card stacking on top),
-  // scale down and push back to create a 3D depth/parallax effect
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.75, 1], [0.9, 1, 1, 0.88, 0.85]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.75, 1], [0.5, 1, 1, 0.6, 0.4]);
-  const y = useTransform(scrollYProgress, [0.5, 0.75, 1], [0, -30, -60]);
-  const rotateX = useTransform(scrollYProgress, [0.5, 0.75, 1], [0, 2, 4]);
+  // As this card gets scrolled past and the next card stacks on top:
+  // - Scale down to simulate receding backward
+  // - Reduce opacity to feel like depth
+  const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.92]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.5]);
+
+  // Slight top offset so it feels like it's being "pushed back"
+  const topOffset = index * 20;
 
   return (
     <motion.div
@@ -31,13 +33,10 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
       style={{ 
         scale, 
         opacity, 
-        y,
-        rotateX,
-        transformPerspective: 1200,
-        transformOrigin: "center top",
         zIndex: index,
+        top: `${topOffset}px`,
       }}
-      className="sticky top-0 h-screen w-full flex items-center justify-center px-4 md:px-8 lg:px-16"
+      className="sticky h-screen w-full flex items-center justify-center px-4 md:px-8 lg:px-16"
     >
       <div className="relative w-full max-w-[1600px]">
         <div
