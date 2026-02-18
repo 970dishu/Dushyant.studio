@@ -18,14 +18,16 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
     offset: ["start start", "end start"]
   });
 
-  // As this card gets scrolled past and the next card stacks on top:
-  // - Scale down to simulate receding backward
-  // - Reduce opacity to feel like depth
-  const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.92]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.5]);
+  // As the next card scrolls up and covers this one:
+  // - Scale down significantly to simulate receding into background
+  // - Fade out for depth
+  // - Push upward slightly so it peeks above the next card
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.85]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.3]);
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, -60]);
 
-  // Slight top offset so it feels like it's being "pushed back"
-  const topOffset = index * 20;
+  // Each card sticks slightly lower to reinforce stacking
+  const topOffset = index * 24;
 
   return (
     <motion.div
@@ -33,6 +35,7 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
       style={{ 
         scale, 
         opacity, 
+        y,
         zIndex: index,
         top: `${topOffset}px`,
       }}
