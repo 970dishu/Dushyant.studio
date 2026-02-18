@@ -49,7 +49,7 @@ const MorphingText = ({ className }: { className?: string }) => {
         ref={containerRef}
         className="inline-flex overflow-hidden"
         animate={{ width: containerWidth }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <AnimatePresence mode="popLayout">
           {currentPrefix.split("").map((char, i) => (
@@ -59,9 +59,12 @@ const MorphingText = ({ className }: { className?: string }) => {
               animate={{ y: "0%", opacity: 1 }}
               exit={{ y: direction === 1 ? "100%" : "-100%", opacity: 0, position: "absolute" }}
               transition={{
-                duration: 0.3,
-                delay: i * 0.04,
-                ease: [0.16, 1, 0.3, 1],
+                duration: 0.5,
+                delay: i * 0.08,
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                mass: 0.8,
               }}
               className="inline-block"
             >
