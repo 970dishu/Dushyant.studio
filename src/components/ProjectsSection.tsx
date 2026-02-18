@@ -9,38 +9,39 @@ interface ProjectCardProps {
   totalProjects: number;
 }
 
-const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, totalProjects, containerRef }: ProjectCardProps & { containerRef: React.RefObject<HTMLDivElement> }) => {
   const navigate = useNavigate();
   const cardRef = useRef<HTMLDivElement>(null);
   
+  // Track the overall container scroll to determine how far we've scrolled
+  // Each card occupies 1/totalProjects of the total scroll distance
   const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start start", "end start"]
+    target: containerRef,
+    offset: ["start start", "end end"]
   });
 
-  // Progressive scale-down as user scrolls past this card.
-  // Starts scaling immediately once scrolling begins (not delayed),
-  // ending at a smaller size so the card visually "recedes" into the background.
-  // The last card doesn't need to scale since nothing stacks on top of it.
   const isLastCard = index === totalProjects - 1;
-  const targetScale = isLastCard ? 1 : 1 - (0.08 * (totalProjects - index));
+
+  // Each card's "active" range within the total scroll
+  const cardStart = index / totalProjects;
+  const cardEnd = (index + 1) / totalProjects;
+
+  // Scale: starts at 1 when this card is active, scales down to 0.9 as next card takes over
   const scale = useTransform(
     scrollYProgress,
-    [0, 1],
-    [1, isLastCard ? 1 : targetScale]
+    [cardStart, cardEnd],
+    [1, isLastCard ? 1 : 0.9]
   );
 
-  // Slight darkening to enhance depth — cards further back feel more distant
+  // Brightness dims as card recedes
   const brightness = useTransform(
     scrollYProgress,
-    [0, 1],
-    [1, isLastCard ? 1 : 0.6]
+    [cardStart, cardEnd],
+    [1, isLastCard ? 1 : 0.5]
   );
   const filterBrightness = useTransform(brightness, (v) => `brightness(${v})`);
 
-  // Each successive card sticks at a slightly higher top value.
-  // This means when a card scales down and gets "pushed back",
-  // you can see the top edge + rounded corners of the card behind.
+  // Each card sticks slightly lower to show stacking
   const stickyTop = index * 40;
 
   return (
@@ -161,6 +162,7 @@ const ProjectCard = ({ project, index, totalProjects }: ProjectCardProps) => {
 };
 
 const ProjectsSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <section id="work" className="relative bg-background">
@@ -201,13 +203,14 @@ const ProjectsSection = () => {
       </div>
 
       {/* Stacked Projects */}
-      <div className="relative" style={{ height: `${projects.length * 100}vh` }}>
+      <div ref={containerRef} className="relative" style={{ height: `${projects.length * 100}vh` }}>
         {projects.map((project, index) => (
           <ProjectCard
             key={project.id}
             project={project}
             index={index}
             totalProjects={projects.length}
+            containerRef={containerRef as React.RefObject<HTMLDivElement>}
           />
         ))}
       </div>
