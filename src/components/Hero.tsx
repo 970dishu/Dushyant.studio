@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, PointerEvent as ReactPointerEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
 
@@ -27,6 +27,12 @@ const Hero = () => {
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
 
+  // Drag state
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragScrollLeft = useRef(0);
+  const hasDragged = useRef(false);
+
   // Play active video, pause others
   useEffect(() => {
     Object.entries(videoRefs.current).forEach(([idStr, video]) => {
@@ -48,15 +54,62 @@ const Hero = () => {
     return () => { document.body.style.overflow = ""; };
   }, [fullscreenVideoId]);
 
+  // Horizontal wheel scroll (for trackpads & mice)
+  useEffect(() => {
+    const container = carouselRef.current;
+    if (!container) return;
+    const handleWheel = (e: WheelEvent) => {
+      // If there's meaningful horizontal delta (trackpad), let it work naturally
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      // Convert vertical scroll to horizontal
+      e.preventDefault();
+      container.scrollLeft += e.deltaY;
+    };
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => container.removeEventListener("wheel", handleWheel);
+  }, []);
+
+  // Drag handlers
+  const onPointerDown = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    const container = carouselRef.current;
+    if (!container) return;
+    isDragging.current = true;
+    hasDragged.current = false;
+    dragStartX.current = e.clientX;
+    dragScrollLeft.current = container.scrollLeft;
+    container.setPointerCapture(e.pointerId);
+    container.style.cursor = "grabbing";
+  }, []);
+
+  const onPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - dragStartX.current;
+    if (Math.abs(dx) > 5) hasDragged.current = true;
+    const container = carouselRef.current;
+    if (container) {
+      container.scrollLeft = dragScrollLeft.current - dx;
+    }
+  }, []);
+
+  const onPointerUp = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    isDragging.current = false;
+    const container = carouselRef.current;
+    if (container) {
+      container.releasePointerCapture(e.pointerId);
+      container.style.cursor = "grab";
+    }
+  }, []);
+
   const handleCardClick = useCallback((id: number) => {
+    // Ignore click if user just dragged
+    if (hasDragged.current) return;
+
     if (activeId === id) {
-      // Second click opens fullscreen
       setFullscreenVideoId(id);
       return;
     }
     setActiveId(id);
 
-    // Scroll card to center
     const card = cardRefs.current[id];
     const container = carouselRef.current;
     if (card && container) {
@@ -138,8 +191,12 @@ const Hero = () => {
 
           <div
             ref={carouselRef}
-            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y" }}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
           >
             <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
