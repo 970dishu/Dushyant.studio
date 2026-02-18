@@ -298,7 +298,7 @@ const Hero = () => {
                     />
 
                     {/* Overlay text on video */}
-                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-background/80 via-background/30 to-transparent">
+                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
                       <h3 className="text-foreground text-xs md:text-sm font-semibold tracking-wide uppercase">
                         {project.client}
                       </h3>
