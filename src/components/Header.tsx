@@ -71,10 +71,10 @@ const Header = () => {
           </div>
 
           {/* "Available for work" text - Shown when scrolled */}
-          <div className={`flex items-center gap-2 transition-all duration-500 overflow-hidden ${isScrolled ? 'max-w-[200px] opacity-100 pr-2' : 'max-w-0 opacity-0'}`}>
+          <a href={isHomePage ? "#contact" : "/#contact"} className={`flex items-center gap-2 transition-all duration-500 overflow-hidden cursor-pointer hover:text-primary ${isScrolled ? 'max-w-[200px] opacity-100 pr-2' : 'max-w-0 opacity-0'}`}>
             <span className="text-sm font-medium text-foreground whitespace-nowrap">Available for work</span>
             <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 animate-pulse"></span>
-          </div>
+          </a>
 
           {/* Contact Button - Hidden when scrolled */}
           <a
@@ -107,10 +107,10 @@ const Header = () => {
           </div>
 
             {/* Available for work text with green dot */}
-            <div className="flex items-center gap-2 pr-2">
+            <a href={isHomePage ? "#contact" : "/#contact"} className="flex items-center gap-2 pr-2 cursor-pointer hover:text-primary transition-colors">
               <span className="text-sm font-medium text-foreground">Available for work</span>
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-            </div>
+            </a>
 
             {/* Hamburger Menu Button */}
             <button
