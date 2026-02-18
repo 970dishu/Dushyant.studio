@@ -251,8 +251,8 @@ const Hero = () => {
 
           <div
             ref={carouselRef}
-            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none snap-x snap-mandatory"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d" }}
+            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none snap-x snap-proximity"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d", scrollBehavior: "smooth" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
