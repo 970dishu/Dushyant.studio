@@ -1,64 +1,67 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 
-const prefixes = ["Direc", "Edi"];
+// Each char has a unique id so framer-motion can track and animate its position
+const directorChars = [
+  { id: "D", char: "D" },
+  { id: "I", char: "I" },
+  { id: "R2", char: "R" },
+  { id: "E", char: "E" },
+  { id: "C", char: "C" },
+  { id: "T", char: "T" },
+  { id: "O", char: "O" },
+  { id: "R7", char: "R" },
+];
+
+const editorChars = [
+  { id: "E", char: "E" },
+  { id: "D", char: "D" },
+  { id: "I", char: "I" },
+  { id: "T", char: "T" },
+  { id: "O", char: "O" },
+  { id: "R7", char: "R" },
+];
 
 const MorphingText = ({ className }: { className?: string }) => {
-  const [prefixIndex, setPrefixIndex] = useState(0);
-  const measureRef = useRef<HTMLSpanElement>(null);
-  const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
+  const [isDirector, setIsDirector] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPrefixIndex((prev) => (prev + 1) % prefixes.length);
+      setIsDirector((prev) => !prev);
     }, 3500);
     return () => clearInterval(interval);
   }, []);
 
-  const currentPrefix = prefixes[prefixIndex];
-
-  useEffect(() => {
-    if (measureRef.current) {
-      setContainerWidth(measureRef.current.offsetWidth);
-    }
-  }, [prefixIndex]);
+  const chars = isDirector ? directorChars : editorChars;
 
   return (
-    <span className={`relative inline-flex ${className ?? ""}`}>
-      {/* Hidden measurer for prefix */}
-      <span ref={measureRef} className="absolute invisible whitespace-nowrap" aria-hidden="true">
-        {currentPrefix}
-      </span>
-
-      {/* Animated prefix with smooth width */}
+    <LayoutGroup>
       <motion.span
-        className="inline-flex overflow-hidden"
-        animate={{ width: containerWidth }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className={`inline-flex ${className ?? ""}`}
+        layout
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <AnimatePresence mode="popLayout">
-          {currentPrefix.split("").map((char, i) => (
+          {chars.map((item) => (
             <motion.span
-              key={`${prefixIndex}-${i}`}
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: "0%", opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0, position: "absolute" }}
+              key={item.id}
+              layoutId={item.id}
+              initial={{ opacity: 0, filter: "blur(4px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, filter: "blur(4px)", transition: { duration: 0.3 } }}
               transition={{
-                duration: 0.3,
-                delay: i * 0.04,
-                ease: [0.16, 1, 0.3, 1],
+                layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.3 },
+                filter: { duration: 0.3 },
               }}
               className="inline-block"
             >
-              {char}
+              {item.char}
             </motion.span>
           ))}
         </AnimatePresence>
       </motion.span>
-
-      {/* Static suffix */}
-      <span>tor</span>
-    </span>
+    </LayoutGroup>
   );
 };
 
