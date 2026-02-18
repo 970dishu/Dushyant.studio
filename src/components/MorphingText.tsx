@@ -55,9 +55,9 @@ const MorphingText = ({ className }: { className?: string }) => {
           {currentPrefix.split("").map((char, i) => (
             <motion.span
               key={`${prefixIndex}-${i}`}
-              initial={{ y: direction === 1 ? "100%" : "-100%", opacity: 0 }}
+              initial={{ y: direction === 1 ? "-100%" : "100%", opacity: 0 }}
               animate={{ y: "0%", opacity: 1 }}
-              exit={{ y: direction === 1 ? "-100%" : "100%", opacity: 0, position: "absolute" }}
+              exit={{ y: direction === 1 ? "100%" : "-100%", opacity: 0, position: "absolute" }}
               transition={{
                 duration: 0.3,
                 delay: i * 0.04,
