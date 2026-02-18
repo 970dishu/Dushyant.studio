@@ -174,7 +174,14 @@ const Hero = () => {
             className="fixed inset-0 z-50 bg-background cursor-pointer flex items-center justify-center"
             onClick={() => setFullscreenVideoId(null)}
           >
-            <video src={VIDEO_URL} autoPlay loop playsInline className="w-full h-full object-cover" />
+            <video 
+              src={VIDEO_URL} 
+              autoPlay 
+              loop 
+              playsInline 
+              className="w-full h-full object-cover"
+              ref={(el) => el && (el.volume = 0.5)}
+            />
 
             {/* Close button */}
             <motion.button
@@ -289,7 +296,10 @@ const Hero = () => {
                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   >
                     <video
-                      ref={(el) => { videoRefs.current[project.id] = el; }}
+                      ref={(el) => { 
+                        videoRefs.current[project.id] = el;
+                        if (el) el.volume = 0.5;
+                      }}
                       src={VIDEO_URL}
                       poster={THUMBNAIL_URL}
                       preload="metadata"
