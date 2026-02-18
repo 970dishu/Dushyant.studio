@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
 import { Maximize2, X } from "lucide-react";
 
-const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
-const THUMBNAIL_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4#t=0.1";
+const VIDEO_URL = "/src/assets/mubi/call.mp4";
+const THUMBNAIL_URL = "/src/assets/mubi/call.mp4#t=0.1";
 
 const videoProjects = [
   { id: 1, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
