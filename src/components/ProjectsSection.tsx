@@ -23,28 +23,25 @@ const ProjectCard = ({ project, index, totalProjects, containerRef }: ProjectCar
   // Each card's scroll segment
   const cardStart = index / totalProjects;
   const cardEnd = (index + 1) / totalProjects;
-  // Midpoint: card is fully visible here, then starts receding
-  const cardMid = (cardStart + cardEnd) / 2;
+  // Only start shrinking in the last 35% of the card's range
+  const shrinkStart = cardStart + (cardEnd - cardStart) * 0.65;
 
-  // Scale: hold at 1 during first half, then shrink to 0.85 during second half
   const scale = useTransform(
     scrollYProgress,
-    [cardStart, cardMid, cardEnd],
+    [cardStart, shrinkStart, cardEnd],
     [1, 1, isLastCard ? 1 : 0.85]
   );
 
-  // Brightness dims as card recedes
   const brightness = useTransform(
     scrollYProgress,
-    [cardStart, cardMid, cardEnd],
+    [cardStart, shrinkStart, cardEnd],
     [1, 1, isLastCard ? 1 : 0.4]
   );
   const filterBrightness = useTransform(brightness, (v) => `brightness(${v})`);
 
-  // Y offset: card slides up slightly as it recedes to enhance "going behind" feel
   const y = useTransform(
     scrollYProgress,
-    [cardStart, cardMid, cardEnd],
+    [cardStart, shrinkStart, cardEnd],
     [0, 0, isLastCard ? 0 : -60]
   );
 
