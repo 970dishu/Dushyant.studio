@@ -142,23 +142,17 @@ const Hero = () => {
     }
 
     isUserScrolling.current = false;
+    setActiveId(id);
 
     const card = cardRefs.current[id];
     const container = carouselRef.current;
     if (card && container) {
-      // Scroll to center the card first (at its current size)
       const cardRect = card.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-
-      // Activate after scroll settles so width change doesn't cause a jump
-      setTimeout(() => {
-        setActiveId(id);
-        isUserScrolling.current = true;
-      }, 350);
+      setTimeout(() => { isUserScrolling.current = true; }, 500);
     } else {
-      setActiveId(id);
       isUserScrolling.current = true;
     }
   }, []);
@@ -277,10 +271,10 @@ const Hero = () => {
                   ref={(el) => { cardRefs.current[project.id] = el; }}
                   className="flex-shrink-0 cursor-pointer group snap-center"
                   style={{
-                    width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
-                    transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
+                    width: "clamp(260px, 35vw, 420px)",
+                    transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${isActive ? 1.15 : 0.9})`,
                     opacity: cardOpacity,
-                    transition: "width 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
+                    transition: "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
                     transformStyle: "preserve-3d",
                   }}
                   onClick={() => handleCardClick(project.id)}
@@ -289,14 +283,12 @@ const Hero = () => {
                   transition={{ delay: 0.3 + index * 0.04, duration: 0.5 }}
                 >
                   {/* Video Card */}
-                  <motion.div
+                  <div
                     className={`relative aspect-video rounded-lg overflow-hidden ring-1 transition-all duration-500 ${
                       isActive
                         ? "ring-primary/50 shadow-lg shadow-primary/10"
                         : "ring-border/20 hover:ring-border/40"
                     }`}
-                    animate={{ scale: isActive ? 1 : 0.92 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   >
                     <video
                       ref={(el) => { videoRefs.current[project.id] = el; }}
@@ -335,7 +327,7 @@ const Hero = () => {
                       </motion.button>
                     )}
 
-                  </motion.div>
+                  </div>
 
                   {/* Active indicator dot */}
                   {isActive && (
