@@ -269,7 +269,7 @@ const Hero = () => {
                   ref={(el) => { cardRefs.current[project.id] = el; }}
                   className="flex-shrink-0 cursor-pointer group snap-center"
                   style={{
-                    width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
+                    width: isActive ? "clamp(320px, 50vw, 620px)" : "clamp(250px, 35vw, 440px)",
                     transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
                     opacity: cardOpacity,
                     transition: "width 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
