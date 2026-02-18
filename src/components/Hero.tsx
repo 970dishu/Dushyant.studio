@@ -141,20 +141,24 @@ const Hero = () => {
       return;
     }
 
-    // Prevent auto-detection from overriding during programmatic scroll
     isUserScrolling.current = false;
-    setActiveId(id);
 
     const card = cardRefs.current[id];
     const container = carouselRef.current;
     if (card && container) {
+      // Scroll to center the card first (at its current size)
       const cardRect = card.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2 - cardRect.width / 2);
       container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-      // Re-enable auto-detection after scroll completes
-      setTimeout(() => { isUserScrolling.current = true; }, 600);
+
+      // Activate after scroll settles so width change doesn't cause a jump
+      setTimeout(() => {
+        setActiveId(id);
+        isUserScrolling.current = true;
+      }, 350);
     } else {
+      setActiveId(id);
       isUserScrolling.current = true;
     }
   }, []);
