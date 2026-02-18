@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, PointerEvent as ReactPointerEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
-import { Maximize2 } from "lucide-react";
+import { Maximize2, X } from "lucide-react";
 
 const VIDEO_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4";
 const THUMBNAIL_URL = "https://irsbtrpdbggqjfirabmw.supabase.co/storage/v1/object/public/video/call.mp4#t=0.1";
@@ -173,6 +173,27 @@ const Hero = () => {
             onClick={() => setFullscreenVideoId(null)}
           >
             <video src={VIDEO_URL} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+
+            {/* Close button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-foreground/10 backdrop-blur-md border border-border/30 flex items-center justify-center hover:bg-primary/20 hover:border-primary/50 transition-all duration-200"
+              onClick={(e) => { e.stopPropagation(); setFullscreenVideoId(null); }}
+            >
+              <X className="w-5 h-5 text-foreground/80" />
+            </motion.button>
+
+            {/* Tap to dismiss hint */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 0.5, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-foreground/50 font-mono tracking-wider"
+            >
+              TAP ANYWHERE TO CLOSE
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
