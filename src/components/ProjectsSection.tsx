@@ -28,47 +28,41 @@ const ProjectCard = ({
   // Easing helper: cubic ease-in-out mapped to 0-1
   const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-  // Y position:
-  // - Incoming: slides up from below to center (0)
-  // - Outgoing: stays at 0 (recedes in place behind the new card)
+  // The NEXT card's segment start — that's when this card should start receding
+  const nextStart = end;
+  const nextEnd = nextStart + segmentSize;
+
+  // Y position: incoming slides up from 800 to 0 over its own segment
   const y = useTransform(scrollYProgress, (v) => {
-    if (v < start) return isFirstCard ? 0 : 800;
+    if (isFirstCard) return 0;
+    if (v < start) return 800;
     if (v >= start && v < end) {
-      const progress = (v - start) / segmentSize;
-      if (progress < 0.5) {
-        const t = easeInOut(progress / 0.5);
-        return isFirstCard ? 0 : 800 * (1 - t);
-      }
-      // Outgoing: card stays at y=0, only scales down
-      return 0;
+      const t = easeInOut((v - start) / segmentSize);
+      return 800 * (1 - t);
     }
     return 0;
   });
 
-  // Scale: incoming grows to 1, outgoing shrinks behind (recedes into background)
+  // Scale: card is 1.0 when active, recedes to 0.92 when the NEXT card enters
   const scale = useTransform(scrollYProgress, (v) => {
-    if (v < start) return isFirstCard ? 1 : 0.95;
-    if (v >= start && v < end) {
-      const progress = (v - start) / segmentSize;
-      if (progress < 0.5) {
-        const t = easeInOut(progress / 0.5);
-        return isFirstCard ? 1 : 0.95 + 0.05 * t;
-      } else {
-        // Outgoing: scale down to appear behind
-        const t = easeInOut((progress - 0.5) / 0.5);
-        return isLastCard ? 1 : 1 - 0.08 * t;
-      }
+    // Incoming: scale up from 0.95 to 1
+    if (!isFirstCard && v >= start && v < end) {
+      const t = easeInOut((v - start) / segmentSize);
+      return 0.95 + 0.05 * t;
     }
-    return isLastCard ? 1 : 0.92;
+    // Outgoing: scale down from 1 to 0.92 while next card comes in
+    if (!isLastCard && v >= nextStart && v < nextEnd) {
+      const t = easeInOut((v - nextStart) / segmentSize);
+      return 1 - 0.08 * t;
+    }
+    if (v < start) return isFirstCard ? 1 : 0.95;
+    if (v >= nextEnd && !isLastCard) return 0.92;
+    return 1;
   });
 
-  // Z-index: incoming card always stacks on top
+  // Z-index: each successive card stacks higher; incoming card gets boost
   const zIndex = useTransform(scrollYProgress, (v) => {
-    if (v < start) return index;
-    if (v >= start && v < end) {
-      const progress = (v - start) / segmentSize;
-      return progress < 0.5 ? totalProjects + index : index;
-    }
+    if (!isFirstCard && v >= start && v < end) return totalProjects + index;
     return index;
   });
 
