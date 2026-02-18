@@ -286,11 +286,7 @@ const Hero = () => {
                 >
                   {/* Video Card */}
                   <motion.div
-                    className={`relative aspect-video rounded-lg overflow-hidden ring-1 transition-all duration-500 ${
-                      isActive
-                        ? "ring-primary/50 shadow-lg shadow-primary/10"
-                        : "ring-border/20 hover:ring-border/40"
-                    }`}
+                    className="relative aspect-video rounded-lg overflow-hidden transition-all duration-500"
                     animate={{ scale: isActive ? 1 : 0.92 }}
                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   >
