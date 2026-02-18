@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const GlobalCursor = () => {
+  const isMobile = useIsMobile();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -44,7 +46,7 @@ const GlobalCursor = () => {
     };
   }, []);
 
-  if (isHidden) return null;
+  if (isHidden || isMobile) return null;
 
   return (
     <>
