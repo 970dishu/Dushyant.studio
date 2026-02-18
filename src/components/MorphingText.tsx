@@ -12,12 +12,7 @@ const MorphingText = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPrefixIndex((prev) => {
-        const next = (prev + 1) % prefixes.length;
-        // Director(0) -> Editor(1): go down (1), Editor(1) -> Director(0): go up (-1)
-        setDirection(next > prev ? 1 : -1);
-        return next;
-      });
+      setPrefixIndex((prev) => (prev + 1) % prefixes.length);
     }, 3500);
     return () => clearInterval(interval);
   }, []);
@@ -54,9 +49,9 @@ const MorphingText = ({ className }: { className?: string }) => {
           {currentPrefix.split("").map((char, i) => (
             <motion.span
               key={`${prefixIndex}-${i}`}
-              initial={{ y: direction === 1 ? "-100%" : "100%", opacity: 0 }}
+              initial={{ y: "-100%", opacity: 0 }}
               animate={{ y: "0%", opacity: 1 }}
-              exit={{ y: direction === 1 ? "100%" : "-100%", opacity: 0, position: "absolute" }}
+              exit={{ y: "100%", opacity: 0, position: "absolute" }}
               transition={{
                 duration: 0.5,
                 delay: i * 0.08,
