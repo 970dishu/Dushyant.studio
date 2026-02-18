@@ -1,54 +1,45 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const words = ["Director", "Editor"];
+const prefixes = ["Direc", "Edi"];
 
 const MorphingText = ({ className }: { className?: string }) => {
-  const [wordIndex, setWordIndex] = useState(0);
-  const containerRef = useRef<HTMLSpanElement>(null);
-  const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
+  const [prefixIndex, setPrefixIndex] = useState(0);
   const measureRef = useRef<HTMLSpanElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
+      setPrefixIndex((prev) => (prev + 1) % prefixes.length);
     }, 3500);
     return () => clearInterval(interval);
   }, []);
 
-  const currentWord = words[wordIndex];
+  const currentPrefix = prefixes[prefixIndex];
 
-  // Measure the new word width after render
   useEffect(() => {
     if (measureRef.current) {
       setContainerWidth(measureRef.current.offsetWidth);
     }
-  }, [wordIndex]);
+  }, [prefixIndex]);
 
   return (
     <span className={`relative inline-flex ${className ?? ""}`}>
-      {/* Hidden measurer */}
-      <span
-        ref={measureRef}
-        className="absolute invisible whitespace-nowrap"
-        aria-hidden="true"
-      >
-        {currentWord.split("").map((char, i) => (
-          <span key={i} className="inline-block">{char}</span>
-        ))}
+      {/* Hidden measurer for prefix */}
+      <span ref={measureRef} className="absolute invisible whitespace-nowrap" aria-hidden="true">
+        {currentPrefix}
       </span>
 
-      {/* Animated container with smooth width */}
+      {/* Animated prefix with smooth width */}
       <motion.span
-        ref={containerRef}
         className="inline-flex overflow-hidden"
         animate={{ width: containerWidth }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <AnimatePresence mode="popLayout">
-          {currentWord.split("").map((char, i) => (
+          {currentPrefix.split("").map((char, i) => (
             <motion.span
-              key={`${wordIndex}-${i}`}
+              key={`${prefixIndex}-${i}`}
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: "0%", opacity: 1 }}
               exit={{ y: "-100%", opacity: 0, position: "absolute" }}
@@ -64,6 +55,9 @@ const MorphingText = ({ className }: { className?: string }) => {
           ))}
         </AnimatePresence>
       </motion.span>
+
+      {/* Static suffix */}
+      <span>tor</span>
     </span>
   );
 };
