@@ -1,67 +1,70 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Each char has a unique id so framer-motion can track and animate its position
-const directorChars = [
-  { id: "D", char: "D" },
-  { id: "I", char: "I" },
-  { id: "R2", char: "R" },
-  { id: "E", char: "E" },
-  { id: "C", char: "C" },
-  { id: "T", char: "T" },
-  { id: "O", char: "O" },
-  { id: "R7", char: "R" },
-];
-
-const editorChars = [
-  { id: "E", char: "E" },
-  { id: "D", char: "D" },
-  { id: "I", char: "I" },
-  { id: "T", char: "T" },
-  { id: "O", char: "O" },
-  { id: "R7", char: "R" },
-];
+const words = ["Director", "Editor"];
 
 const MorphingText = ({ className }: { className?: string }) => {
-  const [isDirector, setIsDirector] = useState(true);
+  const [wordIndex, setWordIndex] = useState(0);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number | "auto">("auto");
+  const measureRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsDirector((prev) => !prev);
+      setWordIndex((prev) => (prev + 1) % words.length);
     }, 3500);
     return () => clearInterval(interval);
   }, []);
 
-  const chars = isDirector ? directorChars : editorChars;
+  const currentWord = words[wordIndex];
+
+  // Measure the new word width after render
+  useEffect(() => {
+    if (measureRef.current) {
+      setContainerWidth(measureRef.current.offsetWidth);
+    }
+  }, [wordIndex]);
 
   return (
-    <LayoutGroup>
+    <span className={`relative inline-flex ${className ?? ""}`}>
+      {/* Hidden measurer */}
+      <span
+        ref={measureRef}
+        className="absolute invisible whitespace-nowrap"
+        aria-hidden="true"
+      >
+        {currentWord.split("").map((char, i) => (
+          <span key={i} className="inline-block">{char}</span>
+        ))}
+      </span>
+
+      {/* Animated container with smooth width */}
       <motion.span
-        className={`inline-flex ${className ?? ""}`}
-        layout
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        ref={containerRef}
+        className="inline-flex overflow-hidden"
+        animate={{ width: containerWidth }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <AnimatePresence mode="popLayout">
-          {chars.map((item) => (
+          {currentWord.split("").map((char, i) => (
             <motion.span
-              key={item.id}
-              layoutId={item.id}
-              initial={{ opacity: 0, filter: "blur(4px)" }}
-              animate={{ opacity: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, filter: "blur(4px)", transition: { duration: 0.3 } }}
+              key={`${wordIndex}-${i}`}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: "0%", opacity: 1 }}
+              exit={{ y: "-100%", opacity: 0, position: "absolute" }}
               transition={{
-                layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                opacity: { duration: 0.3 },
-                filter: { duration: 0.3 },
+                duration: 0.3,
+                delay: i * 0.04,
+                ease: [0.16, 1, 0.3, 1],
               }}
               className="inline-block"
             >
-              {item.char}
+              {char}
             </motion.span>
           ))}
         </AnimatePresence>
       </motion.span>
-    </LayoutGroup>
+    </span>
   );
 };
 
