@@ -28,46 +28,50 @@ const ProjectCard = ({
   // Easing helper: cubic ease-in-out mapped to 0-1
   const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-  // Y position:
-  // - Incoming: slides up from +120vh (below) to center (0)
-  // - Active: stays at 0
-  // - Outgoing: moves DOWN to +80px and slightly behind
+  // Y: Incoming slides from +200px below, outgoing pushes 40px down
   const y = useTransform(scrollYProgress, (v) => {
-    if (v < start) {
-      // Before this card's turn — parked below
-      return isFirstCard ? 0 : 800;
-    }
+    if (v < start) return isFirstCard ? 0 : 200;
     if (v >= start && v < end) {
       const progress = (v - start) / segmentSize;
       if (progress < 0.5) {
-        // First half: card entering (sliding up from below)
         const t = easeInOut(progress / 0.5);
-        return isFirstCard ? 0 : 800 * (1 - t);
+        return isFirstCard ? 0 : 200 * (1 - t);
       } else {
-        // Second half: card exiting (sliding down / getting pushed back)
         const t = easeInOut((progress - 0.5) / 0.5);
-        return isLastCard ? 0 : 80 * t;
+        return isLastCard ? 0 : 40 * t;
       }
     }
-    // After this card's segment — pushed down behind
-    return isLastCard ? 0 : 80;
+    return isLastCard ? 0 : 40;
   });
 
-  // Scale: subtle depth — incoming grows from 0.97, outgoing shrinks to 0.95
+  // Scale: incoming 0.98→1, outgoing 1→0.97
   const scale = useTransform(scrollYProgress, (v) => {
-    if (v < start) return isFirstCard ? 1 : 0.97;
+    if (v < start) return isFirstCard ? 1 : 0.98;
     if (v >= start && v < end) {
       const progress = (v - start) / segmentSize;
       if (progress < 0.5) {
         const t = easeInOut(progress / 0.5);
-        return isFirstCard ? 1 : 0.97 + 0.03 * t;
+        return isFirstCard ? 1 : 0.98 + 0.02 * t;
       } else {
         const t = easeInOut((progress - 0.5) / 0.5);
-        return isLastCard ? 1 : 1 - 0.05 * t;
+        return isLastCard ? 1 : 1 - 0.03 * t;
       }
     }
-    return isLastCard ? 1 : 0.95;
+    return isLastCard ? 1 : 0.97;
   });
+
+  // Blur: outgoing gets subtle 2px blur for depth separation
+  const blur = useTransform(scrollYProgress, (v) => {
+    if (v < start) return 0;
+    if (v >= start && v < end) {
+      const progress = (v - start) / segmentSize;
+      if (progress < 0.5) return 0;
+      const t = easeInOut((progress - 0.5) / 0.5);
+      return isLastCard ? 0 : 2 * t;
+    }
+    return isLastCard ? 0 : 2;
+  });
+  const filterBlur = useTransform(blur, (v) => v > 0 ? `blur(${v}px)` : 'none');
 
   // Z-index: active card on top, incoming even higher
   const zIndex = useTransform(scrollYProgress, (v) => {
@@ -82,7 +86,7 @@ const ProjectCard = ({
 
   return (
     <motion.div
-      style={{ y, scale, zIndex }}
+      style={{ y, scale, zIndex, filter: filterBlur }}
       className="absolute inset-0 flex items-center justify-center px-4 md:px-6 lg:px-12"
     >
       <div className="relative w-full max-w-[1600px]">
