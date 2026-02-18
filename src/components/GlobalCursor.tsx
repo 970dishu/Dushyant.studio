@@ -48,22 +48,22 @@ const GlobalCursor = () => {
 
   return (
     <>
-      {/* Main cursor dot */}
+      {/* Delayed following circle */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         animate={{
-          x: position.x - 4,
-          y: position.y - 4,
-          scale: isClicking ? 0.8 : 1,
+          x: position.x - 10,
+          y: position.y - 10,
+          scale: isClicking ? 0.8 : isPointer ? 1.3 : 1,
         }}
         transition={{
           type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
+          stiffness: 150,
+          damping: 15,
+          mass: 0.1,
         }}
       >
-        <div className="w-2 h-2 rounded-full bg-white" />
+        <div className="w-5 h-5 rounded-full bg-primary/80" />
       </motion.div>
 
     </>
