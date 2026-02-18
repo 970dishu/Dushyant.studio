@@ -93,7 +93,9 @@ const GlobalCursor = () => {
         }}
       >
         <div 
-          className="w-10 h-10 rounded-full border-2 border-foreground/30 transition-colors duration-200"
+          className={`w-10 h-10 rounded-full border-2 transition-colors duration-200 ${
+            isPointer ? 'border-primary bg-primary/10' : 'border-foreground/30'
+          }`}
         />
       </motion.div>
     </>
