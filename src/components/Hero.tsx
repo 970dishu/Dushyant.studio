@@ -334,14 +334,6 @@ const Hero = () => {
                       </motion.button>
                     )}
 
-                    {/* Play indicator for non-active cards */}
-                    {!isActive && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-background/20">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-foreground/40 flex items-center justify-center group-hover:border-primary/60 group-hover:scale-110 transition-all duration-300">
-                          <div className="w-0 h-0 border-l-[8px] md:border-l-[10px] border-l-foreground/50 border-t-[5px] md:border-t-[6px] border-t-transparent border-b-[5px] md:border-b-[6px] border-b-transparent ml-1 group-hover:border-l-primary/70 transition-colors" />
-                        </div>
-                      </div>
-                    )}
                   </motion.div>
 
                   {/* Active indicator dot */}
