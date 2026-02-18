@@ -251,7 +251,7 @@ const Hero = () => {
 
           <div
             ref={carouselRef}
-            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none"
+            className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none snap-x snap-mandatory"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -271,12 +271,12 @@ const Hero = () => {
                 <motion.div
                   key={project.id}
                   ref={(el) => { cardRefs.current[project.id] = el; }}
-                  className="flex-shrink-0 cursor-pointer group"
+                  className="flex-shrink-0 cursor-pointer group snap-center"
                   style={{
                     width: isActive ? "clamp(280px, 45vw, 520px)" : "clamp(220px, 30vw, 380px)",
                     transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
                     opacity: cardOpacity,
-                    transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease-out, opacity 0.3s ease-out",
+                    transition: "width 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease-out",
                     transformStyle: "preserve-3d",
                   }}
                   onClick={() => handleCardClick(project.id)}
@@ -291,8 +291,8 @@ const Hero = () => {
                         ? "ring-primary/50 shadow-lg shadow-primary/10"
                         : "ring-border/20 hover:ring-border/40"
                     }`}
-                    animate={{ scale: isActive ? 1 : 0.95 }}
-                    transition={{ duration: 0.4 }}
+                    animate={{ scale: isActive ? 1 : 0.92 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   >
                     <video
                       ref={(el) => { videoRefs.current[project.id] = el; }}
