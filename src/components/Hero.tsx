@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, PointerEvent as ReactPointerEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
-import { Maximize2, X } from "lucide-react";
+import { Maximize2, X, Volume2, VolumeX } from "lucide-react";
 
 const VIDEO_URL = "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4";
 const THUMBNAIL_URL = "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4#t=0.1";
@@ -24,6 +24,7 @@ const videoProjects = [
 const Hero = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [fullscreenVideoId, setFullscreenVideoId] = useState<number | null>(null);
+  const [isMuted, setIsMuted] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
@@ -298,7 +299,9 @@ const Hero = () => {
                     <video
                       ref={(el) => { 
                         videoRefs.current[project.id] = el;
-                        if (el) el.volume = 0.5;
+                        if (el) {
+                          el.volume = isMuted ? 0 : 0.5;
+                        }
                       }}
                       src={VIDEO_URL}
                       poster={THUMBNAIL_URL}
@@ -331,6 +334,31 @@ const Hero = () => {
                         }}
                       >
                         <Maximize2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/80" />
+                      </motion.button>
+                    )}
+
+                    {/* Volume toggle button for active card */}
+                    {isActive && (
+                      <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="absolute bottom-3 right-3 z-10 w-8 h-8 md:w-9 md:h-9 rounded-full bg-background/60 backdrop-blur-sm border border-border/30 flex items-center justify-center hover:bg-primary/20 hover:border-primary/50 transition-all duration-200"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const newMutedState = !isMuted;
+                          setIsMuted(newMutedState);
+                          // Update all video volumes
+                          Object.values(videoRefs.current).forEach(video => {
+                            if (video) video.volume = newMutedState ? 0 : 0.5;
+                          });
+                        }}
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/80" />
+                        ) : (
+                          <Volume2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/80" />
+                        )}
                       </motion.button>
                     )}
 
