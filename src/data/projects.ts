@@ -32,7 +32,7 @@ export const projects: Project[] = [
     client: "Web3 Protocol Company",
     year: "2025",
     role: "Motion Designer & Animator",
-    image: "/src/assets/Motion Design.png?w=800&h=600&fit=crop",
+    image: "/src/assets/Motion_Design.png?w=800&h=600&fit=crop",
     heroVideo: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582497/call_12_lrjw9e.mp4",
     isVideo: true,
     overview: "This project involved creating a series of motion graphics for a leading creative agency's brand campaign. The goal was to bring their static brand identity to life through dynamic, engaging animations that would resonate with their target audience across digital platforms.",
