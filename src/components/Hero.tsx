@@ -9,84 +9,84 @@ const videoProjects = [
     client: "APPLE", 
     subtitle: "SHOT ON IPHONE",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 2, 
     client: "SPOTIFY", 
     subtitle: "WRAPPED 2024",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4#t=0.9"
+    thumbnailTime: 9.0
   },
   { 
     id: 3, 
     client: "NIKE", 
     subtitle: "AIR MAX DAY",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582370/call_2_sol6il.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582370/call_2_sol6il.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 4, 
     client: "SAMSUNG", 
     subtitle: "GALAXY UNPACKED",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582424/call_3_wqng4q.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582424/call_3_wqng4q.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 5, 
     client: "COLDPLAY", 
     subtitle: "MOON MUSIC",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582207/call_4_dkcddo.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582207/call_4_dkcddo.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 6, 
     client: "ADIDAS", 
     subtitle: "IMPOSSIBLE IS NOTHING",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582321/call_5_gmlwgy.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582321/call_5_gmlwgy.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 7, 
     client: "PUMA", 
     subtitle: "FOREVER FASTER",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582376/call_6_ktkpvd.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582376/call_6_ktkpvd.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 8, 
     client: "RED BULL", 
     subtitle: "GIVES YOU WINGS",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582291/call_7_wy6g0f.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582291/call_7_wy6g0f.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 9, 
     client: "ZARA", 
     subtitle: "FALL COLLECTION",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582361/call_8_tr51ck.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582361/call_8_tr51ck.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 10, 
     client: "H&M", 
     subtitle: "CONSCIOUS",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582343/call_9_vu6bqs.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582343/call_9_vu6bqs.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 11, 
     client: "GUCCI", 
     subtitle: "ANCORA",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582378/call_10_it65fd.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582378/call_10_it65fd.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
   { 
     id: 12, 
     client: "LOUIS VUITTON", 
     subtitle: "HORIZONS",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582591/call_11_nva5zu.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582591/call_11_nva5zu.mp4#t=0.1"
+    thumbnailTime: 0.1
   },
 ];
 
@@ -383,10 +383,16 @@ const Hero = () => {
                         videoRefs.current[project.id] = el;
                         if (el) {
                           el.volume = isMuted ? 0 : 0.5;
+                          // Set initial time for thumbnail when metadata loads
+                          const handleLoadedMetadata = () => {
+                            if (el && project.id !== activeId) {
+                              el.currentTime = project.thumbnailTime;
+                            }
+                          };
+                          el.addEventListener('loadedmetadata', handleLoadedMetadata);
                         }
                       }}
                       src={project.videoUrl}
-                      poster={project.thumbnailUrl}
                       preload="metadata"
                       loop
                       playsInline
