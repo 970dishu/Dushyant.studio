@@ -67,10 +67,7 @@ const MorphingText = ({ className }: { className?: string }) => {
             </motion.span>
           ))}
         </AnimatePresence>
-      </motion.span>
-
-      {/* Static suffix */}
-      <span>{suffix}</span>
+      </motion.span>{/* Static suffix */}<span>{suffix}</span>
     </span>
   );
 };
