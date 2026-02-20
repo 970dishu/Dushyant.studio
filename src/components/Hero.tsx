@@ -6,85 +6,85 @@ import { Maximize2, X, Volume2, VolumeX } from "lucide-react";
 const videoProjects = [
   { 
     id: 1, 
-    client: "APPLE", 
+    client: "RUN", 
     subtitle: "SHOT ON IPHONE",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 2, 
-    client: "SPOTIFY", 
-    subtitle: "WRAPPED 2024",
+    client: "Reliq", 
+    subtitle: "Launch Campaign",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
     thumbnailTime: 7.0
   },
   { 
     id: 3, 
-    client: "NIKE", 
-    subtitle: "AIR MAX DAY",
+    client: "Across Web3", 
+    subtitle: "DeFi Night",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582370/call_2_sol6il.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 4, 
-    client: "SAMSUNG", 
-    subtitle: "GALAXY UNPACKED",
+    client: "Finance", 
+    subtitle: "Documentry",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582424/call_3_wqng4q.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 5, 
-    client: "COLDPLAY", 
-    subtitle: "MOON MUSIC",
+    client: "Devlearn", 
+    subtitle: "Community Pitch",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582207/call_4_dkcddo.mp4",
     thumbnailTime: 1.1
   },
   { 
     id: 6, 
-    client: "ADIDAS", 
-    subtitle: "IMPOSSIBLE IS NOTHING",
+    client: "Rangrezz-Alfaaz", 
+    subtitle: "Promotional Video",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582321/call_5_gmlwgy.mp4",
     thumbnailTime: 1.1
   },
   { 
     id: 7, 
-    client: "PUMA", 
-    subtitle: "FOREVER FASTER",
+    client: "Across Web3", 
+    subtitle: "Infotainment",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582376/call_6_ktkpvd.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 8, 
-    client: "RED BULL", 
-    subtitle: "GIVES YOU WINGS",
+    client: "Agyaat Khat Intro", 
+    subtitle: "Animated Intro",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582291/call_7_wy6g0f.mp4",
     thumbnailTime: 3.1
   },
   { 
     id: 9, 
-    client: "ZARA", 
-    subtitle: "FALL COLLECTION",
+    client: "SaaS VFX AI", 
+    subtitle: "Intro Video",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582361/call_8_tr51ck.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 10, 
-    client: "H&M", 
-    subtitle: "CONSCIOUS",
+    client: "SaaS VFX AI", 
+    subtitle: "Explainer Video",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582343/call_9_vu6bqs.mp4",
     thumbnailTime: 0.1
   },
   { 
     id: 11, 
-    client: "GUCCI", 
-    subtitle: "ANCORA",
+    client: "Thanks Giving", 
+    subtitle: "Welcoming Video",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582378/call_10_it65fd.mp4",
     thumbnailTime: 3.1
   },
   { 
     id: 12, 
-    client: "LOUIS VUITTON", 
-    subtitle: "HORIZONS",
+    client: "Agyaat Khat", 
+    subtitle: "Short Series",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582591/call_11_nva5zu.mp4",
     thumbnailTime: 0.1
   },
