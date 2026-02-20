@@ -16,7 +16,7 @@ const videoProjects = [
     client: "SPOTIFY", 
     subtitle: "WRAPPED 2024",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
-    thumbnailTime: 9.0
+    thumbnailTime: 7.0
   },
   { 
     id: 3, 
@@ -37,14 +37,14 @@ const videoProjects = [
     client: "COLDPLAY", 
     subtitle: "MOON MUSIC",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582207/call_4_dkcddo.mp4",
-    thumbnailTime: 0.1
+    thumbnailTime: 1.1
   },
   { 
     id: 6, 
     client: "ADIDAS", 
     subtitle: "IMPOSSIBLE IS NOTHING",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582321/call_5_gmlwgy.mp4",
-    thumbnailTime: 0.1
+    thumbnailTime: 1.1
   },
   { 
     id: 7, 
@@ -58,7 +58,7 @@ const videoProjects = [
     client: "RED BULL", 
     subtitle: "GIVES YOU WINGS",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582291/call_7_wy6g0f.mp4",
-    thumbnailTime: 0.1
+    thumbnailTime: 3.1
   },
   { 
     id: 9, 
@@ -79,7 +79,7 @@ const videoProjects = [
     client: "GUCCI", 
     subtitle: "ANCORA",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582378/call_10_it65fd.mp4",
-    thumbnailTime: 0.1
+    thumbnailTime: 3.1
   },
   { 
     id: 12, 
