@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const prefixes = ["Direc", "Edi"];
@@ -18,13 +18,6 @@ const MorphingText = ({ className }: { className?: string }) => {
   }, []);
 
   const currentPrefix = prefixes[prefixIndex];
-
-  // Measure width on mount to prevent initial gap (runs before paint)
-  useLayoutEffect(() => {
-    if (measureRef.current) {
-      setContainerWidth(measureRef.current.offsetWidth);
-    }
-  }, []);
 
   useEffect(() => {
     if (measureRef.current) {
