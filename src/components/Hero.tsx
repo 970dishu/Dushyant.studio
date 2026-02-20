@@ -3,22 +3,91 @@ import { motion, AnimatePresence } from "framer-motion";
 import MorphingText from "./MorphingText";
 import { Maximize2, X, Volume2, VolumeX } from "lucide-react";
 
-const VIDEO_URL = "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4";
-const THUMBNAIL_URL = "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_lcol7n.mp4#t=0.1";
-
 const videoProjects = [
-  { id: 1, client: "APPLE", subtitle: "SHOT ON IPHONE" },
-  { id: 2, client: "SPOTIFY", subtitle: "WRAPPED 2024" },
-  { id: 3, client: "NIKE", subtitle: "AIR MAX DAY" },
-  { id: 4, client: "SAMSUNG", subtitle: "GALAXY UNPACKED" },
-  { id: 5, client: "COLDPLAY", subtitle: "MOON MUSIC" },
-  { id: 6, client: "ADIDAS", subtitle: "IMPOSSIBLE IS NOTHING" },
-  { id: 7, client: "PUMA", subtitle: "FOREVER FASTER" },
-  { id: 8, client: "RED BULL", subtitle: "GIVES YOU WINGS" },
-  { id: 9, client: "ZARA", subtitle: "FALL COLLECTION" },
-  { id: 10, client: "H&M", subtitle: "CONSCIOUS" },
-  { id: 11, client: "GUCCI", subtitle: "ANCORA" },
-  { id: 12, client: "LOUIS VUITTON", subtitle: "HORIZONS" },
+  { 
+    id: 1, 
+    client: "APPLE", 
+    subtitle: "SHOT ON IPHONE",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call.mp4#t=0.1"
+  },
+  { 
+    id: 2, 
+    client: "SPOTIFY", 
+    subtitle: "WRAPPED 2024",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_1.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_1.mp4#t=0.1"
+  },
+  { 
+    id: 3, 
+    client: "NIKE", 
+    subtitle: "AIR MAX DAY",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_2.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_2.mp4#t=0.1"
+  },
+  { 
+    id: 4, 
+    client: "SAMSUNG", 
+    subtitle: "GALAXY UNPACKED",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_3.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_3.mp4#t=0.1"
+  },
+  { 
+    id: 5, 
+    client: "COLDPLAY", 
+    subtitle: "MOON MUSIC",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_4.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_4.mp4#t=0.1"
+  },
+  { 
+    id: 6, 
+    client: "ADIDAS", 
+    subtitle: "IMPOSSIBLE IS NOTHING",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_5.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_5.mp4#t=0.1"
+  },
+  { 
+    id: 7, 
+    client: "PUMA", 
+    subtitle: "FOREVER FASTER",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_6.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_6.mp4#t=0.1"
+  },
+  { 
+    id: 8, 
+    client: "RED BULL", 
+    subtitle: "GIVES YOU WINGS",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_7.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_7.mp4#t=0.1"
+  },
+  { 
+    id: 9, 
+    client: "ZARA", 
+    subtitle: "FALL COLLECTION",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_8.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_8.mp4#t=0.1"
+  },
+  { 
+    id: 10, 
+    client: "H&M", 
+    subtitle: "CONSCIOUS",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_9.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_9.mp4#t=0.1"
+  },
+  { 
+    id: 11, 
+    client: "GUCCI", 
+    subtitle: "ANCORA",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_10.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_10.mp4#t=0.1"
+  },
+  { 
+    id: 12, 
+    client: "LOUIS VUITTON", 
+    subtitle: "HORIZONS",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_11.mp4",
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771440996/call_11.mp4#t=0.1"
+  },
 ];
 
 const Hero = () => {
@@ -34,6 +103,7 @@ const Hero = () => {
   const dragStartX = useRef(0);
   const dragScrollLeft = useRef(0);
   const hasDragged = useRef(false);
+  const [cursorState, setCursorState] = useState<'grab' | 'grabbing'>('grab');
 
   // Play active video, pause others
   useEffect(() => {
@@ -120,20 +190,23 @@ const Hero = () => {
     isUserScrolling.current = true;
     dragStartX.current = e.clientX;
     dragScrollLeft.current = container.scrollLeft;
+    setCursorState('grabbing');
   }, []);
 
   const onPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
     const dx = e.clientX - dragStartX.current;
-    if (Math.abs(dx) > 5) hasDragged.current = true;
+    if (Math.abs(dx) > 10) hasDragged.current = true;
     const container = carouselRef.current;
     if (container) {
-      container.scrollLeft = dragScrollLeft.current - dx;
+      // Balanced sensitivity with 0.95 multiplier
+      container.scrollLeft = dragScrollLeft.current - (dx * 2.00);
     }
   }, []);
 
   const onPointerUp = useCallback(() => {
     isDragging.current = false;
+    setCursorState('grab');
   }, []);
 
   const handleCardClick = useCallback((id: number) => {
@@ -166,23 +239,25 @@ const Hero = () => {
     <>
       {/* Fullscreen Video Overlay */}
       <AnimatePresence>
-        {fullscreenVideoId !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-background cursor-pointer flex items-center justify-center"
-            onClick={() => setFullscreenVideoId(null)}
-          >
-            <video 
-              src={VIDEO_URL} 
-              autoPlay 
-              loop 
-              playsInline 
-              className="w-full h-full object-cover"
-              ref={(el) => el && (el.volume = 0.5)}
-            />
+        {fullscreenVideoId !== null && (() => {
+          const fullscreenProject = videoProjects.find(p => p.id === fullscreenVideoId);
+          return fullscreenProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 bg-background cursor-pointer flex items-center justify-center"
+              onClick={() => setFullscreenVideoId(null)}
+            >
+              <video 
+                src={fullscreenProject.videoUrl} 
+                autoPlay 
+                loop 
+                playsInline 
+                className="w-full h-full object-cover"
+                ref={(el) => el && (el.volume = 0.5)}
+              />
 
             {/* Close button */}
             <motion.button
@@ -204,8 +279,9 @@ const Hero = () => {
             >
               TAP ANYWHERE TO CLOSE
             </motion.p>
-          </motion.div>
-        )}
+            </motion.div>
+          );
+        })()}
       </AnimatePresence>
 
       <section className="w-full min-h-screen flex flex-col">
@@ -258,7 +334,7 @@ const Hero = () => {
           <div
             ref={carouselRef}
             className="w-full overflow-x-auto flex items-center gap-4 md:gap-6 px-[20vw] md:px-[25vw] py-4 select-none snap-x snap-proximity"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: "grab", touchAction: "pan-y", transformStyle: "preserve-3d", scrollBehavior: "smooth" }}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", cursor: cursorState, touchAction: "pan-y", transformStyle: "preserve-3d" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -303,8 +379,8 @@ const Hero = () => {
                           el.volume = isMuted ? 0 : 0.5;
                         }
                       }}
-                      src={VIDEO_URL}
-                      poster={THUMBNAIL_URL}
+                      src={project.videoUrl}
+                      poster={project.thumbnailUrl}
                       preload="metadata"
                       loop
                       playsInline
