@@ -215,6 +215,12 @@ const Hero = () => {
       return;
     }
 
+    // If clicking on already active card, open fullscreen
+    if (id === activeId) {
+      setFullscreenVideoId(id);
+      return;
+    }
+
     // Prevent auto-detection from overriding during programmatic scroll
     isUserScrolling.current = false;
     setActiveId(id);
@@ -233,7 +239,7 @@ const Hero = () => {
     } else {
       isUserScrolling.current = true;
     }
-  }, []);
+  }, [activeId]);
 
   return (
     <>
