@@ -109,24 +109,38 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* Hero Image */}
+          {/* Hero Image/Video */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative aspect-video rounded-2xl overflow-hidden bg-secondary"
           >
-            <img 
-              src={project.image} 
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-            {project.isVideo && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer">
-                  <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
-                </div>
-              </div>
+            {project.heroVideo ? (
+              <video 
+                src={project.heroVideo} 
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <>
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                {project.isVideo && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer">
+                      <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </motion.div>
         </div>
