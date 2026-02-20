@@ -16,7 +16,7 @@ const videoProjects = [
     client: "SPOTIFY", 
     subtitle: "WRAPPED 2024",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
-    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4#t=4.1"
+    thumbnailUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4#t=0.9"
   },
   { 
     id: 3, 
