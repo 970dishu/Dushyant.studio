@@ -19,8 +19,8 @@ const MorphingText = ({ className }: { className?: string }) => {
 
   const currentPrefix = prefixes[prefixIndex];
 
-  // Measure width on mount to prevent initial gap
-  useEffect(() => {
+  // Measure width on mount to prevent initial gap (runs before paint)
+  useLayoutEffect(() => {
     if (measureRef.current) {
       setContainerWidth(measureRef.current.offsetWidth);
     }
