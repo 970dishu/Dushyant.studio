@@ -114,7 +114,11 @@ const Hero = () => {
           video.play().catch(() => {});
         } else {
           video.pause();
-          video.currentTime = 0;
+          // Reset to thumbnail time instead of 0
+          const project = videoProjects.find(p => p.id === id);
+          if (project) {
+            video.currentTime = project.thumbnailTime;
+          }
         }
       }
     });
