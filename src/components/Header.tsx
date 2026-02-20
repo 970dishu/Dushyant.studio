@@ -76,26 +76,22 @@ const Header = () => {
             <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 animate-pulse"></span>
           </a>
 
-          {/* Contact Button - Hidden when scrolled */}
-          {!isScrolled && (
+          {/* Contact Button / Hamburger Menu - Smooth transition */}
+          <div className="relative flex items-center justify-center" style={{ width: isScrolled ? '40px' : '100px', transition: 'width 0.4s cubic-bezier(0.25, 1, 0.5, 1)' }}>
             <a
               href={isHomePage ? "#contact" : "/#contact"}
-              className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 whitespace-nowrap"
+              className={`inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground whitespace-nowrap transition-all duration-400 ${isScrolled ? 'opacity-0 pointer-events-none absolute scale-75' : 'opacity-100 relative scale-100'}`}
             >
               Contact
             </a>
-          )}
-
-          {/* Hamburger Menu Button - Shown when scrolled */}
-          {isScrolled && (
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-full"
+              className={`w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-full transition-all duration-400 ${isScrolled ? 'opacity-100 scale-100 relative' : 'opacity-0 pointer-events-none absolute scale-75'}`}
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-          )}
+          </div>
         </nav>
 
         {/* Tablet/Mobile Navigation - "Available for work" pill */}
