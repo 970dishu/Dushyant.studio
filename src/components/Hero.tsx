@@ -266,7 +266,7 @@ const Hero = () => {
                 loop 
                 playsInline 
                 className="w-full h-full object-cover"
-                ref={(el) => el && (el.volume = 0.5)}
+                ref={(el) => el && (el.volume = 1)}
               />
 
             {/* Close button */}
@@ -386,7 +386,7 @@ const Hero = () => {
                       ref={(el) => { 
                         videoRefs.current[project.id] = el;
                         if (el) {
-                          el.volume = isMuted ? 0 : 0.5;
+                          el.volume = isMuted ? 0 : 1;
                           // Set initial time for thumbnail when metadata loads
                           const handleLoadedMetadata = () => {
                             if (el && project.id !== activeId) {
@@ -442,7 +442,7 @@ const Hero = () => {
                           setIsMuted(newMutedState);
                           // Update all video volumes
                           Object.values(videoRefs.current).forEach(video => {
-                            if (video) video.volume = newMutedState ? 0 : 0.5;
+                            if (video) video.volume = newMutedState ? 0 : 1;
                           });
                         }}
                       >
