@@ -77,12 +77,25 @@ const Header = () => {
           </a>
 
           {/* Contact Button - Hidden when scrolled */}
-          <a
-            href={isHomePage ? "#contact" : "/#contact"}
-            className={`inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-500 whitespace-nowrap ${isScrolled ? 'max-w-0 opacity-0 px-0 overflow-hidden' : 'max-w-[200px] opacity-100'}`}
-          >
-            Contact
-          </a>
+          {!isScrolled && (
+            <a
+              href={isHomePage ? "#contact" : "/#contact"}
+              className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium bg-white text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 whitespace-nowrap"
+            >
+              Contact
+            </a>
+          )}
+
+          {/* Hamburger Menu Button - Shown when scrolled */}
+          {isScrolled && (
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-full"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          )}
         </nav>
 
         {/* Tablet/Mobile Navigation - "Available for work" pill */}
@@ -124,9 +137,9 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile/Desktop Menu Overlay */}
       {isMenuOpen && (
-        <div className="lg:hidden mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
+        <div className="mt-4 mx-4 bg-secondary/95 backdrop-blur-md rounded-2xl">
           <nav className="px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
               link.isAnchor ? (
