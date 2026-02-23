@@ -3,8 +3,8 @@ import { ChevronDown, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import dushyantPortrait from "@/assets/dushyant-portrait.png";
-import waveHand from "@/assets/wave-hand.png";
+import dushyantPortrait from "/assets/dushyant-portrait.png";
+import waveHand from "/assets/wave-hand.png";
 
 const serviceOptions = [
   "Motion Design",

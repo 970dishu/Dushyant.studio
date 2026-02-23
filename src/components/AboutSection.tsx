@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
-import workspaceImage from "@/assets/workspace-setup.jpg";
+import workspaceImage from "/assets/workspace-setup.jpg";
 
 interface CounterProps {
   end: number;

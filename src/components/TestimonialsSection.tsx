@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import kanishkImg from "@/assets/kanishk-khurana.png";
-import amanImg from "@/assets/aman-verma.png";
-import agyaatImg from "@/assets/agyaat-aadarsh.png";
+import kanishkImg from "/assets/kanishk-khurana.png";
+import amanImg from "/assets/aman-verma.png";
+import agyaatImg from "/assets/agyaat-aadarsh.png";
 
 interface CounterProps {
   end: number;

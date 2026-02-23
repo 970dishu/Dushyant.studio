@@ -1,5 +1,5 @@
 import { Sparkles, Paintbrush, MousePointer2, PenTool } from "lucide-react";
-import adobeLogo from "@/assets/adobe-logo.png";
+import adobeLogo from "/assets/adobe-logo.png";
 
 const tools = [
   "After Effects",
