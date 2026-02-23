@@ -1,4 +1,4 @@
-import filmEditingThumbnail from "@/assets/film-editing-thumbnail.jpg";
+import filmEditingThumbnail from "/assets/film-editing-thumbnail.jpg";
 
 export interface Project {
   id: string;
