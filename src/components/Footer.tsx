@@ -6,10 +6,10 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { name: "Twitter", href: "#" },
-    { name: "LinkedIn", href: "#" },
-    { name: "Instagram", href: "#" },
-    { name: "Behance", href: "#" },
+    { name: "Twitter", href: "https://x.com/Dushyant_Dishu" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/dushyant-garg-955869213/" },
+    { name: "Instagram", href: "https://www.instagram.com/dushyant_dishu/" },
+    { name: "Behance", href: "https://www.behance.net/970dishu1" },
   ];
 
   const navLinks = [
