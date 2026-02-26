@@ -9,7 +9,7 @@ import MyStory from "./pages/MyStory";
 import NotFound from "./pages/NotFound";
 import GlobalCursor from "./components/GlobalCursor";
 import ScrollToTop from "./components/ScrollToTop";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
