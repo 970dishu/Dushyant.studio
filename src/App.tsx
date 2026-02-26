@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import GlobalCursor from "./components/GlobalCursor";
 import ScrollToTop from "./components/ScrollToTop";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,8 @@ const App = () => (
       </div>
     </TooltipProvider>
   </QueryClientProvider>
-  <Analytics /></>
+  <Analytics />
+  <SpeedInsights /></>
 );
 
 export default App;
