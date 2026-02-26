@@ -9,11 +9,12 @@ import MyStory from "./pages/MyStory";
 import NotFound from "./pages/NotFound";
 import GlobalCursor from "./components/GlobalCursor";
 import ScrollToTop from "./components/ScrollToTop";
+import { Analytics } from "@vercel/analytics/next";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <><QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <div className="min-h-screen bg-background cursor-none relative">
         {/* Grain texture overlay */}
@@ -34,6 +35,7 @@ const App = () => (
       </div>
     </TooltipProvider>
   </QueryClientProvider>
+  <Analytics /></>
 );
 
 export default App;
