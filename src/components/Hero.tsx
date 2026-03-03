@@ -14,24 +14,24 @@ const videoProjects = [
   },
   {
     id: 2,
-    client: "Reliq",
-    subtitle: "Launch Campaign",
-    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
-    thumbnailTime: 7.0
-  },
-  {
-    id: 3,
     client: "Across Web3",
     subtitle: "DeFi Night",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582370/call_2_sol6il.mp4",
     thumbnailTime: 0.1
   },
   {
-    id: 4,
+    id: 3,
     client: "Finance",
     subtitle: "Documentry",
     videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582424/call_3_wqng4q.mp4",
     thumbnailTime: 0.1
+  },
+  {
+    id: 4,
+    client: "Reliq",
+    subtitle: "Launch Campaign",
+    videoUrl: "https://res.cloudinary.com/dpeynjx4c/video/upload/v1771582145/call_1_xq4kyt.mp4",
+    thumbnailTime: 7.0
   },
   {
     id: 5,
