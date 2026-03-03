@@ -221,7 +221,7 @@ const ServicesSection = () => {
       <div className="container-wide relative z-10">
         {/* Header */}
         <motion.div
-          className="pt-2 md:pt-0 mb-6 md:mb-12"
+          className="pt-2 md:pt-0 mb-6 ml-4 md:mb-12"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
