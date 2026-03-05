@@ -118,7 +118,7 @@ const ContactSection = () => {
           <div className="order-1 lg:order-2">
             {/* Heading */}
             <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 md:mb-6 leading-[1.1] uppercase italic text-center lg:text-left">
-              Let's Work Together
+              Let's Work Together!
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-8 md:mb-10 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
               Let's build something impactful together—whether it's your brand, your website, or your next big idea.

@@ -326,10 +326,10 @@ const MyStory = () => {
               className="text-center mb-12 md:mb-16"
             >
               <p className="text-sm text-primary uppercase tracking-wider mb-4">
-                Tools & Software
+                My Tech Stack
               </p>
               <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
-                My Tech Stack
+                Tools & Software
               </h2>
             </motion.div>
 
@@ -350,9 +350,6 @@ const MyStory = () => {
               viewport={{ once: true }}
               className="text-center mb-12 md:mb-16"
             >
-              <p className="text-sm text-primary uppercase tracking-wider mb-4">
-                Process
-              </p>
               <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
                 How I Work
               </h2>
@@ -375,9 +372,6 @@ const MyStory = () => {
               viewport={{ once: true }}
               className="text-center mb-12 md:mb-16"
             >
-              <p className="text-sm text-primary uppercase tracking-wider mb-4">
-                Highlights
-              </p>
               <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
                 Key Achievements
               </h2>
